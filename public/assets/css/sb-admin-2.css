@@ -1,0 +1,110 @@
+/* --- CSS Tambahan/Override untuk Tampilan Lebih Menarik --- */
+
+/* 1. Memusatkan Konten Login (Asumsi elemen login ada di dalam container atau div tertentu) */
+/* Coba identifikasi div terluar yang membungkus form, misalnya beri class 'login-container' di HTML */
+.login-container {
+    /* Gunakan flexbox untuk memposisikan di tengah layar */
+    display: flex;
+    justify-content: center; /* Horisontal center */
+    align-items: center;     /* Vertikal center */
+    min-height: 100vh;       /* Pastikan menempati seluruh tinggi viewport */
+    padding: 20px;
+}
+
+/* 2. Styling untuk Card/Panel Login (jika menggunakan card, sesuaikan class-nya) */
+/* Jika Anda menggunakan struktur seperti card, terapkan styling ini pada elemen formulir atau kontainernya */
+.login-form-box {
+    /* Ganti input-group dari gambar */
+    max-width: 400px;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.95); /* Sedikit transparan agar latar belakang terlihat */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2); /* Bayangan yang lebih menonjol */
+    animation: fadeInScale 0.5s ease-out; /* Tambahkan animasi muncul */
+}
+
+/* Animasi untuk memunculkan kotak login dengan elegan */
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* 3. Styling untuk Header/Judul */
+.login-form-box h1,
+.login-form-box h2,
+.login-form-box h3,
+.login-form-box .h1,
+.login-form-box .h2,
+.login-form-box .h3 {
+    text-align: center;
+    color: var(--blue); /* Warna primer SB Admin 2 */
+    margin-bottom: 25px;
+    font-weight: 700;
+}
+
+/* 4. Styling Input Form */
+.form-control {
+    border: 1px solid #ced4da;
+    transition: all 0.3s ease;
+    /* Tambahkan bayangan kecil saat fokus untuk efek modern */
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.2rem rgba(78, 115, 223, 0.2); /* Sedikit lebih ringan */
+}
+
+/* 5. Styling Tombol Login */
+.btn-primary {
+    background-image: linear-gradient(to right, #4e73df, #224abe); /* Gradient ringan */
+    border: none;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(78, 115, 223, 0.4); /* Bayangan tombol */
+}
+
+.btn-primary:hover {
+    background-color: #2e59d9;
+    background-image: none;
+    transform: translateY(-1px); /* Efek angkat saat hover */
+    box-shadow: 0 6px 15px rgba(78, 115, 223, 0.6);
+}
+
+/* 6. Styling Tombol Login dengan Google/Sosial Media */
+.btn-google {
+    background-color: #ea4335;
+    border-color: #ea4335;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(234, 67, 53, 0.4);
+}
+.btn-google:hover {
+    background-color: #d62516;
+    border-color: #d62516;
+    transform: translateY(-1px);
+}
+/* Tambahkan margin di sekitar tombol sosial untuk ruang */
+.btn-social {
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+/* 7. Styling Tautan Lainnya (Forgot Password, Create Account, dll) */
+.text-link {
+    display: block;
+    text-align: center;
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #b7b9cc; /* Lebih lembut */
+    transition: color 0.3s ease;
+}
+
+.text-link:hover {
+    color: var(--primary);
+    text-decoration: none;
+}
