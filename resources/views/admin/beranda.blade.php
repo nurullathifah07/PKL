@@ -1,8 +1,10 @@
 @extends('layout.admin_layout')
 
+@section('title', 'Dashboard')
+
 @section('content')
 
-    <h4 class="page-title">Dashboard</h4>
+<h4 class="page-title">Dashboard</h4>
     <div class="row">
         <div class="col-md-3">
             <div class="card card-stats card-warning">

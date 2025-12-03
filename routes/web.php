@@ -22,4 +22,10 @@ Route::get('/register', function () {
 Route::get('/admin/beranda', [AdminController::class, 'beranda'])->name('admin.beranda');
 
 
-Route::get('/admin/akun', [AkunController::class, 'akun'])->name('admin.akun');
+Route::get('/admin/akun', [AdminController::class, 'akun'])->name('admin.akun');
+
+Route::get('/admin/pegawai', [AdminController::class, 'pegawai'])->name('admin.pegawai');
+
+Route::get('/admin/barang', [AdminController::class, 'barang'])->name('admin.barang');
+
+

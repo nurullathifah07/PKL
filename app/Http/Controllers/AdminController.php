@@ -10,4 +10,22 @@ class AdminController extends Controller
     {
         return view('admin.beranda');
     }
+
+    public function akun()
+    {
+        return view('admin.akun');
+    }
+
+
+    public function barang()
+    {
+        return view('admin.barang');
+    }
+
+    public function pegawai()
+    {
+        return view('admin.pegawai');
+    }
 }
+
+
