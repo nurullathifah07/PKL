@@ -15,7 +15,7 @@
                     <h4 class="card-title">Daftar Akun Pengguna</h4>
 
                     {{-- Tombol Tambah Akun --}}
-                    <a href="#" class="btn btn-primary btn-round ml-auto">
+                    <a href="{{ url('admin/akun_tambah') }}" class="btn btn-primary btn-round ml-auto">
                         <i class="la la-plus"></i> Tambah Akun
                     </a>
                 </div>
@@ -23,8 +23,8 @@
 
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="add-row" class="display table table-striped table-hover">
-                        <thead>
+                    <table id="add-row" class="display table table-hover" class="text-center">
+                        <thead class="text-center">
                             <tr>
                                 <th>No</th>
                                 <th>Username</th>
@@ -33,7 +33,7 @@
                                 <th style="width: 10%">Aksi</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="text-center">
                             {{-- Contoh Baris Data Statis --}}
                             <tr>
                                 <td>1</td>
@@ -55,6 +55,22 @@
                             </tr>
                             <tr>
                                 <td>2</td>
+                                <td>mark_otto</td>
+                                <td>mark@example.com</td>
+                                <td>User Biasa</td>
+                                <td>
+                                    <div class="form-button-action">
+                                        <button type="button" data-toggle="tooltip" title="Edit Akun" class="btn btn-link btn-simple-primary">
+                                            <i class="la la-edit"></i>
+                                        </button>
+                                        <button type="button" data-toggle="tooltip" title="Hapus Akun" class="btn btn-link btn-simple-danger">
+                                            <i class="la la-times"></i>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
                                 <td>mark_otto</td>
                                 <td>mark@example.com</td>
                                 <td>User Biasa</td>

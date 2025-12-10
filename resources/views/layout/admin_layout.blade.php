@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @yield('styles')
+
 </head>
 <body>
     <div class="wrapper">
@@ -40,17 +41,6 @@
                         </div>
                     </form>
                     <ul class="navbar-nav topbar-nav ml-md-auto align-items-center">
-                        <li class="nav-item dropdown hidden-caret">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="la la-envelope"></i>
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" href="#">Action</a>
-                                <a class="dropdown-item" href="#">Another action</a>
-                                <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" href="#">Something else here</a>
-                            </div>
-                        </li>
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="la la-bell"></i>
@@ -115,15 +105,12 @@
                                         <div class="u-img"><img src="{{ asset('assets/img/profile.jpg') }}" alt="user"></div>
                                         <div class="u-text">
                                             <h4>Hizrian</h4>
-                                            <p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">View Profile</a></div>
+                                            <p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">Lihat Profil</a></div>
                                         </div>
                                     </li>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"><i class="ti-user"></i> My Profile</a>
-                                    <a class="dropdown-item" href="#"></i> My Balance</a>
-                                    <a class="dropdown-item" href="#"><i class="ti-email"></i> Inbox</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"><i class="ti-settings"></i> Account Setting</a>
+                                    <a class="dropdown-item" href="#"><i class="ti-user"></i> Edit Profil</a>
+                                    <a class="dropdown-item" href="#"><i class="ti-settings"></i> Pengaturan</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
                             </ul>
@@ -143,30 +130,9 @@
                                 <span>
                                     Hizrian
                                     <span class="user-level">Administrator</span>
-                                    <span class="caret"></span>
                                 </span>
                             </a>
                             <div class="clearfix"></div>
-
-                            <div class="collapse in" id="collapseExample" aria-expanded="true" style="">
-                                <ul class="nav">
-                                    <li>
-                                        <a href="#profile">
-                                            <span class="link-collapse">My Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#edit">
-                                            <span class="link-collapse">Edit Profile</span>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#settings">
-                                            <span class="link-collapse">Settings</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
                         </div>
                     </div>
                     <ul class="nav">
@@ -198,18 +164,26 @@
                                 <span class="badge badge-count">14</span>
                             </a>
                         </li>
-                        <li class="nav-item {{ Request::routeIs('admin.notifikasi') ? 'active' : '' }}">
-                            <a href="{{ url('admin/notifikasi') }}">
-                                <i class="bi bi-bell" style="font-size: 18px;"></i>
-                                <p>notifikasi</p>
+                        <li class="nav-item {{ Request::routeIs('admin.barang_masuk') ? 'active' : '' }}">
+                            <a href="{{ url('admin/barang_masuk') }}">
+                                <i class="bi bi-box-seam-fill" style="font-size: 18px;"></i>
+                                <p>Barang Masuk</p>
                                 <span class="badge badge-count">14</span>
                             </a>
                         </li>
-                        <li class="nav-item update-pro">
-                            <button data-toggle="modal" data-target="#modalUpdate">
-                                <i class="la la-hand-pointer-o"></i>
-                                <p>Update To Pro</p>
-                            </button>
+                        <li class="nav-item {{ Request::routeIs('admin.barang_keluar') ? 'active' : '' }}">
+                            <a href="{{ url('admin/barang_keluar') }}">
+                                <i class="bi bi-dropbox" style="font-size: 18px;"></i>
+                                <p>Barang Keluar</p>
+                                <span class="badge badge-count">14</span>
+                            </a>
+                        </li>
+                        <li class="nav-item {{ Request::routeIs('admin.notifikasi') ? 'active' : '' }}">
+                            <a href="{{ url('admin/notifikasi') }}">
+                                <i class="bi bi-bell" style="font-size: 18px;"></i>
+                                <p>Notifikasi</p>
+                                <span class="badge badge-count">14</span>
+                            </a>
                         </li>
                     </ul>
                 </div>
@@ -223,25 +197,6 @@
 
                 <footer class="footer">
                     <div class="container-fluid">
-                        <nav class="pull-left">
-                            <ul class="nav">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="http://www.themekita.com">
-                                        ThemeKita
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#">
-                                        Help
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="https://themewagon.com/license/#free-item">
-                                        Licenses
-                                    </a>
-                                </li>
-                            </ul>
-                        </nav>
                         <div class="copyright ml-auto">
                             2025, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">BPS Kabupaten Banjar</a>
                         </div>
@@ -281,7 +236,6 @@
     <script src="{{ asset('assets/js/plugin/jquery-mapael/jquery.mapael.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jquery-mapael/maps/world_countries.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
-    <script src="{{ asset('assets/js/plugin/jquery-scrollbar/jquery.scrollbar.min.js') }}"></script>
     <script src="{{ asset('assets/js/ready.min.js') }}"></script>
     <script src="{{ asset('assets/js/demo.js') }}"></script>
     @yield('scripts')
