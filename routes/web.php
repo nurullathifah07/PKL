@@ -21,6 +21,9 @@ Route::get('/register', function () {
 //Admin
 Route::get('/admin/beranda', [AdminController::class, 'beranda'])->name('admin.beranda');
 
+Route::get('/admin/profil', [AdminController::class, 'profil'])->name('admin.profil');
+Route::get('/admin/profil_edit', [AdminController::class, 'profil_edit'])->name('admin.profil_edit');
+
 
 Route::get('/admin/akun', [AdminController::class, 'akun'])->name('admin.akun');
 Route::get('/admin/akun_tambah', [AdminController::class, 'akun_tambah'])->name('admin.akun_tambah');
@@ -37,3 +40,6 @@ Route::get('/admin/barang_masuk_tambah', [AdminController::class, 'barang_masuk_
 
 Route::get('/admin/barang_keluar', [AdminController::class, 'barang_keluar'])->name('admin.barang_keluar');
 Route::get('/admin/barang_keluar_tambah', [AdminController::class, 'barang_keluar_tambah'])->name('admin.barang_keluar_tambah');
+
+
+Route::get('/admin/notifikasi', [AdminController::class, 'notifikasi'])->name('admin.notifikasi');

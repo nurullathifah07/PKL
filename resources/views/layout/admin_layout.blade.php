@@ -105,11 +105,11 @@
                                         <div class="u-img"><img src="{{ asset('assets/img/profile.jpg') }}" alt="user"></div>
                                         <div class="u-text">
                                             <h4>Hizrian</h4>
-                                            <p class="text-muted">hello@themekita.com</p><a href="profile.html" class="btn btn-rounded btn-danger btn-sm">Lihat Profil</a></div>
+                                            <p class="text-muted">hello@themekita.com</p><a href="{{ url('admin/profil') }}" class="btn btn-rounded btn-danger btn-sm">Lihat Profil</a></div>
                                         </div>
                                     </li>
                                     <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"><i class="ti-user"></i> Edit Profil</a>
+                                    <a class="dropdown-item" href="{{ url('admin/profil_edit') }}"><i class="ti-user"></i> Edit Profil</a>
                                     <a class="dropdown-item" href="#"><i class="ti-settings"></i> Pengaturan</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#"><i class="fa fa-power-off"></i> Logout</a>
@@ -140,49 +140,42 @@
                             <a href="{{ url('admin/beranda') }}">
                                 <i class="bi bi-speedometer" style="font-size: 18px;"></i>
                                 <p>Dashboard</p>
-                                <span class="badge badge-count">5</span>
                             </a>
                         </li>
                         <li class="nav-item {{ Request::routeIs('admin.akun') ? 'active' : '' }}">
                             <a href="{{ url('admin/akun') }}">
                                 <i class="bi bi-person-fill-add" style="font-size: 18px;"></i>
                                 <p>Akun</p>
-                                <span class="badge badge-count">14</span>
                             </a>
                         </li>
                         <li class="nav-item {{ Request::routeIs('admin.pegawai') ? 'active' : '' }}">
                             <a href="{{ url('admin/pegawai') }}">
                                 <i class="bi bi-person-rolodex" style="font-size: 18px;"></i>
                                 <p>Data Pegawai</p>
-                                <span class="badge badge-count">14</span>
                             </a>
                         </li>
                         <li class="nav-item {{ Request::routeIs('admin.barang') ? 'active' : '' }}">
                             <a href="{{ url('admin/barang') }}">
                                 <i class="bi bi-box-seam" style="font-size: 18px;"></i>
                                 <p>Data Barang</p>
-                                <span class="badge badge-count">14</span>
                             </a>
                         </li>
                         <li class="nav-item {{ Request::routeIs('admin.barang_masuk') ? 'active' : '' }}">
                             <a href="{{ url('admin/barang_masuk') }}">
                                 <i class="bi bi-box-seam-fill" style="font-size: 18px;"></i>
                                 <p>Barang Masuk</p>
-                                <span class="badge badge-count">14</span>
                             </a>
                         </li>
                         <li class="nav-item {{ Request::routeIs('admin.barang_keluar') ? 'active' : '' }}">
                             <a href="{{ url('admin/barang_keluar') }}">
                                 <i class="bi bi-dropbox" style="font-size: 18px;"></i>
                                 <p>Barang Keluar</p>
-                                <span class="badge badge-count">14</span>
                             </a>
                         </li>
                         <li class="nav-item {{ Request::routeIs('admin.notifikasi') ? 'active' : '' }}">
                             <a href="{{ url('admin/notifikasi') }}">
                                 <i class="bi bi-bell" style="font-size: 18px;"></i>
                                 <p>Notifikasi</p>
-                                <span class="badge badge-count">14</span>
                             </a>
                         </li>
                     </ul>

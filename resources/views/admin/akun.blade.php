@@ -29,6 +29,7 @@
                                 <th>No</th>
                                 <th>Username</th>
                                 <th>Email</th>
+                                <th>Password</th>
                                 <th>Level</th>
                                 <th style="width: 10%">Aksi</th>
                             </tr>
@@ -39,6 +40,7 @@
                                 <td>1</td>
                                 <td>hizrian</td>
                                 <td>hizrian@example.com</td>
+                                <td>jdnckjnsne3j4#238u3r</td>
                                 <td>Administrator</td>
                                 <td>
                                     <div class="form-button-action">
@@ -57,6 +59,7 @@
                                 <td>2</td>
                                 <td>mark_otto</td>
                                 <td>mark@example.com</td>
+                                <td>jdnckjnsne3j4#238u3r</td>
                                 <td>User Biasa</td>
                                 <td>
                                     <div class="form-button-action">
@@ -73,6 +76,7 @@
                                 <td>3</td>
                                 <td>mark_otto</td>
                                 <td>mark@example.com</td>
+                                <td>jdnckjnsne3j4#238u3r</td>
                                 <td>User Biasa</td>
                                 <td>
                                     <div class="form-button-action">

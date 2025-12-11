@@ -12,6 +12,16 @@ class AdminController extends Controller
         return view('admin.beranda');
     }
 
+    //Profil
+     public function profil()
+    {
+        return view('admin.profil');
+    }
+    public function profil_edit()
+    {
+        return view('admin.profil_edit');
+    }
+
     //Akun
     public function akun()
     {
@@ -64,6 +74,12 @@ class AdminController extends Controller
     public function barang_keluar_tambah()
     {
         return view('admin.barang_keluar_tambah');
+    }
+
+    //Notifikasi
+    public function notifikasi()
+    {
+        return view('admin.notifikasi');
     }
 
 }
