@@ -4,54 +4,53 @@
 
 @section('content')
 
-<h4 class="page-title">Edit Akun</h4>
-<hr>
-
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Form Edit Data Akun Pengguna</h6>
+<div class="card">
+    <div class="card-header">
+        <h5 class="card-title">Form Edit Akun</h5>
     </div>
     <div class="card-body">
-
-        <form id="formEditAkun" action="{{ url('/admin/akun/update/ID_AKUN') }}" method="POST">
-            @csrf
-            @method('PUT')
-
-            <div class="mb-3">
-                <label for="editUsername" class="form-label">Username</label>
-                <input type="text" class="form-control" id="editUsername" name="username"
-                    placeholder="Masukkan Username" value="{{ $akun->username ?? 'hizrian_lama' }}" required>
+        <form action="{{ route('admin.akun') }}" method="POST">
+            @csrf <div class="mb-3">
+                <label for="nama" class="form-label">Nama Lengkap</label>
+                <input type="text" class="form-control" id="nama" name="nama" value="{{ old('nama') }}" required>
+                @error('nama')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
-                <label for="editEmail" class="form-label">Email</label>
-                <input type="email" class="form-control" id="editEmail" name="email"
-                    placeholder="Masukkan Email" value="{{ $akun->email ?? 'hizrian@example.com' }}" required>
+                <label for="username" class="form-label">Username</label>
+                <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" required>
+                @error('username')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
-                <label for="editLevel" class="form-label">Level Akun</label>
-                <select class="form-select" id="editLevel" name="level" required>
-                    <option value="Administrator" {{ ($akun->level ?? 'Administrator') == 'Administrator' ? 'selected' : '' }}>Administrator</option>
-                    <option value="User Biasa" {{ ($akun->level ?? 'Administrator') == 'User Biasa' ? 'selected' : '' }}>User Biasa</option>
-                </select>
-            </div>
-
-            <hr>
-            <p class="text-danger">Kosongkan kolom di bawah ini jika tidak ingin mengubah password.</p>
-
-            <div class="mb-3">
-                <label for="editPassword" class="form-label">Password Baru</label>
-                <input type="password" class="form-control" id="editPassword" name="password"
-                    placeholder="Isi jika ingin mengganti password">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password" required>
+                @error('password')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
-                <label for="editKonfirmasiPassword" class="form-label">Konfirmasi Password</label>
-                <input type="password" class="form-control" id="editKonfirmasiPassword" name="password_confirmation"
-                    placeholder="Ulangi Password Baru">
+                <label for="password_confirmation" class="form-label">Konfirmasi Password</label>
+                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
             </div>
 
+            <div class="mb-3">
+                <label for="role" class="form-label">Role Akun</label>
+                <select class="form-select" id="role" name="role" required>
+                    <option value="" selected disabled>Pilih Role</option>
+                    <option value="admin" {{ old('role') == 'admin' ? 'selected' : '' }}>Admin</option>
+                    <option value="pegawai" {{ old('role') == 'pegawai' ? 'selected' : '' }}>Pegawai</option>
+                    <option value="operator" {{ old('role') == 'manager' ? 'selected' : '' }}>Operator</option>
+                    </select>
+                @error('role')
+                    <div class="text-danger mt-1">{{ $message }}</div>
+                @enderror
+            </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary me-2">Update</button>
                 <a href="{{ route('admin.akun') }}" class="btn btn-secondary">Batal</a>
@@ -60,4 +59,10 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+    <script>
+        // ...
+    </script>
 @endsection

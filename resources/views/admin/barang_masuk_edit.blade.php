@@ -1,12 +1,12 @@
 @extends('layout.admin_layout')
 
-@section('title', 'Tambah Daftar Barang Masuk')
+@section('title', 'Edit Barang Masuk')
 
 @section('content')
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Tambah Barang Masuk Baru</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Edit Barang Masuk</h6>
     </div>
     <div class="card-body">
         <form action="{{ url('/admin/proses_barang_masuk') }}" method="POST">
@@ -57,7 +57,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary me-2">Simpan</button>
+                <button type="submit" class="btn btn-primary me-2">Update</button>
                 <a href="{{ route('admin.barang_masuk') }}" class="btn btn-secondary">Batal</a>
             </div>
             </div>

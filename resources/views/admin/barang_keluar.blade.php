@@ -47,9 +47,11 @@
                                 <td>
                                     <div class="form-button-action">
                                         {{-- Tombol Edit --}}
+                                        <a href="{{ url('admin/barang_keluar_edit') }}">
                                         <button type="button" data-toggle="tooltip" title="Edit Barang Keluar" class="btn btn-link btn-simple-primary">
                                             <i class="la la-edit"></i>
                                         </button>
+                                        </a>
                                         {{-- Tombol Hapus (Delete) --}}
                                         <button type="button" data-toggle="tooltip" title="Hapus Barang Keluar" class="btn btn-link btn-simple-danger">
                                             <i class="la la-times"></i>

@@ -31,15 +31,19 @@ Route::get('/admin/akun_edit', [AdminController::class, 'akun_edit'])->name('adm
 
 Route::get('/admin/pegawai', [AdminController::class, 'pegawai'])->name('admin.pegawai');
 Route::get('/admin/pegawai_tambah', [AdminController::class, 'pegawai_tambah'])->name('admin.pegawai_tambah');
+Route::get('/admin/pegawai_edit', [AdminController::class, 'pegawai_edit'])->name('admin.pegawai_edit');
 
 Route::get('/admin/barang', [AdminController::class, 'barang'])->name('admin.barang');
 Route::get('/admin/barang_tambah', [AdminController::class, 'barang_tambah'])->name('admin.barang_tambah');
+Route::get('/admin/barang_edit', [AdminController::class, 'barang_edit'])->name('admin.barang_edit');
 
 Route::get('/admin/barang_masuk', [AdminController::class, 'barang_masuk'])->name('admin.barang_masuk');
 Route::get('/admin/barang_masuk_tambah', [AdminController::class, 'barang_masuk_tambah'])->name('admin.barang_masuk_tambah');
+Route::get('/admin/barang_masuk_edit', [AdminController::class, 'barang_masuk_edit'])->name('admin.barang_masuk_edit');
 
 Route::get('/admin/barang_keluar', [AdminController::class, 'barang_keluar'])->name('admin.barang_keluar');
 Route::get('/admin/barang_keluar_tambah', [AdminController::class, 'barang_keluar_tambah'])->name('admin.barang_keluar_tambah');
+Route::get('/admin/barang_keluar_edit', [AdminController::class, 'barang_keluar_edit'])->name('admin.barang_keluar_edit');
 
 
 Route::get('/admin/notifikasi', [AdminController::class, 'notifikasi'])->name('admin.notifikasi');

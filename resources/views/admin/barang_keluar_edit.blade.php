@@ -1,12 +1,12 @@
 @extends('layout.admin_layout')
 
-@section('title', 'Tambah Daftar Barang Keluar')
+@section('title', 'Edit Barang Keluar')
 
 @section('content')
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Tambah Barang Keluar Baru</h6>
+        <h6 class="m-0 font-weight-bold text-primary">Edit Barang Keluar</h6>
     </div>
     <div class="card-body">
         <form action="proses_tambah_barang_keluar.php" method="POST">
@@ -56,7 +56,7 @@
                 </div>
             </div>
             <div class="text-center">
-                <button type="submit" class="btn btn-primary me-2">Simpan</button>
+                <button type="submit" class="btn btn-primary me-2">Update</button>
                 <a href="{{ route('admin.barang_keluar') }}" class="btn btn-secondary">Batal</a>
             </div>
             </div>

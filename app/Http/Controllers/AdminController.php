@@ -45,6 +45,10 @@ class AdminController extends Controller
     {
         return view('admin.pegawai_tambah');
     }
+    public function pegawai_edit()
+    {
+        return view('admin.pegawai_edit');
+    }
 
     //Barang
     public function barang()
@@ -54,6 +58,10 @@ class AdminController extends Controller
     public function barang_tambah()
     {
         return view('admin.barang_tambah');
+    }
+    public function barang_edit()
+    {
+        return view('admin.barang_edit');
     }
 
     //Barang Masuk
@@ -65,6 +73,10 @@ class AdminController extends Controller
     {
         return view('admin.barang_masuk_tambah');
     }
+    public function barang_masuk_edit()
+    {
+        return view('admin.barang_masuk_edit');
+    }
 
     //Barang Keluar
     public function barang_keluar()
@@ -74,6 +86,10 @@ class AdminController extends Controller
     public function barang_keluar_tambah()
     {
         return view('admin.barang_keluar_tambah');
+    }
+    public function barang_keluar_edit()
+    {
+        return view('admin.barang_keluar_edit');
     }
 
     //Notifikasi
