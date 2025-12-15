@@ -4,7 +4,7 @@
 
 @section('content')
 
-<h4 class="page-title">Daftar Akun</h4>
+<h4 class="page-title">Daftar Akun Pengguna</h4>
 
 {{-- TABEL DAFTAR AKUN --}}
 <div class="row">
@@ -12,7 +12,7 @@
         <div class="card">
             <div class="card-header">
                 <div class="d-flex align-items-center">
-                    <h4 class="card-title">Daftar Akun Pengguna</h4>
+                    <h4 class="card-title">Akun Pengguna</h4>
 
                     {{-- Tombol Tambah Akun --}}
                     <a href="{{ url('admin/akun_tambah') }}" class="btn btn-primary btn-round ml-auto">

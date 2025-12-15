@@ -27,9 +27,16 @@
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
-                                <th>Nama Pegawai</th>
+                                <th>NIP BPS</th>
                                 <th>NIP</th>
-                                <th>Subbagian</th>
+                                <th>Nama Pegawai</th>
+                                <th>Jabatan</th>
+                                <th>Golongan Akhir</th>
+                                <th>Pendidikan</th>
+                                <th>Tempat Lahir</th>
+                                <th>Tanggal Lahir</th>
+                                <th>Jenis Kelamin</th>
+                                <th>Agama</th>
                                 <th style="width: 10%">Aksi</th>
                             </tr>
                         </thead>
@@ -37,9 +44,16 @@
                             {{-- Contoh Baris Data Statis --}}
                             <tr>
                                 <td>1</td>
-                                <td>Hizrian</td>
-                                <td>1998050320220301001</td>
-                                <td>Fungsional</td>
+                                <td>340018756</td>
+                                <td>198305042006041011</td>
+                                <td>Muhammad Wira Perdana</td>
+                                <td>Statistisi Mahir BPS Kabupaten/Kota</td>
+                                <td>III/c</td>
+                                <td>SMU IPA</td>
+                                <td>Martapura</td>
+                                <td>04-05-1983</td>
+                                <td>LK</td>
+                                <td>Islam</td>
                                 <td>
                                     <div class="form-button-action">
                                         {{-- Tombol Edit --}}
@@ -57,9 +71,16 @@
                             </tr>
                             <tr>
                                 <td>2</td>
-                                <td>M.Otto</td>
-                                <td>1999040620200305002</td>
-                                <td>Umum</td>
+                                <td>340052319</td>
+                                <td>198407192009012008</td>
+                                <td>Yulia Sapitri, SE</td>
+                                <td>Statistisi Mahir BPS Kabupaten/Kota</td>
+                                <td>III/b</td>
+                                <td>S-1 Akuntansi</td>
+                                <td>Martapura</td>
+                                <td>19-07-1984</td>
+                                <td>PR</td>
+                                <td>Islam</td>
                                 <td>
                                     <div class="form-button-action">
                                         <button type="button" data-toggle="tooltip" title="Edit Pegawai" class="btn btn-link btn-simple-primary">

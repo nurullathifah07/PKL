@@ -20,8 +20,11 @@
     <div class="wrapper">
         <div class="main-header">
             <div class="logo-header">
-                <a href="index.html" class="logo">
-                    Ready Dashboard
+                <a class="logo d-flex align-items-center">
+                    <img src="{{ asset('assets/img/logo BPS.png') }}"
+                        alt="Logo BPS"
+                        style="height: 30px; margin-right: 8px;">
+                    ATK BPS Banjar
                 </a>
                 <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -126,7 +129,7 @@
                             <img src="{{ asset('assets/img/profile.jpg') }}">
                         </div>
                         <div class="info">
-                            <a class="" data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+                            <a aria-expanded="true">
                                 <span>
                                     Hizrian
                                     <span class="user-level">Administrator</span>
@@ -181,11 +184,11 @@
                     </ul>
                 </div>
             </div>
-            <div class="main-panel">
+            <div class="main-panel" style="background: url('{{ asset('assets/img/bg.png') }}') no-repeat center center fixed; background-size: cover;">
                 <div class="content">
                     <div class="container-fluid">
                         @yield('content')
-                        </div>
+                    </div>
                 </div>
 
                 <footer class="footer">

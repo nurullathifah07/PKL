@@ -22,47 +22,6 @@ class AdminController extends Controller
         return view('admin.profil_edit');
     }
 
-    //Akun
-    public function akun()
-    {
-        return view('admin.akun');
-    }
-    public function akun_tambah()
-    {
-        return view('admin.akun_tambah');
-    }
-    public function akun_edit()
-    {
-        return view('admin.akun_edit');
-    }
-
-    //Pegawai
-    public function pegawai()
-    {
-        return view('admin.pegawai');
-    }
-    public function pegawai_tambah()
-    {
-        return view('admin.pegawai_tambah');
-    }
-    public function pegawai_edit()
-    {
-        return view('admin.pegawai_edit');
-    }
-
-    //Barang
-    public function barang()
-    {
-        return view('admin.barang');
-    }
-    public function barang_tambah()
-    {
-        return view('admin.barang_tambah');
-    }
-    public function barang_edit()
-    {
-        return view('admin.barang_edit');
-    }
 
     //Barang Masuk
     public function barang_masuk()

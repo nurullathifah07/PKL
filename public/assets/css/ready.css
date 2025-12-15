@@ -93,7 +93,7 @@ p {
 h4.page-title {
   font-size: 22px;
   font-weight: 600;
-  color: #333333;
+  color: #ffffff;
   line-height: 30px;
   margin-bottom: 20px;
 }
@@ -2102,8 +2102,8 @@ body {
   margin-top: 12.5px;
   padding-left: 25px;
   padding-right: 25px;
-  padding-bottom: 12.5px;
-  border-bottom: 1px solid #eee;
+  padding-bottom: 0px;
+  border-bottom: 2px solid #eee;
   display: block;
 }
 .sidebar .user .photo {
@@ -2164,7 +2164,7 @@ body {
 .sidebar .nav {
   display: block;
   float: none;
-  margin-top: 20px;
+  margin-top: 0px;
 }
 .sidebar .nav .nav-item {
   display: list-item;
@@ -2246,6 +2246,10 @@ body {
   min-height: 100%;
   float: right;
   background: #f2f3f8;
+  background: url('../img/bg.png') no-repeat center center fixed;
+  background-size: cover;
+  background-attachment: fixed;
+  background-color: #f5f5f5;
 }
 .main-panel .content {
   padding: 30px 15px;
