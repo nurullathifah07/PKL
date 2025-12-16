@@ -3,19 +3,67 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Akun;
+use Illuminate\Support\Facades\Hash;
 
 class AkunController extends Controller
 {
-    public function akun()
+    // TAMPIL DATA
+    public function index()
     {
-        return view('admin.akun');
+        $akun = Akun::all();
+        return view('admin.akun.index', compact('akun'));
     }
-    public function akun_tambah()
+
+    // FORM TAMBAH
+    public function create()
     {
-        return view('admin.akun_tambah');
+        return view('admin.akun.create');
     }
-    public function akun_edit()
+
+    // SIMPAN DATA
+    public function store(Request $request)
     {
-        return view('admin.akun_edit');
+        Akun::create([
+            'username' => $request->username,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'level'    => $request->level,
+        ]);
+
+        return redirect()->route('akun.index')
+                         ->with('success', 'Akun berhasil ditambahkan');
+    }
+
+    // FORM EDIT
+    public function edit($id)
+    {
+        $akun = Akun::findOrFail($id);
+        return view('admin.akun.edit', compact('akun'));
+    }
+
+    // UPDATE DATA
+    public function update(Request $request, $id)
+    {
+        $akun = Akun::findOrFail($id);
+
+        $akun->update([
+            'username' => $request->username,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'level'    => $request->level,
+        ]);
+
+        return redirect()->route('akun.index')
+                         ->with('success', 'Akun berhasil diperbarui');
+    }
+
+    // HAPUS DATA
+    public function destroy($id)
+    {
+        Akun::findOrFail($id)->delete();
+
+        return redirect()->route('akun.index')
+                         ->with('success', 'Akun berhasil dihapus');
     }
 }

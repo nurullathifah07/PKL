@@ -27,9 +27,7 @@ Route::get('/admin/profil', [AdminController::class, 'profil'])->name('admin.pro
 Route::get('/admin/profil_edit', [AdminController::class, 'profil_edit'])->name('admin.profil_edit');
 
 
-Route::get('/admin/akun', [AkunController::class, 'akun'])->name('admin.akun');
-Route::get('/admin/akun_tambah', [AkunController::class, 'akun_tambah'])->name('admin.akun_tambah');
-Route::get('/admin/akun_edit', [AkunController::class, 'akun_edit'])->name('admin.akun_edit');
+Route::resource('/admin/akun', AkunController::class);
 
 Route::get('/admin/pegawai', [PegawaiController::class, 'pegawai'])->name('admin.pegawai');
 Route::get('/admin/pegawai_tambah', [PegawaiController::class, 'pegawai_tambah'])->name('admin.pegawai_tambah');

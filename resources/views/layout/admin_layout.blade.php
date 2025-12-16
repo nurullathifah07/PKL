@@ -145,7 +145,7 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        <li class="nav-item {{ Request::routeIs('admin.akun') ? 'active' : '' }}">
+                        <li class="nav-item {{ Request::routeIs('admin.akun.index') ? 'active' : '' }}">
                             <a href="{{ url('admin/akun') }}">
                                 <i class="bi bi-person-fill-add" style="font-size: 18px;"></i>
                                 <p>Akun</p>
