@@ -27,9 +27,9 @@ Route::get('/admin/beranda', [AdminController::class, 'beranda'])->name('admin.b
 Route::get('/admin/profil', [AdminController::class, 'profil'])->name('admin.profil');
 Route::get('/admin/profil_edit', [AdminController::class, 'profil_edit'])->name('admin.profil_edit');
 
-
+//Admin//Akun
 Route::resource('/admin/akun', AkunController::class);
-
+//Admin//Pegawai
 Route::resource('/admin/pegawai', PegawaiController::class);
 
 Route::get('/admin/barang', [BarangController::class, 'barang'])->name('admin.barang');

@@ -13,7 +13,11 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('pegawai.update', $pegawai->id_pegawai) }}" method="POST">
+        {{-- ⚠️ tambahkan enctype --}}
+        <form action="{{ route('pegawai.update', $pegawai->id_pegawai) }}"
+              method="POST"
+              enctype="multipart/form-data">
+
             @csrf
             @method('PUT')
 
@@ -69,6 +73,29 @@
                 {{-- KANAN --}}
                 <div class="col-md-6">
 
+                    {{-- FOTO --}}
+                    <div class="mb-3">
+                        <label class="form-label">Foto Pegawai</label>
+                        <input type="file"
+                               class="form-control"
+                               name="foto"
+                               accept="image/*">
+
+                        {{-- PREVIEW FOTO LAMA --}}
+                        @if ($pegawai->foto)
+                            <div class="mt-2">
+                                <img src="{{ asset('storage/' . $pegawai->foto) }}"
+                                     alt="Foto Pegawai"
+                                     width="120"
+                                     class="img-thumbnail">
+                            </div>
+                        @endif
+
+                        <small class="text-muted">
+                            Kosongkan jika tidak ingin mengganti foto
+                        </small>
+                    </div>
+
                     {{-- PENDIDIKAN --}}
                     <div class="mb-3">
                         <label class="form-label">Pendidikan</label>
@@ -100,12 +127,10 @@
                         <label class="form-label">Jenis Kelamin</label>
                         <select class="form-select" name="jenis_kelamin" required>
                             <option value="">Pilih</option>
-
                             <option value="L"
                                 {{ old('jenis_kelamin', $pegawai->jenis_kelamin) == 'L' ? 'selected' : '' }}>
                                 Laki-laki
                             </option>
-
                             <option value="P"
                                 {{ old('jenis_kelamin', $pegawai->jenis_kelamin) == 'P' ? 'selected' : '' }}>
                                 Perempuan

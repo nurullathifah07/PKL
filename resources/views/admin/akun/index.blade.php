@@ -35,25 +35,25 @@
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            @forelse ($akun as $index => $akun)
+                            @forelse ($akun as $index => $a)
                                 <tr>
                                     <td>{{ $index + 1 }}</td>
-                                    <td>{{ $akun->username }}</td>
-                                    <td>{{ $akun->email ?? '-' }}</td>
+                                    <td>{{ $a->username }}</td>
+                                    <td>{{ $a->email ?? '-' }}</td>
                                     <td>********</td> {{-- password jangan ditampilkan --}}
-                                    <td>{{ ucfirst($akun->level) }}</td>
+                                    <td>{{ ucfirst($a->level) }}</td>
                                     <td>
                                         <div class="form-button-action">
 
                                             {{-- Edit --}}
-                                            <a href="{{ route('akun.edit', $akun->id_akun) }}"
+                                            <a href="{{ route('akun.edit', $a->id_akun) }}"
                                                 class="btn btn-link btn-simple-primary"
                                                 title="Edit Akun">
                                                 <i class="la la-edit"></i>
                                             </a>
 
                                             {{-- Hapus --}}
-                                            <form action="{{ route('akun.destroy', $akun->id_akun) }}"
+                                            <form action="{{ route('akun.destroy', $a->id_akun) }}"
                                                 method="POST"
                                                 style="display:inline;">
                                                 @csrf

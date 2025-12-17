@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pegawai;
 use App\Models\Akun;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class PegawaiController extends Controller
 {
@@ -18,11 +19,11 @@ class PegawaiController extends Controller
     // 2. FORM TAMBAH
     public function create()
     {
-        $akun = Akun::all(); // untuk dropdown username
+        $akun = Akun::all();
         return view('admin.pegawai.create', compact('akun'));
     }
 
-    // 3. SIMPAN DATA
+    // 3. SIMPAN DATA + FOTO
     public function store(Request $request)
     {
         $request->validate([
@@ -35,11 +36,19 @@ class PegawaiController extends Controller
             'pendidikan' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required',
+            'jenis_kelamin' => 'required|in:L,P',
             'agama' => 'required',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        Pegawai::create($request->all());
+        $data = $request->all();
+
+        // upload foto jika ada
+        if ($request->hasFile('foto')) {
+            $data['foto'] = $request->file('foto')->store('pegawai', 'public');
+        }
+
+        Pegawai::create($data);
 
         return redirect()
             ->route('pegawai.index')
@@ -62,7 +71,7 @@ class PegawaiController extends Controller
         return view('admin.pegawai.edit', compact('pegawai', 'akun'));
     }
 
-    // 6. UPDATE DATA
+    // 6. UPDATE DATA + FOTO
     public function update(Request $request, $id)
     {
         $pegawai = Pegawai::findOrFail($id);
@@ -77,21 +86,42 @@ class PegawaiController extends Controller
             'pendidikan' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required|date',
-            'jenis_kelamin' => 'required',
+            'jenis_kelamin' => 'required|in:L,P',
             'agama' => 'required',
+            'foto' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
-        $pegawai->update($request->all());
+        $data = $request->all();
+
+        // jika upload foto baru
+        if ($request->hasFile('foto')) {
+
+            // hapus foto lama
+            if ($pegawai->foto && Storage::disk('public')->exists($pegawai->foto)) {
+                Storage::disk('public')->delete($pegawai->foto);
+            }
+
+            // simpan foto baru
+            $data['foto'] = $request->file('foto')->store('pegawai', 'public');
+        }
+
+        $pegawai->update($data);
 
         return redirect()
             ->route('pegawai.index')
             ->with('success', 'Data pegawai berhasil diperbarui');
     }
 
-    // 7. HAPUS DATA
+    // 7. HAPUS DATA + FOTO
     public function destroy($id)
     {
-        Pegawai::findOrFail($id)->delete();
+        $pegawai = Pegawai::findOrFail($id);
+
+        if ($pegawai->foto && Storage::disk('public')->exists($pegawai->foto)) {
+            Storage::disk('public')->delete($pegawai->foto);
+        }
+
+        $pegawai->delete();
 
         return redirect()
             ->route('pegawai.index')

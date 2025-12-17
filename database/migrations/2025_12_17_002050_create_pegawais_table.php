@@ -28,6 +28,8 @@ return new class extends Migration
             $table->enum('jenis_kelamin', ['L', 'P']);
             $table->string('agama');
 
+            $table->string('foto')->nullable();
+
             $table->timestamps();
 
             // foreign key

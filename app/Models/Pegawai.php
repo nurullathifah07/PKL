@@ -23,7 +23,8 @@ class Pegawai extends Model
         'tempat_lahir',
         'tanggal_lahir',
         'jenis_kelamin',
-        'agama'
+        'agama',
+        'foto'
     ];
 
     // relasi ke akun

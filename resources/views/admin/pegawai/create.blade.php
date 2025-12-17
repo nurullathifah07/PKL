@@ -14,8 +14,9 @@
 
     <div class="card-body">
 
-        {{-- ✅ ROUTE RESOURCE --}}
-        <form action="{{ route('pegawai.store') }}" method="POST">
+        <form action="{{ route('pegawai.store') }}"
+              method="POST"
+              enctype="multipart/form-data">
             @csrf
 
             <div class="row">
@@ -59,6 +60,18 @@
                 </div>
 
                 <div class="col-md-6">
+
+                    {{-- FOTO --}}
+                    <div class="mb-3">
+                        <label class="form-label">Foto Pegawai (Opsional)</label>
+                        <input type="file"
+                               name="foto"
+                               class="form-control"
+                               accept="image/*">
+                        <small class="text-muted">
+                            JPG, JPEG, PNG • Maks 2MB
+                        </small>
+                    </div>
 
                     <div class="mb-3">
                         <label class="form-label">Pendidikan</label>
@@ -110,9 +123,9 @@
                 <label class="form-label">Akun Login (Opsional)</label>
                 <select name="id_akun" class="form-select">
                     <option value="">Tidak terhubung</option>
-                    @foreach ($akun as $akun)
-                        <option value="{{ $akun->id_akun }}">
-                            {{ $akun->username }}
+                    @foreach ($akun as $a)
+                        <option value="{{ $a->id_akun }}">
+                            {{ $a->username }}
                         </option>
                     @endforeach
                 </select>
