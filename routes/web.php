@@ -4,6 +4,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\BarangController;
 use App\Http\Controllers\PegawaiController;
+use App\Models\Pegawai;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -29,9 +30,7 @@ Route::get('/admin/profil_edit', [AdminController::class, 'profil_edit'])->name(
 
 Route::resource('/admin/akun', AkunController::class);
 
-Route::get('/admin/pegawai', [PegawaiController::class, 'pegawai'])->name('admin.pegawai');
-Route::get('/admin/pegawai_tambah', [PegawaiController::class, 'pegawai_tambah'])->name('admin.pegawai_tambah');
-Route::get('/admin/pegawai_edit', [PegawaiController::class, 'pegawai_edit'])->name('admin.pegawai_edit');
+Route::resource('/admin/pegawai', PegawaiController::class);
 
 Route::get('/admin/barang', [BarangController::class, 'barang'])->name('admin.barang');
 Route::get('/admin/barang_tambah', [BarangController::class, 'barang_tambah'])->name('admin.barang_tambah');

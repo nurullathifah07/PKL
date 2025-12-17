@@ -118,9 +118,9 @@
                                     <a class="dropdown-item" href="{{ url('login') }}"><i class="fa fa-power-off"></i> Logout</a>
                             </ul>
                         </li>
-                        </ul>
-                    </div>
-                </nav>
+                    </ul>
+                </div>
+            </nav>
             </div>
             <div class="sidebar">
                 <div class="scrollbar-inner sidebar-wrapper">
@@ -151,7 +151,7 @@
                                 <p>Akun</p>
                             </a>
                         </li>
-                        <li class="nav-item {{ Request::routeIs('admin.pegawai') ? 'active' : '' }}">
+                        <li class="nav-item {{ Request::routeIs('admin.pegawai.index') ? 'active' : '' }}">
                             <a href="{{ url('admin/pegawai') }}">
                                 <i class="bi bi-person-rolodex" style="font-size: 18px;"></i>
                                 <p>Data Pegawai</p>
