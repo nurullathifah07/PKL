@@ -4,53 +4,71 @@
 
 @section('content')
 
-<div class="card">
-    <div class="card-header">
-        <h5 class="card-title">Form Edit Barang</h5>
-    </div>
+<h4 class="page-title">Edit Barang</h4>
+<hr>
+
+<div class="card shadow">
     <div class="card-body">
-        <form action="{{ route('admin.barang') }}" method="POST">
+
+        <form action="{{ route('barang.update', $barang->id_barang) }}" method="POST">
             @csrf
+            @method('PUT')
 
+            {{-- KODE --}}
             <div class="mb-3">
-                <label for="kode_barang" class="form-label">Kode Barang</label>
-                <input type="text" class="form-control" id="kode_barang" name="kode_barang" value="{{ old('kode_barang') }}" placeholder="Contoh: 4.01.03.996.999" required>
-                @error('kode_barang')
-                    <div class="text-danger mt-1">{{ $message }}</div>
-                @enderror
+                <label>Kode Barang</label>
+                <input type="text" name="kode_barang" class="form-control"
+                       value="{{ old('kode_barang', $barang->kode_barang) }}" required>
             </div>
 
+            {{-- NAMA --}}
             <div class="mb-3">
-                <label for="nama_barang" class="form-label">Nama Barang</label>
-                <input type="text" class="form-control" id="nama_barang" name="nama_barang" value="{{ old('nama_barang') }}" placeholder="Contoh: Pen Kenko K.1 Hitam" required>
-                @error('nama_barang')
-                    <div class="text-danger mt-1">{{ $message }}</div>
-                @enderror
+                <label>Nama Barang</label>
+                <input type="text" name="nama_barang" class="form-control"
+                       value="{{ old('nama_barang', $barang->nama_barang) }}" required>
             </div>
 
+            {{-- SATUAN --}}
             <div class="mb-3">
-                <label for="satuan" class="form-label">Satuan</label>
-                <input type="text" class="form-control" id="satuan" name="satuan" value="{{ old('satuan') }}" placeholder="Contoh: Buah, Lusin, Kotak" required>
-                @error('satuan')
-                    <div class="text-danger mt-1">{{ $message }}</div>
-                @enderror
+                <label>Satuan</label>
+                <select name="satuan" class="form-select" required>
+                    <option value="buah" {{ $barang->satuan == 'buah' ? 'selected' : '' }}>Buah</option>
+                    <option value="box"  {{ $barang->satuan == 'box' ? 'selected' : '' }}>Box</option>
+                    <option value="rim"  {{ $barang->satuan == 'rim' ? 'selected' : '' }}>Rim</option>
+                </select>
             </div>
 
+            {{-- STOK MINIMAL --}}
             <div class="mb-3">
-                <label for="stok_minimal" class="form-label">Stok Minimal</label>
-                <input type="number" class="form-control" id="stok_minimal" name="stok_minimal" value="{{ old('stok_minimal') }}" placeholder="Contoh: 6" required min="0">
-                <small class="form-text text-muted">Stok minimal sebagai batas pemberitahuan jika barang mulai habis.</small>
-                @error('stok_minimal')
-                    <div class="text-danger mt-1">{{ $message }}</div>
-                @enderror
+                <label>Stok Minimal</label>
+                <input type="number" name="stok_minimal" class="form-control"
+                       value="{{ old('stok_minimal', $barang->stok_minimal) }}" min="0" required>
             </div>
+
+            {{-- STOK (EDITABLE) --}}
+            <div class="mb-3">
+                <label>Stok Saat Ini</label>
+                <input type="number" name="stok" class="form-control"
+                       value="{{ old('stok', $barang->stok) }}" min="0">
+                <small class="text-muted">
+                    Boleh dikosongkan (stok tidak berubah)
+                </small>
+            </div>
+
+            <hr>
+
             <div class="text-center">
-                <button type="submit" class="btn btn-primary me-2">Update</button>
-                <a href="{{ route('admin.barang') }}" class="btn btn-secondary">Batal</a>
+                <button class="btn btn-primary">
+                    Update
+                </button>
+                <a href="{{ route('barang.index') }}" class="btn btn-secondary">
+                    Batal
+                </a>
             </div>
+
         </form>
+
     </div>
 </div>
 
 @endsection
-
