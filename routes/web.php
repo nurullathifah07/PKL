@@ -3,8 +3,10 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\PegawaiController;
 use App\Models\Barang;
+use App\Models\BarangMasuk;
 use App\Models\Pegawai;
 use Illuminate\Support\Facades\Route;
 
@@ -36,9 +38,8 @@ Route::resource('/admin/pegawai', PegawaiController::class);
 //Admin//Barang
 Route::resource('/admin/barang', BarangController::class);
 
-Route::get('/admin/barang_masuk', [AdminController::class, 'barang_masuk'])->name('admin.barang_masuk');
-Route::get('/admin/barang_masuk_tambah', [AdminController::class, 'barang_masuk_tambah'])->name('admin.barang_masuk_tambah');
-Route::get('/admin/barang_masuk_edit', [AdminController::class, 'barang_masuk_edit'])->name('admin.barang_masuk_edit');
+//Admin//Barang Masuk
+Route::resource('/admin/barang_masuk', BarangMasukController::class);
 
 Route::get('/admin/barang_keluar', [AdminController::class, 'barang_keluar'])->name('admin.barang_keluar');
 Route::get('/admin/barang_keluar_tambah', [AdminController::class, 'barang_keluar_tambah'])->name('admin.barang_keluar_tambah');

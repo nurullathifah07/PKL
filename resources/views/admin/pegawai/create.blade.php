@@ -51,6 +51,24 @@
                     </div>
 
                     <div class="mb-3">
+                        <label class="form-label">Subbagian / Seksi</label>
+                        <input type="text"
+                            name="subbagian"
+                            class="form-control @error('subbagian') is-invalid @enderror"
+                            value="{{ old('subbagian') }}"
+                            placeholder="Contoh: Umum, Statistik Sosial, Neraca">
+
+                        <small class="text-muted">
+                            Opsional — diisi jika pegawai memiliki subbagian/seksi
+                        </small>
+
+                        @error('subbagian')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+
+                    <div class="mb-3">
                         <label class="form-label">Golongan Akhir</label>
                         <input type="text" name="golongan_akhir"
                                class="form-control"

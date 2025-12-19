@@ -13,7 +13,7 @@
     </div>
 
     <div class="card-body">
-        {{-- ⚠️ tambahkan enctype --}}
+
         <form action="{{ route('pegawai.update', $pegawai->id_pegawai) }}"
               method="POST"
               enctype="multipart/form-data">
@@ -22,7 +22,7 @@
             @method('PUT')
 
             <div class="row">
-                {{-- KIRI --}}
+
                 <div class="col-md-6">
 
                     {{-- NAMA --}}
@@ -60,6 +60,15 @@
                                required>
                     </div>
 
+                    {{-- SUBBAGIAN --}}
+                    <div class="mb-3">
+                        <label class="form-label">Subbagian / Seksi</label>
+                        <input type="text"
+                            name="subbagian"
+                            class="form-control"
+                            value="{{ old('subbagian', $pegawai->subbagian) }}">
+                    </div>
+
                     {{-- GOLONGAN --}}
                     <div class="mb-3">
                         <label class="form-label">Golongan Akhir</label>
@@ -70,7 +79,6 @@
 
                 </div>
 
-                {{-- KANAN --}}
                 <div class="col-md-6">
 
                     {{-- FOTO --}}

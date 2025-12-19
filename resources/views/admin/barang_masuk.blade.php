@@ -27,11 +27,12 @@
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
-                                <th>Tanggal Masuk</th>
+                                <th>Tanggal Pembelian</th>
                                 <th>Nama Barang</th>
                                 <th>Jumlah Barang</th>
                                 <th>Satuan Barang</th>
                                 <th>Harga Satuan (Rp)</th>
+                                <th>Total Harga (Rp)</th>
                                 <th style="width: 10%">Aksi</th>
                             </tr>
                         </thead>
@@ -44,6 +45,7 @@
                                 <td>12</td>
                                 <td>Buah</td>
                                 <td>12.000</td>
+                                <td>144.000</td>
                                 <td>
                                     <div class="form-button-action">
                                         {{-- Tombol Edit --}}
@@ -66,6 +68,7 @@
                                 <td>8</td>
                                 <td>Buah</td>
                                 <td>5.500</td>
+                                <td>44.000</td>
                                 <td>
                                     <div class="form-button-action">
                                         <a href="{{ url('admin/barang_masuk_edit') }}">

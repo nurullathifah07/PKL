@@ -34,6 +34,7 @@
                                 <th>NIP</th>
                                 <th>Nama Pegawai</th>
                                 <th>Jabatan</th>
+                                <th>Subbagian/Seksi</th>
                                 <th>Username</th>
                                 <th style="width: 12%">Aksi</th>
                             </tr>
@@ -62,6 +63,7 @@
                                     <td>{{ $p->nip }}</td>
                                     <td>{{ $p->nama_pegawai }}</td>
                                     <td>{{ $p->jabatan }}</td>
+                                    <td>{{ $p->subbagian?? '-' }}</td>
                                     <td>{{ $p->akun->username ?? '-' }}</td>
 
                                     {{-- AKSI --}}

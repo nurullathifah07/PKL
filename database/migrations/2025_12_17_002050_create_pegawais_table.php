@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('nip')->unique();
             $table->string('nama_pegawai');
             $table->string('jabatan');
+            $table->string('subbagian')->nullable();
             $table->string('golongan_akhir');
             $table->string('pendidikan');
             $table->string('tempat_lahir');

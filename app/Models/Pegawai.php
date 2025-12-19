@@ -18,6 +18,7 @@ class Pegawai extends Model
         'nip',
         'nama_pegawai',
         'jabatan',
+        'subbagian',
         'golongan_akhir',
         'pendidikan',
         'tempat_lahir',

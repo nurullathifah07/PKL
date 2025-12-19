@@ -48,6 +48,10 @@
                     <td>: {{ $pegawai->nip_bps ?? '-' }}</td>
                 </tr>
                 <tr>
+                    <th>Subbagian/Seksi</th>
+                    <td>: {{ $pegawai->subbagian ?? '-' }}</td>
+                </tr>
+                <tr>
                     <th>Golongan</th>
                     <td>: {{ $pegawai->golongan_akhir }}</td>
                 </tr>
