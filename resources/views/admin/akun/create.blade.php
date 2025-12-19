@@ -4,6 +4,8 @@
 
 @section('content')
 
+<h4 class="page-title">Tambah Akun</h4>
+
 <div class="card">
     <div class="card-header">
         <h5 class="card-title">Form Tambah Akun</h5>

@@ -5,9 +5,11 @@
 @section('content')
 
 <h4 class="page-title">Edit Barang</h4>
-<hr>
 
 <div class="card shadow">
+    <div class="card-header">
+        <h5 class="card-title mb-0">Form Edit Data Barang</h5>
+    </div>
     <div class="card-body">
 
         <form action="{{ route('barang.update', $barang->id_barang) }}" method="POST">

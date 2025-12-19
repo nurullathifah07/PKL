@@ -4,9 +4,11 @@
 
 @section('content')
 
+<h4 class="page-title">Edit Barang Masuk</h4>
+
 <div class="card shadow mb-4">
     <div class="card-header">
-        <h5 class="m-0 font-weight-bold text-primary">Edit Barang Masuk</h5>
+        <h5 class="card-title mb-0">Form Edit Barang Masuk</h5>
     </div>
 
     <div class="card-body">
@@ -60,7 +62,7 @@
 
             <div class="text-center">
                 <button class="btn btn-primary">
-                    <i class="la la-save"></i> Update
+                    Update
                 </button>
                 <a href="{{ route('barang_masuk.index') }}" class="btn btn-secondary">
                     Batal

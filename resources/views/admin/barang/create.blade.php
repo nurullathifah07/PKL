@@ -5,11 +5,10 @@
 @section('content')
 
 <h4 class="page-title">Tambah Barang</h4>
-<hr>
 
 <div class="card shadow">
     <div class="card-header">
-        <h5 class="card-title mb-0">Form Tambah Data Barang</h5>
+        <h5 class="card-title mb-0">Form Tambah Barang</h5>
     </div>
 
     <div class="card-body">

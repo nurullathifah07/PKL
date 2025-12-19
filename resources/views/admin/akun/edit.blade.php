@@ -4,6 +4,8 @@
 
 @section('content')
 
+<h4 class="page-title">Edit Akun</h4>
+
 <div class="card">
     <div class="card-header">
         <h5 class="card-title">Form Edit Akun</h5>

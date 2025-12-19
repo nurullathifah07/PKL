@@ -5,7 +5,6 @@
 @section('content')
 
 <h4 class="page-title">Tambah Data Pegawai</h4>
-<hr>
 
 <div class="card shadow mb-4">
     <div class="card-header py-3">
