@@ -1,99 +1,77 @@
 @extends('layout.admin_layout')
 
-@section('title', 'Daftar Pembelian Barang')
+@section('title', 'Daftar Barang Keluar')
 
 @section('content')
 
 <h4 class="page-title">Daftar Barang Keluar</h4>
 
-{{-- TABEL DAFTAR AKUN --}}
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-header">
-                <div class="d-flex align-items-center">
-                    <h4 class="card-title">Daftar Barang Keluar</h4>
+            <div class="card-header d-flex align-items-center">
+                <h4 class="card-title">Daftar Barang Keluar</h4>
 
-                    {{-- Tombol Tambah Akun --}}
-                    <a href="{{ url('admin/barang_keluar_tambah') }}" class="btn btn-primary btn-round ml-auto">
-                        <i class="la la-plus"></i> Tambah Barang Keluar
-                    </a>
-                </div>
+                <a href="{{ route('barang_keluar.create') }}"
+                   class="btn btn-primary btn-round ml-auto">
+                    <i class="la la-plus"></i> Tambah Barang Keluar
+                </a>
             </div>
 
             <div class="card-body">
                 <div class="table-responsive">
-                    <table id="add-row" class="display table table-hover">
+                    <table class="table table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
-                                <th>Nama Pegawai</th>
-                                <th>Subbagian/Seksi</th>
-                                <th>Tanggal Keluar</th>
-                                <th>Nama Barang</th>
-                                <th>Jumlah Barang</th>
+                                <th>Tanggal</th>
+                                <th>Nama Pemohon</th>
                                 <th>Keterangan</th>
-                                <th style="width: 10%">Aksi</th>
+                                <th style="width: 15%">Aksi</th>
                             </tr>
                         </thead>
                         <tbody class="text-center">
-                            {{-- Contoh Baris Data Statis --}}
-                            <tr>
-                                <td>1</td>
-                                <td>Hizrian</td>
-                                <td>2 Desember 2025</td>
-                                <td>Pen Kenko K.1 Hitam</td>
-                                <td>1</td>
-                                <td></td>
-                                <td>
-                                    <div class="form-button-action">
-                                        {{-- Tombol Edit --}}
-                                        <a href="{{ url('admin/barang_keluar_edit') }}">
-                                        <button type="button" data-toggle="tooltip" title="Edit Barang Keluar" class="btn btn-link btn-simple-primary">
-                                            <i class="la la-edit"></i>
-                                        </button>
+                            @forelse ($barangKeluar as $bk)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>
+                                        {{ \Carbon\Carbon::parse($bk->tanggal_keluar)->format('d M Y') }}
+                                    </td>
+                                    <td>{{ $bk->nama_pemohon }}</td>
+                                    <td>{{ $bk->keterangan }}</td>
+                                    <td>
+                                        <a href="{{ route('barang_keluar.show', $bk->id_barang_keluar) }}"
+                                           class="btn btn-info btn-sm"
+                                           title="Lihat Surat">
+                                            <i class="la la-eye"></i>
                                         </a>
-                                        {{-- Tombol Hapus (Delete) --}}
-                                        <button type="button" data-toggle="tooltip" title="Hapus Barang Keluar" class="btn btn-link btn-simple-danger">
-                                            <i class="la la-times"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>1</td>
-                                <td>M.Otto</td>
-                                <td>2 Desember 2025</td>
-                                <td>Pen Kenko K.1 Biru</td>
-                                <td>1</td>
-                                <td></td>
-                                <td>
-                                    <div class="form-button-action">
-                                        <button type="button" data-toggle="tooltip" title="Edit Barang Keluar" class="btn btn-link btn-simple-primary">
-                                            <i class="la la-edit"></i>
-                                        </button>
-                                        <button type="button" data-toggle="tooltip" title="Hapus Barang Keluar" class="btn btn-link btn-simple-danger">
-                                            <i class="la la-times"></i>
-                                        </button>
-                                    </div>
-                                </td>
-                            </tr>
-                            {{-- END Contoh Baris Data --}}
 
-                            {{-- Di sinilah Anda akan melakukan looping data dari database menggunakan @foreach --}}
+                                        <form action="{{ route('barang_keluar.destroy', $bk->id_barang_keluar) }}"
+                                              method="POST"
+                                              class="d-inline"
+                                              onsubmit="return confirm('Yakin ingin menghapus surat ini?')">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button class="btn btn-danger btn-sm" title="Hapus">
+                                                <i class="la la-trash"></i>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="5" class="text-center">
+                                        Data belum tersedia
+                                    </td>
+                                </tr>
+                            @endforelse
                         </tbody>
                     </table>
                 </div>
             </div>
+
         </div>
     </div>
 </div>
 
-
-@endsection
-
-@section('scripts')
-    <script>
-        // ...
-    </script>
 @endsection

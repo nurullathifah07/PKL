@@ -1,65 +1,97 @@
 @extends('layout.admin_layout')
 
-@section('title', 'Tambah Daftar Barang Keluar')
+@section('title', 'Tambah Barang Keluar')
 
 @section('content')
 
-<div class="card shadow mb-4">
-    <div class="card-header py-3">
-        <h6 class="m-0 font-weight-bold text-primary">Tambah Barang Keluar Baru</h6>
+<div class="card shadow">
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">Tambah Barang Keluar</h5>
     </div>
+
     <div class="card-body">
-        <form action="proses_tambah_barang_keluar.php" method="POST">
 
-            <div class="row mb-3">
-                <label for="namaPegawai" class="col-sm-3 col-form-label">Nama Pegawai <span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                    <select class="form-select" id="namaPegawai" name="nama_pegawai" required>
-                        <option value="" disabled selected>-- Pilih Pegawai --</option>
-                        <option value="Hizrian">Hizrian</option>
-                        <option value="M.Otto">M.Otto</option>
-                        <option value="Fulan">Fulan</option>
-                    </select>
+        @if(session('error'))
+            <div class="alert alert-danger">
+                {{ session('error') }}
+            </div>
+        @endif
+
+        <form action="{{ route('barang_keluar.store') }}" method="POST">
+            @csrf
+
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <label>Tanggal Keluar</label>
+                    <input type="date" name="tanggal_keluar" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Nama Pemohon</label>
+                    <input type="text" name="nama_pemohon" class="form-control" required>
+                </div>
+
+                <div class="col-md-4 mb-3">
+                    <label>Keterangan</label>
+                    <input type="text" name="keterangan" class="form-control">
                 </div>
             </div>
 
-            <div class="row mb-3">
-                <label for="namaBarang" class="col-sm-3 col-form-label">Nama Barang <span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                    <select class="form-select" id="namaBarang" name="nama_barang" required>
-                        <option value="" disabled selected>-- Pilih Barang --</option>
-                        <option value="Pen Kenko K.1 Hitam">Pen Kenko K.1 Hitam (Stok: 50)</option>
-                        <option value="Pen Kenko K.1 Biru">Pen Kenko K.1 Biru (Stok: 35)</option>
-                        <option value="Kertas HVS A4">Kertas HVS A4 (Stok: 10)</option>
-                    </select>
-                </div>
-            </div>
+            <hr>
 
-            <div class="row mb-3">
-                <label for="jumlahBarang" class="col-sm-3 col-form-label">Jumlah Barang <span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                    <input type="number" class="form-control" id="jumlahBarang" name="jumlah_barang" min="1" required placeholder="Masukkan jumlah barang yang dikeluarkan">
-                </div>
-            </div>
+            <h5>Daftar Barang</h5>
 
-            <div class="row mb-3">
-                <label for="tanggalKeluar" class="col-sm-3 col-form-label">Tanggal Keluar <span class="text-danger">*</span></label>
-                <div class="col-sm-9">
-                    <input type="date" class="form-control" id="tanggalKeluar" name="tanggal_keluar" value="<?php echo date('Y-m-d'); ?>" required>
-                </div>
-            </div>
+            <table class="table table-bordered" id="tabel-barang">
+                <thead class="text-center">
+                    <tr>
+                        <th>Barang</th>
+                        <th width="120">Jumlah</th>
+                        <th width="80">Aksi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="row-barang">
+                        <td>
+                            <select name="barang[0][id_barang]" class="form-control" required>
+                                <option value="">-- Pilih Barang --</option>
+                                @foreach($barang as $b)
+                                    <option value="{{ $b->id_barang }}">
+                                        {{ $b->nama_barang }} (stok: {{ $b->stok }})
+                                    </option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td>
+                            <input type="number"
+                                   name="barang[0][jumlah_keluar]"
+                                   class="form-control"
+                                   min="1"
+                                   required>
+                        </td>
+                        <td class="text-center">
+                            <button type="button"
+                                    class="btn btn-danger btn-sm btn-remove"
+                                    disabled>
+                                <i class="la la-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
 
-            <div class="row mb-3">
-                <label for="keterangan" class="col-sm-3 col-form-label">Keterangan (Opsional)</label>
-                <div class="col-sm-9">
-                    <textarea class="form-control" id="keterangan" name="keterangan" rows="3" placeholder="Contoh: Digunakan untuk kebutuhan rapat divisi A"></textarea>
-                </div>
-            </div>
+            <button type="button" class="btn btn-secondary btn-sm" id="tambah-barang">
+                + Tambah Barang
+            </button>
+
+            <hr>
+
             <div class="text-center">
-                <button type="submit" class="btn btn-primary me-2">Simpan</button>
-                <a href="{{ route('admin.barang_keluar') }}" class="btn btn-secondary">Batal</a>
+                <button class="btn btn-primary">Simpan</button>
+                <a href="{{ route('barang_keluar.index') }}" class="btn btn-secondary">
+                    Batal
+                </a>
             </div>
-            </div>
+
         </form>
     </div>
 </div>

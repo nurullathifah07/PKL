@@ -3,6 +3,7 @@
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AkunController;
 use App\Http\Controllers\BarangController;
+use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\PegawaiController;
 use App\Models\Barang;
@@ -10,13 +11,9 @@ use App\Models\BarangMasuk;
 use App\Models\Pegawai;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 
 //Auth
-Route::get('/login', function () {
+Route::get('/', function () {
     return view('auth.login');
 });
 Route::get('/register', function () {
@@ -41,9 +38,8 @@ Route::resource('/admin/barang', BarangController::class);
 //Admin//Barang Masuk
 Route::resource('/admin/barang_masuk', BarangMasukController::class);
 
-Route::get('/admin/barang_keluar', [AdminController::class, 'barang_keluar'])->name('admin.barang_keluar');
-Route::get('/admin/barang_keluar_tambah', [AdminController::class, 'barang_keluar_tambah'])->name('admin.barang_keluar_tambah');
-Route::get('/admin/barang_keluar_edit', [AdminController::class, 'barang_keluar_edit'])->name('admin.barang_keluar_edit');
+//Admin//Barang Keluar
+Route::resource('/admin/barang_keluar', BarangKeluarController::class);
 
 
 Route::get('/admin/notifikasi', [AdminController::class, 'notifikasi'])->name('admin.notifikasi');
