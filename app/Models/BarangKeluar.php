@@ -13,7 +13,8 @@ class BarangKeluar extends Model
     protected $fillable = [
         'tanggal_keluar',
         'nama_pemohon',
-        'keterangan'
+        'keterangan',
+        'mengetahui'
     ];
 
     // 1 surat → banyak barang

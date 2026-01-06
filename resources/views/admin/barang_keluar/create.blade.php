@@ -21,19 +21,35 @@
             @csrf
 
             <div class="row">
-                <div class="col-md-4 mb-3">
+                <div class="col-md-3 mb-3">
                     <label>Tanggal Keluar</label>
-                    <input type="date" name="tanggal_keluar" class="form-control" required>
+                    <input type="date"
+                           name="tanggal_keluar"
+                           class="form-control"
+                           required>
                 </div>
 
-                <div class="col-md-4 mb-3">
+                <div class="col-md-3 mb-3">
                     <label>Nama Pemohon</label>
-                    <input type="text" name="nama_pemohon" class="form-control" required>
+                    <input type="text"
+                           name="nama_pemohon"
+                           class="form-control"
+                           required>
                 </div>
 
-                <div class="col-md-4 mb-3">
+                <div class="col-md-3 mb-3">
                     <label>Keterangan</label>
-                    <input type="text" name="keterangan" class="form-control">
+                    <input type="text"
+                           name="keterangan"
+                           class="form-control">
+                </div>
+
+                <div class="col-md-3 mb-3">
+                    <label>Mengetahui</label>
+                    <input type="text"
+                           name="mengetahui"
+                           class="form-control"
+                           value="Badal Imamuddin">
                 </div>
             </div>
 
@@ -52,7 +68,9 @@
                 <tbody>
                     <tr class="row-barang">
                         <td>
-                            <select name="barang[0][id_barang]" class="form-control" required>
+                            <select name="barang[0][id_barang]"
+                                    class="form-control"
+                                    required>
                                 <option value="">-- Pilih Barang --</option>
                                 @foreach($barang as $b)
                                     <option value="{{ $b->id_barang }}">
@@ -79,15 +97,20 @@
                 </tbody>
             </table>
 
-            <button type="button" class="btn btn-secondary btn-sm" id="tambah-barang">
+            <button type="button"
+                    class="btn btn-secondary btn-sm"
+                    id="tambah-barang">
                 + Tambah Barang
             </button>
 
             <hr>
 
             <div class="text-center">
-                <button class="btn btn-primary">Simpan</button>
-                <a href="{{ route('barang_keluar.index') }}" class="btn btn-secondary">
+                <button type="submit" class="btn btn-primary">
+                    Simpan
+                </button>
+                <a href="{{ route('barang_keluar.index') }}"
+                   class="btn btn-secondary">
                     Batal
                 </a>
             </div>

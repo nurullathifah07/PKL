@@ -13,7 +13,8 @@ return new class extends Migration
 
             $table->date('tanggal_keluar');
             $table->string('nama_pemohon');
-            $table->text('keterangan')->nullable(); // diperbaiki
+            $table->string('keterangan')->nullable();
+            $table->string('mengetahui')->nullable();
 
             $table->timestamps();
         });

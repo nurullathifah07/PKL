@@ -4,67 +4,96 @@
 
 @section('content')
 
-<div class="card shadow" id="area-print">
-    <div class="card-header bg-primary text-white text-center">
-        <h5 class="mb-0">SURAT BARANG KELUAR</h5>
+<div class="card bg-white" id="area-print">
+    <div class="card-body text-dark" style="font-family: 'Times New Roman'; font-size: 14px;">
+
+        {{-- HEADER --}}
+        <table width="100%">
+            <tr>
+                <td width="10%" align="center">
+                    <img src="{{ asset('assets/img/logo BPS.png') }}" width="60">
+                </td>
+                <td width="100%">
+                    <strong style="font-size:15px;">BADAN PUSAT STATISTIK</strong><br>
+                    <strong style="font-size:15px;">KABUPATEN BANJAR</strong>
+                </td>
+            </tr>
+        </table>
+
+        <br>
+        <h5 class="text-center"><u>PERMINTAAN ATK / ARK</u></h5>
     </div>
 
-    <div class="card-body">
+    <br>
 
-        {{-- HEADER INFO --}}
-        <table class="table table-borderless mb-4">
+        {{-- INFO --}}
+        <table width="100%">
             <tr>
-                <td width="150">Tanggal Keluar</td>
-                <td width="10">:</td>
-                <td>{{ \Carbon\Carbon::parse($barangKeluar->tanggal_keluar)->format('d-m-Y') }}</td>
+                <td width="25%">Tujuan</td>
+                <td width="2%">:</td>
+                <td>Kepada Yth. Kasubbag Umum</td>
             </tr>
             <tr>
-                <td>Nama Pemohon</td>
-                <td>:</td>
-                <td>{{ $barangKeluar->nama_pemohon }}</td>
-            </tr>
-            <tr>
-                <td>Keterangan</td>
+                <td>Dari Subbagian/Seksi</td>
                 <td>:</td>
                 <td>{{ $barangKeluar->keterangan ?? '-' }}</td>
             </tr>
         </table>
 
+        <br>
+
         {{-- TABEL BARANG --}}
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead class="table-light text-center">
-                    <tr>
-                        <th width="50">No</th>
-                        <th>Nama Barang</th>
-                        <th width="120">Jumlah Keluar</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($barangKeluar->details as $i => $details)
-                        <tr>
-                            <td class="text-center">{{ $i + 1 }}</td>
-                            <td>{{ $details->barang->nama_barang }}</td>
-                            <td class="text-center">{{ $details->jumlah_keluar }}</td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+        <table width="100%" border="1" cellpadding="6" cellspacing="0">
+            <thead>
+                <tr class="text-center">
+                    <th width="5%">No<br>(1)</th>
+                    <th width="15%">Banyaknya<br>(2)</th>
+                    <th>Nama Barang<br>(3)</th>
+                    <th width="20%">Keterangan<br>(5)</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($barangKeluar->details as $i => $d)
+                <tr>
+                    <td class="text-center">{{ $i+1 }}</td>
+                    <td class="text-center">{{ $d->jumlah_keluar }}</td>
+                    <td>{{ $d->barang->nama_barang }}</td>
+                    <td></td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+
+        <table width="100%" style="margin-top:15px;">
+            <tr>
+                <td width="40%"></td>
+                <td width="40%" align="center">
+                    Martapura, {{ \Carbon\Carbon::parse($barangKeluar->tanggal_keluar)->format('d-m-Y') }}
+                </td>
+            </tr>
+        </table>
+
+        <br>
 
         {{-- TANDA TANGAN --}}
-        <div class="row mt-5">
-            <div class="col-md-6 text-center">
-                <p>Mengetahui,</p>
-                <br><br><br>
-                <p><u>___________________</u></p>
-            </div>
-            <div class="col-md-6 text-center">
-                <p>Pemohon,</p>
-                <br><br><br>
-                <p><u>{{ $barangKeluar->nama_pemohon }}</u></p>
-            </div>
-        </div>
+        <table width="100%">
+            <tr>
+                <td width="50%" align="center">
+                    Yang menerima,
+                    <div style="height:70px;"></div>
+                    <strong><u>{{ $barangKeluar->nama_pemohon }}</u></strong><br>
+                    NIP.
+                </td>
+
+                <td width="50%" align="center">
+                    Mengetahui<br>
+                    Kepala Subbagian Umum
+                    <div style="height:65px;"></div>
+                    <strong><u>Badal Imamuddin</u></strong><br>
+                    NIP. 198xxxxxxxx
+                </td>
+            </tr>
+        </table>
 
     </div>
 </div>
@@ -79,26 +108,43 @@
     </a>
 </div>
 
-{{-- CSS PRINT --}}
+{{-- PRINT STYLE --}}
 <style>
 @media print {
+
     body * {
         visibility: hidden;
     }
-
     #area-print, #area-print * {
         visibility: visible;
     }
 
-    #area-print {
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
+    @page {
+        size: A4 portrait;
+        margin: 0;
     }
 
-    .no-print {
-        display: none;
+    #area-print {
+        visibility: visible;
+        position: static;
+        width: 210mm;
+        height: 170mm;
+
+        padding: 15mm;
+        box-sizing: border-box;
+
+        overflow: hidden;
+        page-break-after: cut;
+    }
+
+    .no-print, .main-header, .sidebar, .footer, .btn {
+        display: none !important;
+    }
+
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
     }
 }
 </style>
