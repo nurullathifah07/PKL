@@ -21,6 +21,16 @@
             <div class="row">
                 <div class="col-md-6">
 
+                    {{-- STATUS PEGAWAI --}}
+                    <div class="mb-3">
+                        <label class="form-label">Status Pegawai</label>
+                        <select name="status_pegawai" class="form-select" required>
+                            <option value="">Pilih</option>
+                            <option value="PNS" {{ old('status_pegawai') == 'PNS' ? 'selected' : '' }}>PNS</option>
+                            <option value="Non PNS" {{ old('status_pegawai') == 'Non PNS' ? 'selected' : '' }}>Non PNS</option>
+                        </select>
+                    </div>
+
                     <div class="mb-3">
                         <label class="form-label">Nama Pegawai</label>
                         <input type="text" name="nama_pegawai"
@@ -32,7 +42,7 @@
                         <label class="form-label">NIP</label>
                         <input type="text" name="nip"
                                class="form-control"
-                               value="{{ old('nip') }}" required>
+                               value="{{ old('nip') }}">
                     </div>
 
                     <div class="mb-3">
@@ -53,19 +63,13 @@
                         <label class="form-label">Subbagian / Seksi</label>
                         <input type="text"
                             name="subbagian"
-                            class="form-control @error('subbagian') is-invalid @enderror"
+                            class="form-control"
                             value="{{ old('subbagian') }}"
                             placeholder="Contoh: Umum, Statistik Sosial, Neraca">
-
                         <small class="text-muted">
                             Opsional — diisi jika pegawai memiliki subbagian/seksi
                         </small>
-
-                        @error('subbagian')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
                     </div>
-
 
                     <div class="mb-3">
                         <label class="form-label">Golongan Akhir</label>
@@ -115,8 +119,8 @@
                         <label class="form-label">Jenis Kelamin</label>
                         <select name="jenis_kelamin" class="form-select" required>
                             <option value="">Pilih</option>
-                            <option value="L">Laki-laki</option>
-                            <option value="P">Perempuan</option>
+                            <option value="L" {{ old('jenis_kelamin') == 'L' ? 'selected' : '' }}>Laki-laki</option>
+                            <option value="P" {{ old('jenis_kelamin') == 'P' ? 'selected' : '' }}>Perempuan</option>
                         </select>
                     </div>
 
@@ -127,6 +131,9 @@
                             <option value="Islam">Islam</option>
                             <option value="Kristen">Kristen</option>
                             <option value="Katolik">Katolik</option>
+                            <option value="Hindu">Hindu</option>
+                            <option value="Buddha">Buddha</option>
+                            <option value="Konghucu">Konghucu</option>
                         </select>
                     </div>
 

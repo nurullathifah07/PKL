@@ -17,8 +17,9 @@ return new class extends Migration
             // relasi ke akun
             $table->unsignedBigInteger('id_akun');
 
-            $table->string('nip_bps')->unique();
-            $table->string('nip')->unique();
+            $table->enum('status_pegawai',['PNS','Non PNS']);
+            $table->string('nip_bps')->nullable();
+            $table->string('nip')->nullable();
             $table->string('nama_pegawai');
             $table->string('jabatan');
             $table->string('subbagian')->nullable();
