@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BarangKeluarDetail extends Model
 {
+    use HasFactory;
+
     protected $table = 'barang_keluar_detail';
     protected $primaryKey = 'id_detail_bk';
 
@@ -16,6 +18,21 @@ class BarangKeluarDetail extends Model
         'jumlah_keluar'
     ];
 
+    /**
+     * Relasi ke header bon
+     */
+    public function barangKeluar()
+    {
+        return $this->belongsTo(
+            BarangKeluar::class,
+            'id_barang_keluar',
+            'id_barang_keluar'
+        );
+    }
+
+    /**
+     * Relasi ke master barang
+     */
     public function barang()
     {
         return $this->belongsTo(

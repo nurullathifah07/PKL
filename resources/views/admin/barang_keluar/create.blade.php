@@ -21,35 +21,35 @@
             @csrf
 
             <div class="row">
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                     <label>Tanggal Keluar</label>
                     <input type="date"
                            name="tanggal_keluar"
                            class="form-control"
+                           value="{{ date('Y-m-d') }}"
                            required>
                 </div>
 
-                <div class="col-md-3 mb-3">
-                    <label>Nama Pemohon</label>
-                    <input type="text"
-                           name="nama_pemohon"
-                           class="form-control"
-                           required>
+                <div class="col-md-4 mb-3">
+                    <label>Pemohon</label>
+                    <select name="id_pegawai"
+                            class="form-control"
+                            required>
+                        <option value="">-- Pilih Pegawai --</option>
+                        @foreach($pegawai as $p)
+                            <option value="{{ $p->id_pegawai }}">
+                                {{ $p->nama_pegawai }}
+                            </option>
+                        @endforeach
+                    </select>
                 </div>
 
-                <div class="col-md-3 mb-3">
+                <div class="col-md-4 mb-3">
                     <label>Keterangan</label>
                     <input type="text"
                            name="keterangan"
-                           class="form-control">
-                </div>
-
-                <div class="col-md-3 mb-3">
-                    <label>Mengetahui</label>
-                    <input type="text"
-                           name="mengetahui"
                            class="form-control"
-                           value="Badal Imamuddin">
+                           placeholder="Opsional">
                 </div>
             </div>
 
@@ -118,5 +118,31 @@
         </form>
     </div>
 </div>
+
+{{-- SCRIPT TAMBAH BARIS --}}
+<script>
+let index = 1;
+
+document.getElementById('tambah-barang').addEventListener('click', function () {
+    let tbody = document.querySelector('#tabel-barang tbody');
+    let row = document.querySelector('.row-barang').cloneNode(true);
+
+    row.querySelectorAll('select, input').forEach(el => {
+        el.name = el.name.replace(/\[\d+\]/, `[${index}]`);
+        el.value = '';
+    });
+
+    row.querySelector('.btn-remove').disabled = false;
+
+    tbody.appendChild(row);
+    index++;
+});
+
+document.addEventListener('click', function (e) {
+    if (e.target.closest('.btn-remove')) {
+        e.target.closest('tr').remove();
+    }
+});
+</script>
 
 @endsection

@@ -34,28 +34,49 @@
                             @forelse ($barangKeluar as $bk)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+
                                     <td>
                                         {{ \Carbon\Carbon::parse($bk->tanggal_keluar)->format('d M Y') }}
                                     </td>
-                                    <td>{{ $bk->nama_pemohon }}</td>
-                                    <td>{{ $bk->keterangan }}</td>
-                                    <td>
-                                        <a href="{{ route('barang_keluar.show', $bk->id_barang_keluar) }}"
-                                           class="btn btn-info btn-sm"
-                                           title="Lihat Surat">
-                                            <i class="la la-eye"></i>
-                                        </a>
 
-                                        <form action="{{ route('barang_keluar.destroy', $bk->id_barang_keluar) }}"
-                                              method="POST"
-                                              class="d-inline"
-                                              onsubmit="return confirm('Yakin ingin menghapus surat ini?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button class="btn btn-danger btn-sm" title="Hapus">
-                                                <i class="la la-trash"></i>
-                                            </button>
-                                        </form>
+                                    <td>
+                                        {{ $bk->pegawai->nama_pegawai ?? '-' }}
+                                    </td>
+
+                                    <td>{{ $bk->keterangan ?? '-' }}</td>
+
+                                    <td>
+                                        <div class="form-button-action">
+
+                                            {{-- SHOW --}}
+                                            <a href="{{ route('barang_keluar.show', $bk->id_barang_keluar) }}"
+                                               class="btn btn-link btn-info btn-sm"
+                                               title="Detail">
+                                                <i class="la la-eye"></i>
+                                            </a>
+
+                                            {{-- EDIT --}}
+                                            <a href="{{ route('barang_keluar.edit', $bk->id_barang_keluar) }}"
+                                               class="btn btn-link btn-primary btn-sm"
+                                               title="Edit">
+                                                <i class="la la-edit"></i>
+                                            </a>
+
+                                            {{-- DELETE --}}
+                                            <form action="{{ route('barang_keluar.destroy', $bk->id_barang_keluar) }}"
+                                                  method="POST"
+                                                  style="display:inline;">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit"
+                                                        class="btn btn-link btn-danger btn-sm"
+                                                        title="Hapus"
+                                                        onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                                    <i class="la la-times"></i>
+                                                </button>
+                                            </form>
+
+                                        </div>
                                     </td>
                                 </tr>
                             @empty

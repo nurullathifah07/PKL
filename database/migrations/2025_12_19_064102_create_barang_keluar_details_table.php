@@ -9,26 +9,25 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('barang_keluar_detail', function (Blueprint $table) {
+
             $table->id('id_detail_bk');
 
             $table->unsignedBigInteger('id_barang_keluar');
             $table->unsignedBigInteger('id_barang');
 
-            $table->unsignedInteger('jumlah_keluar'); // diperbaiki
+            $table->integer('jumlah_keluar');
 
             $table->timestamps();
 
-            // relasi ke barang_keluar (surat)
             $table->foreign('id_barang_keluar')
                 ->references('id_barang_keluar')
                 ->on('barang_keluar')
                 ->onDelete('cascade');
 
-            // relasi ke barang
             $table->foreign('id_barang')
                 ->references('id_barang')
                 ->on('barang')
-                ->onDelete('cascade');
+                ->onDelete('restrict');
         });
     }
 

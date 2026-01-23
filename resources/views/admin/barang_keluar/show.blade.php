@@ -13,7 +13,7 @@
                 <td width="10%" align="center">
                     <img src="{{ asset('assets/img/logo BPS.png') }}" width="60">
                 </td>
-                <td width="100%">
+                <td width="90%">
                     <strong style="font-size:15px;">BADAN PUSAT STATISTIK</strong><br>
                     <strong style="font-size:15px;">KABUPATEN BANJAR</strong>
                 </td>
@@ -22,9 +22,8 @@
 
         <br>
         <h5 class="text-center"><u>PERMINTAAN ATK / ARK</u></h5>
-    </div>
 
-    <br>
+        <br>
 
         {{-- INFO --}}
         <table width="100%">
@@ -36,7 +35,7 @@
             <tr>
                 <td>Dari Subbagian/Seksi</td>
                 <td>:</td>
-                <td>{{ $barangKeluar->keterangan ?? '-' }}</td>
+                <td>{{ $barangKeluar->pegawai->subbagian ?? '-' }}</td>
             </tr>
         </table>
 
@@ -55,7 +54,7 @@
             <tbody>
                 @foreach($barangKeluar->details as $i => $d)
                 <tr>
-                    <td class="text-center">{{ $i+1 }}</td>
+                    <td class="text-center">{{ $i + 1 }}</td>
                     <td class="text-center">{{ $d->jumlah_keluar }}</td>
                     <td>{{ $d->barang->nama_barang }}</td>
                     <td></td>
@@ -64,9 +63,11 @@
             </tbody>
         </table>
 
-        <table width="100%" style="margin-top:15px;">
+        <br>
+
+        <table width="100%">
             <tr>
-                <td width="40%"></td>
+                <td width="60%"></td>
                 <td width="40%" align="center">
                     Martapura, {{ \Carbon\Carbon::parse($barangKeluar->tanggal_keluar)->format('d-m-Y') }}
                 </td>
@@ -81,17 +82,27 @@
                 <td width="50%" align="center">
                     Yang menerima,
                     <div style="height:70px;"></div>
-                    <strong><u>{{ $barangKeluar->nama_pemohon }}</u></strong><br>
-                    NIP.
+                    <strong>
+                        <u>{{ $barangKeluar->pegawai->nama_pegawai }}</u>
+                    </strong><br>
+                    NIP. {{ $barangKeluar->pegawai->nip ?? '-' }}
                 </td>
 
                 <td width="50%" align="center">
                     Mengetahui<br>
                     Kepala Subbagian Umum
                     <div style="height:65px;"></div>
-                    <strong><u>Badal Imamuddin</u></strong><br>
-                    NIP. 198xxxxxxxx
+
+                    @if($pejabatMengetahui)
+                        <strong>
+                            <u>{{ $pejabatMengetahui->nama_pegawai }}</u>
+                        </strong><br>
+                        NIP. {{ $pejabatMengetahui->nip ?? '-' }}
+                    @else
+                        <em>Pejabat belum ditetapkan</em>
+                    @endif
                 </td>
+
             </tr>
         </table>
 
@@ -115,6 +126,7 @@
     body * {
         visibility: hidden;
     }
+
     #area-print, #area-print * {
         visibility: visible;
     }
@@ -125,19 +137,19 @@
     }
 
     #area-print {
-        visibility: visible;
         position: static;
         width: 210mm;
-        height: 170mm;
-
+        height: auto;
         padding: 15mm;
         box-sizing: border-box;
-
         overflow: hidden;
-        page-break-after: cut;
     }
 
-    .no-print, .main-header, .sidebar, .footer, .btn {
+    .no-print,
+    .main-header,
+    .sidebar,
+    .footer,
+    .btn {
         display: none !important;
     }
 
