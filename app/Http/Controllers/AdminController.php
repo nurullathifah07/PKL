@@ -3,58 +3,44 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Barang;
+use App\Models\BarangMasuk;
+use App\Models\BarangKeluarDetail;
+use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-    //Beranda Admin
-    public function beranda()
+    // ================= BERANDA ADMIN =================
+    public function dashboard()
     {
-        return view('admin.beranda');
-    }
+        // Total barang (item unik)
+        $totalBarang = Barang::count();
 
-    //Profil
-     public function profil()
-    {
-        return view('admin.profil');
-    }
-    public function profil_edit()
-    {
-        return view('admin.profil_edit');
-    }
+        // Total transaksi barang keluar
+        $totalBarangKeluar = BarangKeluarDetail::sum('jumlah_keluar');
 
+        // Total transaksi barang masuk
+        $totalBarangMasuk = BarangMasuk::sum('jumlah_barang');
 
-    //Barang Masuk
-    public function barang_masuk()
-    {
-        return view('admin.barang_masuk');
-    }
-    public function barang_masuk_tambah()
-    {
-        return view('admin.barang_masuk_tambah');
-    }
-    public function barang_masuk_edit()
-    {
-        return view('admin.barang_masuk_edit');
-    }
+        // Stok menipis (misal <= 10)
+        $stokMenipis = Barang::where('stok', '<=', 10)->get();
 
-    //Barang Keluar
-    public function barang_keluar()
-    {
-        return view('admin.barang_keluar');
-    }
-    public function barang_keluar_tambah()
-    {
-        return view('admin.barang_keluar_tambah');
-    }
-    public function barang_keluar_edit()
-    {
-        return view('admin.barang_keluar_edit');
-    }
+        // Rekap pengambilan barang per hari
+        $grafikPengambilan = BarangKeluarDetail::select(
+                DB::raw('DATE(created_at) as tanggal'),
+                DB::raw('SUM(jumlah_keluar) as total')
+            )
+            ->groupBy(DB::raw('DATE(created_at)'))
+            ->orderBy('tanggal', 'desc')
+            ->limit(10)
+            ->get();
 
-    //Notifikasi
-    public function notifikasi()
-    {
-        return view('admin.notifikasi');
+        return view('admin.dashboard', compact(
+            'totalBarang',
+            'totalBarangKeluar',
+            'totalBarangMasuk',
+            'stokMenipis',
+            'grafikPengambilan'
+        ));
     }
-
 }

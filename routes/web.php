@@ -22,7 +22,7 @@ Route::get('/register', function () {
 
 
 //Admin
-Route::get('/admin/beranda', [AdminController::class, 'beranda'])->name('admin.beranda');
+Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 
 Route::get('/admin/profil', [AdminController::class, 'profil'])->name('admin.profil');
 Route::get('/admin/profil_edit', [AdminController::class, 'profil_edit'])->name('admin.profil_edit');

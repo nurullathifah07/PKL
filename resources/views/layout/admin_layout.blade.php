@@ -142,8 +142,8 @@
                     <ul class="nav">
 
                         {{-- BERANDA ADMIN --}}
-                        <li class="nav-item {{ Request::routeIs('admin.beranda') ? 'active' : '' }}">
-                            <a href="{{ url('admin/beranda') }}">
+                        <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
+                            <a href="{{ url('admin/dashboard') }}">
                                 <i class="bi bi-speedometer" style="font-size: 18px;"></i>
                                 <p>Dashboard</p>
                             </a>
