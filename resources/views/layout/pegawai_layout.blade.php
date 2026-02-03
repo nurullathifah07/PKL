@@ -124,7 +124,6 @@
                                     <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
                                         @csrf
                                     </form>
-
                             </ul>
                         </li>
                     </ul>
@@ -149,59 +148,18 @@
                     </div>
                     <ul class="nav">
 
-                        {{-- BERANDA ADMIN --}}
+                        {{-- BERANDA PEGAWAI--}}
                         <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
                             <a href="{{ url('admin/dashboard') }}">
                                 <i class="bi bi-speedometer" style="font-size: 18px;"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
-
-                        {{-- DATA AKUN --}}
-                        <li class="nav-item {{ request()->is('admin/akun*') ? 'active' : '' }}">
-                            <a href="{{ url('admin/akun') }}">
-                                <i class="bi bi-person-fill-add" style="font-size: 18px;"></i>
-                                <p>Akun</p>
-                            </a>
-                        </li>
-
-                        {{-- DATA PEGAWAI --}}
-                        <li class="nav-item {{ request()->is('admin/pegawai*') ? 'active' : '' }}">
-                            <a href="{{ url('admin/pegawai') }}">
-                                <i class="bi bi-person-rolodex" style="font-size: 18px;"></i>
-                                <p>Data Pegawai</p>
-                            </a>
-                        </li>
-
-                        {{-- DATA BARANG --}}
-                        <li class="nav-item {{ request()->is('admin/barang') ? 'active' : '' }}">
-                            <a href="{{ url('admin/barang') }}">
-                                <i class="bi bi-box-seam" style="font-size: 18px;"></i>
-                                <p>Data Barang</p>
-                            </a>
-                        </li>
-
-                        {{-- BARANG MASUK --}}
-                        <li class="nav-item {{ request()->is('admin/barang_masuk*') ? 'active' : '' }}">
-                            <a href="{{ url('admin/barang_masuk') }}">
-                                <i class="bi bi-box-seam-fill" style="font-size: 18px;"></i>
-                                <p>Barang Masuk</p>
-                            </a>
-                        </li>
-
-                        {{-- BARANG KELUAR --}}
-                        <li class="nav-item {{ request()->is('admin/barang_keluar*') ? 'active' : '' }}">
-                            <a href="{{ url('admin/barang_keluar') }}">
-                                <i class="bi bi-dropbox" style="font-size: 18px;"></i>
-                                <p>Barang Keluar</p>
-                            </a>
-                        </li>
-
-                        {{-- NOTIFIKASI --}}
-                        <li class="nav-item {{ Request::routeIs('admin.notifikasi') ? 'active' : '' }}">
-                            <a href="{{ url('admin/notifikasi') }}">
-                                <i class="bi bi-bell" style="font-size: 18px;"></i>
-                                <p>Notifikasi</p>
+                        {{-- # --}}
+                        <li class="nav-item #">
+                            <a href="{{ url('#') }}">
+                                <i class="bi bi-inboxes-fill" style="font-size: 18px;"></i>
+                                <p>Permintaan Barang</p>
                             </a>
                         </li>
                     </ul>

@@ -3,23 +3,23 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Akun extends Model
+class Akun extends Authenticatable
 {
     use HasFactory;
 
-    // Nama tabel
     protected $table = 'akun';
-
-    // Primary key
     protected $primaryKey = 'id_akun';
 
-    // Kolom yang boleh diisi (WAJIB untuk create/update)
     protected $fillable = [
         'username',
         'email',
         'password',
         'level'
+    ];
+
+    protected $hidden = [
+        'password'
     ];
 }
