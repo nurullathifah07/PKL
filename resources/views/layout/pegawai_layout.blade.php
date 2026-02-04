@@ -118,7 +118,7 @@
                                         <div class="u-text">
                                             <h4>{{ Auth::user()->username }}</h4>
                                             <p class="text-muted">{{ Auth::user()->email }}</p>
-                                            <a href="{{ route('profil.index') }}" class="btn btn-rounded btn-danger btn-sm"> Lihat Profil </a>
+                                            <a href="{{ route('profil.index') }}" class="btn btn-rounded btn-danger btn-sm" data-toggle="modal" data-target="#modalProfil"> Lihat Profil </a>
                                         </div>
                                     </div>
                                 </li>
@@ -163,8 +163,8 @@
                     <ul class="nav">
 
                         {{-- BERANDA PEGAWAI--}}
-                        <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
-                            <a href="{{ url('admin/dashboard') }}">
+                        <li class="nav-item {{ Request::routeIs('pegawai.dashboard') ? 'active' : '' }}">
+                            <a href="{{ url('pegawai/dashboard') }}">
                                 <i class="bi bi-speedometer" style="font-size: 18px;"></i>
                                 <p>Dashboard</p>
                             </a>
@@ -216,6 +216,93 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalProfil" tabindex="-1" role="dialog" aria-labelledby="modalProfilLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <!-- HEADER -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalProfilLabel">Profil Pegawai</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <!-- BODY -->
+                <div class="modal-body">
+                    <div class="row">
+
+                        <!-- FOTO + NAMA -->
+                        <div class="col-md-4 text-center border-right">
+                            <img src="{{ asset('storage/' . $pegawai->foto) }}"
+                                class="rounded-circle mb-3"
+                                width="120"
+                                height="120"
+                                style="object-fit:cover;">
+
+                            <h5 class="mb-0">{{ $pegawai->nama_pegawai }}</h5>
+                            <small class="text-muted">{{ $pegawai->jabatan ?? 'Statistis' }}</small>
+                        </div>
+
+                        <!-- DATA -->
+                        <div class="col-md-8">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <th width="40%">NIP</th>
+                                    <td>: {{ $pegawai->nip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>NIP BPS</th>
+                                    <td>: {{ $pegawai->nip_bps }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status Pegawai</th>
+                                    <td>: <span class="badge badge-success">{{ $pegawai->status_pegawai }}</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Subbagian / Seksi</th>
+                                    <td>: {{ $pegawai->subbagian }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Golongan</th>
+                                    <td>: {{ $pegawai->golongan_akhir }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Pendidikan</th>
+                                    <td>: {{ $pegawai->pendidikan }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tempat, Tgl Lahir</th>
+                                    <td>: {{ $pegawai->tempat_lahir }}, {{ $pegawai->tgl_lahir }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Jenis Kelamin</th>
+                                    <td>: {{ $pegawai->jenis_kelamin }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Agama</th>
+                                    <td>: {{ $pegawai->agama }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Username Akun</th>
+                                    <td>: {{ Auth::user()->username }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
