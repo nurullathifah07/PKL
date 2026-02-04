@@ -102,28 +102,38 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{ asset('assets/img/profile.jpg') }}" alt="user-img" width="36" class="img-circle"><span >Hizrian</span></span> </a>
+                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#">
+                                <img src="{{ asset('storage/' . $pegawai->foto) }}"
+                                    class="rounded-circle border"
+                                    style="width:25px; height:25px; object-fit:cover; border-width:1px;">
+                            </a>
                             <ul class="dropdown-menu dropdown-user">
-                                <li>
+                               <li>
                                     <div class="user-box">
-                                        <div class="u-img"><img src="{{ asset('assets/img/profile.jpg') }}" alt="user"></div>
-                                        <div class="u-text">
-                                            <h4>Hizrian</h4>
-                                            <p class="text-muted">hello@themekita.com</p><a href="{{ url('admin/profil') }}" class="btn btn-rounded btn-danger btn-sm">Lihat Profil</a></div>
+                                        <div class="u-img">
+                                            <img src="{{ asset('storage/' . $pegawai->foto) }}"
+                                                alt="user"
+                                                style="width:80px; height:80px; border-radius:50%; object-fit:cover;">
                                         </div>
-                                    </li>
-                                    <div class="dropdown-divider"></div>
+                                        <div class="u-text">
+                                            <h4>{{ Auth::user()->username }}</h4>
+                                            <p class="text-muted">{{ Auth::user()->email }}</p>
+                                            <a href="{{ route('profil.index') }}" class="btn btn-rounded btn-danger btn-sm"> Lihat Profil </a>
+                                        </div>
+                                    </div>
+                                </li>
+                                <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ url('admin/profil_edit') }}"><i class="ti-user"></i> Edit Profil</a>
                                     <a class="dropdown-item" href="#"><i class="ti-settings"></i> Pengaturan</a>
-                                    <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#"
                                         onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                         <i class="fa fa-power-off"></i> Logout
                                     </a>
 
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                                <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
+                                @csrf
+                                </form>
                             </ul>
                         </li>
                     </ul>
@@ -132,20 +142,24 @@
             </div>
             <div class="sidebar">
                 <div class="scrollbar-inner sidebar-wrapper">
+                    @auth
                     <div class="user">
                         <div class="photo">
-                            <img src="{{ asset('assets/img/profile.jpg') }}">
+                            <img src="{{ asset('storage/' . $pegawai->foto) }}">
                         </div>
                         <div class="info">
                             <a aria-expanded="true">
                                 <span>
-                                    Hizrian
-                                    <span class="user-level">Administrator</span>
+                                    {{ Auth::user()->username }}
+                                    <span class="user-level">
+                                        {{ ucfirst(Auth::user()->level) }}
+                                    </span>
                                 </span>
                             </a>
                             <div class="clearfix"></div>
                         </div>
                     </div>
+                    @endauth
                     <ul class="nav">
 
                         {{-- BERANDA PEGAWAI--}}

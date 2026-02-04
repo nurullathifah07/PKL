@@ -101,53 +101,105 @@
                                 </li>
                             </ul>
                         </li>
+                        @auth
                         <li class="nav-item dropdown">
-                            <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#" aria-expanded="false"> <img src="{{ asset('assets/img/profile.jpg') }}" alt="user-img" width="36" class="img-circle"><span >Hizrian</span></span> </a>
+                            <a class="dropdown-toggle profile-pic d-flex align-items-center"
+                            data-toggle="dropdown"
+                            href="#">
+                                <span style="
+                                    width:36px;
+                                    height:36px;
+                                    border-radius:50%;
+                                    background:#4e73df;
+                                    color:#fff;
+                                    display:inline-flex;
+                                    align-items:center;
+                                    justify-content:center;
+                                    font-weight:bold;
+                                    margin-right:8px;
+                                ">
+                                    A
+                                </span>
+                            </a>
+
                             <ul class="dropdown-menu dropdown-user">
                                 <li>
                                     <div class="user-box">
-                                        <div class="u-img"><img src="{{ asset('assets/img/profile.jpg') }}" alt="user"></div>
-                                        <div class="u-text">
-                                            <h4>Hizrian</h4>
-                                            <p class="text-muted">hello@themekita.com</p><a href="{{ url('admin/profil') }}" class="btn btn-rounded btn-danger btn-sm">Lihat Profil</a></div>
+                                        <div class="u-img">
+                                            <div style="
+                                                width:80px;
+                                                height:80px;
+                                                border-radius:50%;
+                                                background:#4e73df;
+                                                color:#fff;
+                                                display:flex;
+                                                align-items:center;
+                                                justify-content:center;
+                                                font-size:32px;
+                                                font-weight:bold;
+                                            ">
+                                                A
+                                            </div>
                                         </div>
-                                    </li>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ url('admin/profil_edit') }}"><i class="ti-user"></i> Edit Profil</a>
-                                    <a class="dropdown-item" href="#"><i class="ti-settings"></i> Pengaturan</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="fa fa-power-off"></i> Logout
-                                    </a>
+                                        <div class="u-text">
+                                            <h4>{{ Auth::user()->username }}</h4>
+                                            <p class="text-muted">{{ Auth::user()->email }}</p>
+                                        </div>
+                                    </div>
+                                </li>
 
-                                    <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                                <div class="dropdown-divider"></div>
 
+                                <a class="dropdown-item" href="#"
+                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-power-off"></i> Logout
+                                </a>
+
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
                             </ul>
                         </li>
+                        @endauth
+
                     </ul>
                 </div>
             </nav>
             </div>
             <div class="sidebar">
                 <div class="scrollbar-inner sidebar-wrapper">
-                    <div class="user">
-                        <div class="photo">
-                            <img src="{{ asset('assets/img/profile.jpg') }}">
-                        </div>
-                        <div class="info">
-                            <a aria-expanded="true">
-                                <span>
-                                    Hizrian
-                                    <span class="user-level">Administrator</span>
-                                </span>
-                            </a>
-                            <div class="clearfix"></div>
+                @auth
+                <div class="user">
+                    <div class="photo">
+                        <div style="
+                            width:42px;
+                            height:42px;
+                            border-radius:50%;
+                            background:#4e73df;
+                            color:#fff;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                            font-weight:bold;
+                        ">
+                            A
                         </div>
                     </div>
-                    <ul class="nav">
+                    <div class="info">
+                        <a aria-expanded="true">
+                            <span>
+                                {{ Auth::user()->username }}
+                                <span class="user-level">
+                                    {{ ucfirst(Auth::user()->level) }}
+                                </span>
+                            </span>
+                        </a>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                @endauth
+
+                <ul class="nav">
 
                         {{-- BERANDA ADMIN --}}
                         <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">

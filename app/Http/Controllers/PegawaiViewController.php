@@ -7,34 +7,36 @@ use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\BarangKeluarDetail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class PegawaiViewController extends Controller
 {
     public function dashboard()
     {
-        // Total barang (item unik)
+        $akun = Auth::user();
+        $pegawai = $akun->pegawai;
+
         $totalBarang = Barang::count();
-
-        // Total transaksi barang keluar
         $totalBarangKeluar = BarangKeluarDetail::sum('jumlah_keluar');
-
-        // Total transaksi barang masuk
         $totalBarangMasuk = BarangMasuk::sum('jumlah_barang');
 
-        // Stok menipis (misal <= 10)
-        $stokMenipis = Barang::where('stok', '<=', 10)->get();
+        $stokMenipis = Barang::where('stok', '<=', 10)
+            ->orderBy('stok', 'asc')
+            ->limit(10)
+            ->get();
 
-        // Rekap pengambilan barang per hari
         $grafikPengambilan = BarangKeluarDetail::select(
                 DB::raw('DATE(created_at) as tanggal'),
                 DB::raw('SUM(jumlah_keluar) as total')
             )
+            ->where('created_at', '>=', now()->subDays(10))
             ->groupBy(DB::raw('DATE(created_at)'))
-            ->orderBy('tanggal', 'desc')
-            ->limit(10)
+            ->orderBy('tanggal', 'asc')
             ->get();
 
         return view('pegawai.dashboard', compact(
+            'akun',
+            'pegawai',
             'totalBarang',
             'totalBarangKeluar',
             'totalBarangMasuk',
@@ -42,4 +44,5 @@ class PegawaiViewController extends Controller
             'grafikPengambilan'
         ));
     }
+
 }

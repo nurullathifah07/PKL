@@ -8,6 +8,7 @@ use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PegawaiViewController;
+use App\Http\Controllers\ProfilController;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
 use App\Models\Pegawai;
@@ -53,6 +54,15 @@ Route::middleware(['auth'])->group(function () {
     // PEGAWAI
     Route::get('/pegawai/dashboard', [PegawaiViewController::class, 'dashboard'])
         ->name('pegawai.dashboard');
+
+    Route::get('/profil', [ProfilController::class, 'index'])
+        ->name('profil.index');
+
+    Route::get('/profil/edit', [ProfilController::class, 'edit'])
+        ->name('profil.edit');
+
+    Route::put('/profil', [ProfilController::class, 'update'])
+        ->name('profil.update');
 });
 
 

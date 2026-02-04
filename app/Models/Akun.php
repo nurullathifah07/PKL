@@ -22,4 +22,10 @@ class Akun extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function pegawai()
+    {
+    return $this->hasOne(Pegawai::class, 'id_akun', 'id_akun');
+    }
+
 }
