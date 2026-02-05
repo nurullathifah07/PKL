@@ -123,7 +123,7 @@
                                     </div>
                                 </li>
                                 <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="{{ url('admin/profil_edit') }}"><i class="ti-user"></i> Edit Profil</a>
+                                    <a class="dropdown-item" href="{{ route('profil.edit') }}"><i class="ti-user"></i> Edit Profil</a>
                                     <a class="dropdown-item" href="#"><i class="ti-settings"></i> Pengaturan</a>
                                 <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#"
@@ -274,7 +274,7 @@
                                 </tr>
                                 <tr>
                                     <th>Tempat, Tgl Lahir</th>
-                                    <td>: {{ $pegawai->tempat_lahir }}, {{ $pegawai->tgl_lahir }}</td>
+                                    <td>: {{ $pegawai->tempat_lahir }}, {{ \Carbon\Carbon::parse($pegawai->tanggal_lahir)->format('d-m-Y') }}</td>
                                 </tr>
                                 <tr>
                                     <th>Jenis Kelamin</th>
