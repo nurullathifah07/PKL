@@ -8,6 +8,7 @@ use App\Http\Controllers\BarangKeluarController;
 use App\Http\Controllers\BarangMasukController;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PegawaiViewController;
+use App\Http\Controllers\PermintaanATKController;
 use App\Http\Controllers\ProfilController;
 use App\Models\Barang;
 use App\Models\BarangMasuk;
@@ -36,12 +37,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
         ->name('admin.dashboard');
 
-    Route::get('/admin/profil', [AdminController::class, 'profil'])
-        ->name('admin.profil');
-
-    Route::get('/admin/profil_edit', [AdminController::class, 'profil_edit'])
-        ->name('admin.profil_edit');
-
     Route::resource('/admin/akun', AkunController::class);
     Route::resource('/admin/pegawai', PegawaiController::class);
     Route::resource('/admin/barang', BarangController::class);
@@ -55,6 +50,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/pegawai/dashboard', [PegawaiViewController::class, 'dashboard'])
         ->name('pegawai.dashboard');
 
+    Route::resource('/pegawai/permintaan-ATK', PermintaanATKController::class);
+
     Route::get('/profil', [ProfilController::class, 'index'])
         ->name('profil.index');
 
@@ -66,8 +63,6 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-
-Route::get('/admin/notifikasi', [AdminController::class, 'notifikasi'])->name('admin.notifikasi');
 
 
 

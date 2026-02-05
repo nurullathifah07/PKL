@@ -102,16 +102,15 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                             <a class="dropdown-toggle profile-pic" data-toggle="dropdown" href="#">
-                                <img src="{{ asset('storage/' . $pegawai->foto) }}"
-                                    class="rounded-circle border"
-                                    style="width:25px; height:25px; object-fit:cover; border-width:1px;">
-                            </a>
+                             <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}"
+                                class="rounded-circle border"
+                                style="width:25px; height:25px; object-fit:cover; border-width:1px;">
+
                             <ul class="dropdown-menu dropdown-user">
                                <li>
                                     <div class="user-box">
                                         <div class="u-img">
-                                            <img src="{{ asset('storage/' . $pegawai->foto) }}"
+                                            <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}"
                                                 alt="user"
                                                 style="width:80px; height:80px; border-radius:50%; object-fit:cover;">
                                         </div>
@@ -145,7 +144,7 @@
                     @auth
                     <div class="user">
                         <div class="photo">
-                            <img src="{{ asset('storage/' . $pegawai->foto) }}">
+                            <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}">
                         </div>
                         <div class="info">
                             <a aria-expanded="true">
@@ -169,11 +168,19 @@
                                 <p>Dashboard</p>
                             </a>
                         </li>
-                        {{-- # --}}
-                        <li class="nav-item #">
-                            <a href="{{ url('#') }}">
+                        {{-- Permintaan ATK (CREATE) --}}
+                        <li class="nav-item">
+                            <a href="{{ route('permintaan-ATK.create') }}">
                                 <i class="bi bi-inboxes-fill" style="font-size: 18px;"></i>
-                                <p>Permintaan Barang</p>
+                                <p>Permintaan ATK</p>
+                            </a>
+                        </li>
+
+                        {{-- Riwayat Permintaan (INDEX) --}}
+                        <li class="nav-item">
+                            <a href="{{ route('permintaan-ATK.index') }}">
+                                <i class="bi bi-clock-history" style="font-size: 18px;"></i>
+                                <p>Riwayat Permintaan</p>
                             </a>
                         </li>
                     </ul>
@@ -235,14 +242,14 @@
 
                         <!-- FOTO + NAMA -->
                         <div class="col-md-4 text-center border-right">
-                            <img src="{{ asset('storage/' . $pegawai->foto) }}"
+                            <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}"
                                 class="rounded-circle mb-3"
                                 width="120"
                                 height="120"
                                 style="object-fit:cover;">
 
-                            <h5 class="mb-0">{{ $pegawai->nama_pegawai }}</h5>
-                            <small class="text-muted">{{ $pegawai->jabatan ?? 'Statistis' }}</small>
+                            <h5 class="mb-0">{{ auth()->user()->pegawai->nama_pegawai }}</h5>
+                            <small class="text-muted">{{ auth()->user()->pegawai->jabatan }}</small>
                         </div>
 
                         <!-- DATA -->
@@ -250,39 +257,39 @@
                             <table class="table table-borderless">
                                 <tr>
                                     <th width="40%">NIP</th>
-                                    <td>: {{ $pegawai->nip }}</td>
+                                    <td>: {{ auth()->user()->pegawai->nip }}</td>
                                 </tr>
                                 <tr>
                                     <th>NIP BPS</th>
-                                    <td>: {{ $pegawai->nip_bps }}</td>
+                                    <td>: {{ auth()->user()->pegawai->nip_bpd }}</td>
                                 </tr>
                                 <tr>
                                     <th>Status Pegawai</th>
-                                    <td>: <span class="badge badge-success">{{ $pegawai->status_pegawai }}</span></td>
+                                    <td>: <span class="badge badge-success">{{ auth()->user()->pegawai->status_pegawai }}</span></td>
                                 </tr>
                                 <tr>
                                     <th>Subbagian / Seksi</th>
-                                    <td>: {{ $pegawai->subbagian }}</td>
+                                    <td>: {{ auth()->user()->pegawai->subbagian}}</td>
                                 </tr>
                                 <tr>
                                     <th>Golongan</th>
-                                    <td>: {{ $pegawai->golongan_akhir }}</td>
+                                    <td>: {{ auth()->user()->pegawai->golongan_akhir }}</td>
                                 </tr>
                                 <tr>
                                     <th>Pendidikan</th>
-                                    <td>: {{ $pegawai->pendidikan }}</td>
+                                    <td>: {{ auth()->user()->pegawai->pendidikan }}</td>
                                 </tr>
                                 <tr>
                                     <th>Tempat, Tgl Lahir</th>
-                                    <td>: {{ $pegawai->tempat_lahir }}, {{ \Carbon\Carbon::parse($pegawai->tanggal_lahir)->format('d-m-Y') }}</td>
+                                    <td>: {{ auth()->user()->pegawai->tempat_lahir }}, {{ \Carbon\Carbon::parse(auth()->user()->pegawai->tanggal_lahir)->format('d-m-Y') }}</td>
                                 </tr>
                                 <tr>
                                     <th>Jenis Kelamin</th>
-                                    <td>: {{ $pegawai->jenis_kelamin }}</td>
+                                    <td>: {{ auth()->user()->pegawai->jenis_kelamin }}</td>
                                 </tr>
                                 <tr>
                                     <th>Agama</th>
-                                    <td>: {{ $pegawai->agama }}</td>
+                                    <td>: {{ auth()->user()->pegawai->agama }}</td>
                                 </tr>
                                 <tr>
                                     <th>Username Akun</th>

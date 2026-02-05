@@ -1,73 +1,89 @@
 @extends('layout.pegawai_layout')
 
-@section('title', 'Dashboard Persediaan ATK')
+@section('title', 'Dashboard Pegawai')
 
 @section('content')
 
-<h4 class="page-title mb-4">Dashboard Persediaan ATK</h4>
+<h4 class="page-title mb-4">Dashboard Pegawai</h4>
 
-{{-- ================= CARD RINGKASAN ================= --}}
-<div class="row">
+{{-- ================= TOP CARDS ================= --}}
+<div class="row g-3">
 
-    <div class="col-md-4">
-        <div class="card card-stats card-warning">
-            <div class="card-body text-center">
-                <i class="bi bi-archive-fill" style="font-size:35px;"></i>
-                <p class="card-category mt-2">Total Barang</p>
-                <h4 class="card-title">{{ $totalBarang }}</h4>
+    {{-- Total Barang --}}
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 card-stats card-info text-center">
+            <div class="card-body">
+                <i class="bi bi-box-seam" style="font-size:32px;"></i>
+                <p class="mt-2 mb-1">Total Barang Tersedia</p>
+                <h3 class="fw-bold">{{ $totalBarang }}</h3>
             </div>
         </div>
     </div>
 
-    <div class="col-md-4">
-        <div class="card card-stats card-danger">
-            <div class="card-body text-center">
-                <i class="bi bi-bag-dash-fill" style="font-size:35px;"></i>
-                <p class="card-category mt-2">Total Pengambilan</p>
-                <h4 class="card-title">{{ $totalBarangKeluar }}</h4>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="card card-stats card-info">
-            <div class="card-body text-center">
-                <i class="bi bi-cart-plus-fill" style="font-size:35px;"></i>
-                <p class="card-category mt-2">Total Pembelian</p>
-                <h4 class="card-title">{{ $totalBarangMasuk }}</h4>
+    {{-- Permintaan Saya --}}
+    <div class="col-md-6">
+        <div class="card shadow-sm border-0 card-stats card-warning text-center">
+            <div class="card-body">
+                <i class="bi bi-clipboard-check" style="font-size:32px;"></i>
+                <p class="mt-2 mb-1">Permintaan Saya</p>
+                <h3 class="fw-bold">{{ $totalPermintaanSaya }}</h3>
             </div>
         </div>
     </div>
 
 </div>
 
-{{-- ================= STOK MENIPIS ================= --}}
-<div class="card mt-4">
-    <div class="card-header">
-        <h4 class="card-title">Stok Barang Menipis</h4>
+
+{{-- ================= DAFTAR BARANG ================= --}}
+<div class="card mt-4 shadow-sm border-0">
+    <div class="card-header bg-white">
+        <h5 class="mb-0">Daftar Barang dan Stok</h5>
     </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead class="table-light">
+
+    <div class="card-body p-0">
+        <table class="table table-hover table-striped mb-0">
+            <thead class="text-center">
                 <tr>
-                    <th width="50">No</th>
+                    <th width="60">No</th>
                     <th>Nama Barang</th>
-                    <th width="100">Stok</th>
-                    <th width="100">Satuan</th>
+                    <th width="120">Stok</th>
+                    <th width="120">Satuan</th>
+                    <th width="120">Status</th>
                 </tr>
             </thead>
-            <tbody>
-                @forelse($stokMenipis as $item)
+            <tbody class="text-center">
+                @forelse($barang as $item)
                 <tr>
                     <td>{{ $loop->iteration }}</td>
                     <td>{{ $item->nama_barang }}</td>
-                    <td class="text-danger fw-bold">{{ $item->stok }}</td>
+
+                    {{-- stok warna otomatis --}}
+                    <td class="
+                        fw-bold
+                        @if($item->stok <= 5) text-danger
+                        @elseif($item->stok <= 10) text-warning
+                        @else text-success
+                        @endif
+                    ">
+                        {{ $item->stok }}
+                    </td>
+
                     <td>{{ $item->satuan }}</td>
+                    <td>
+                        @if ($item->status == 'tersedia')
+                            <span class="badge badge-success">Tersedia</span>
+                        @elseif ($item->status == 'menipis')
+                            <span class="badge badge-warning">Menipis</span>
+                        @else
+                            <span class="badge badge-danger">Habis</span>
+                        @endif
+                    </td>
                 </tr>
+
                 @empty
                 <tr>
-                    <td colspan="4" class="text-center text-muted">
-                        Tidak ada stok menipis
+                    <td colspan="4" class="text-center text-muted py-3">
+                        Belum ada data barang
                     </td>
                 </tr>
                 @endforelse
@@ -76,64 +92,4 @@
     </div>
 </div>
 
-{{-- ================= GRAFIK PENGAMBILAN ================= --}}
-<div class="card mt-4">
-    <div class="card-header">
-        <h4 class="card-title">Grafik Pengambilan Barang Harian</h4>
-    </div>
-    <div class="card-body">
-        <canvas id="grafikPengambilan"></canvas>
-    </div>
-</div>
-
-{{-- ================= TABEL REKAP PENGAMBILAN ================= --}}
-<div class="card mt-4 mb-4">
-    <div class="card-header">
-        <h4 class="card-title">Rekap Pengambilan Barang per Hari</h4>
-    </div>
-    <div class="card-body">
-        <table class="table table-bordered table-striped">
-            <thead class="table-light">
-                <tr>
-                    <th width="50">No</th>
-                    <th>Tanggal</th>
-                    <th width="150">Jumlah Pengambilan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($grafikPengambilan as $item)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->tanggal }}</td>
-                    <td class="fw-bold">{{ $item->total }}</td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="3" class="text-center text-muted">
-                        Belum ada data
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
-
-@endsection
-
-@section('scripts')
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-new Chart(document.getElementById('grafikPengambilan'), {
-    type: 'bar',
-    data: {
-        labels: {!! json_encode($grafikPengambilan->pluck('tanggal')) !!},
-        datasets: [{
-            label: 'Jumlah Pengambilan',
-            data: {!! json_encode($grafikPengambilan->pluck('total')) !!},
-            borderWidth: 1
-        }]
-    }
-});
-</script>
 @endsection

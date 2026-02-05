@@ -42,13 +42,21 @@
                             </div>
 
                             {{-- Password --}}
-                            <div class="form-group">
+                            <div class="form-group position-relative">
                                 <input type="password"
                                     name="password"
+                                    id="password"
                                     class="form-control form-control-user"
                                     placeholder="Password"
                                     required>
+
+                                <span id="togglePassword"
+                                    style="position:absolute; top:50%; right:15px; transform:translateY(-50%); cursor:pointer; display:none;">
+                                    <i class="fa fa-eye"></i>
+                                </span>
                             </div>
+
+
 
                             {{-- Remember Me (opsional) --}}
                             <div class="form-group">
@@ -84,4 +92,35 @@
     </div>
 </div>
 
+@endsection
+
+@section('scripts')
+  <script>
+    const passwordInput = document.getElementById('password');
+    const togglePassword = document.getElementById('togglePassword');
+    const icon = togglePassword.querySelector('i');
+
+    // munculkan / sembunyikan icon BERDASARKAN ISI
+    passwordInput.addEventListener('input', function () {
+        if (this.value.length > 0) {
+            togglePassword.style.display = 'block';
+        } else {
+            togglePassword.style.display = 'none';
+            this.type = 'password';
+            icon.classList.remove('fa-eye-slash');
+            icon.classList.add('fa-eye');
+        }
+    });
+
+    // toggle show / hide password
+    togglePassword.addEventListener('click', function () {
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    });
+    </script>
 @endsection

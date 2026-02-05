@@ -39,7 +39,7 @@ class AuthController extends Controller
         ];
 
         // Proses autentikasi
-        if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials, $request->filled('remember'))) {
             $request->session()->regenerate();
 
             // Redirect berdasarkan level
