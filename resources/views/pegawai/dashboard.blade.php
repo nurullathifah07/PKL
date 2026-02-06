@@ -78,6 +78,9 @@
                             <span class="badge badge-danger">Habis</span>
                         @endif
                     </td>
+                    <td>
+
+                    </td>
                 </tr>
 
                 @empty

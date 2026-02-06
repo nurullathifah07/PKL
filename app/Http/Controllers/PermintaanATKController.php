@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Barang;
 use App\Models\BarangKeluar;
 use App\Models\BarangKeluarDetail;
+use App\Models\Pegawai;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -61,17 +62,15 @@ class PermintaanATKController extends Controller
 
                 $today = now()->toDateString();
 
-                // cek kartu hari ini
                 $barangKeluar = BarangKeluar::where('tanggal_keluar', $today)
                     ->where('id_pegawai', $pegawai->id_pegawai)
                     ->first();
 
-                // kalau belum ada → buat
                 if (!$barangKeluar) {
                     $barangKeluar = BarangKeluar::create([
                         'tanggal_keluar' => $today,
                         'id_pegawai'     => $pegawai->id_pegawai,
-                        'keterangan'     => 'Permintaan ATK Pegawai',
+                        'keterangan'     => $request->keterangan,
                     ]);
                 }
 
@@ -101,5 +100,33 @@ class PermintaanATKController extends Controller
         return redirect()
             ->route('permintaan-ATK.index')
             ->with('success', 'Permintaan berhasil dikirim');
+    }
+
+
+    /*
+    =========================
+    DETAIL / SHOW
+    =========================
+    */
+    public function show(BarangKeluar $permintaan_ATK)
+    {
+        $pegawaiLogin = Auth::user()->pegawai;
+
+        // keamanan
+        if ($permintaan_ATK->id_pegawai != $pegawaiLogin->id_pegawai) {
+            abort(403);
+        }
+
+        $permintaan_ATK->load([
+            'details.barang',
+            'pegawai'
+        ]);
+
+        $pejabatMengetahui = Pegawai::where('jabatan', 'Kepala Subbagian Umum')->first();
+
+        return view('pegawai.permintaan-ATK.show', [
+            'barangKeluar' => $permintaan_ATK,
+            'pejabatMengetahui' => $pejabatMengetahui
+        ]);
     }
 }

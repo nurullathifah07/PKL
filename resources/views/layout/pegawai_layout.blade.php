@@ -169,16 +169,15 @@
                             </a>
                         </li>
                         {{-- Permintaan ATK (CREATE) --}}
-                        <li class="nav-item">
-                            <a href="{{ route('permintaan-ATK.create') }}">
+                        <li class="nav-item {{ Request::is('pegawai/permintaan-ATK/create') ? 'active' : '' }}">
+                            <a href="{{ url('pegawai/permintaan-ATK/create') }}">
                                 <i class="bi bi-inboxes-fill" style="font-size: 18px;"></i>
                                 <p>Permintaan ATK</p>
                             </a>
                         </li>
-
                         {{-- Riwayat Permintaan (INDEX) --}}
-                        <li class="nav-item">
-                            <a href="{{ route('permintaan-ATK.index') }}">
+                        <li class="nav-item {{ Request::is('pegawai/permintaan-ATK') ? 'active' : '' }}">
+                            <a href="{{ url('pegawai/permintaan-ATK') }}">
                                 <i class="bi bi-clock-history" style="font-size: 18px;"></i>
                                 <p>Riwayat Permintaan</p>
                             </a>
