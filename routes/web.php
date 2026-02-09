@@ -8,12 +8,12 @@ use App\Http\Controllers\{
     BarangController,
     BarangKeluarController,
     BarangMasukController,
+    OperatorController,
     PegawaiController,
     PegawaiViewController,
     PermintaanATKController,
     ProfilController
 };
-
 
 /*
 |--------------------------------------------------------------------------
@@ -70,9 +70,15 @@ Route::middleware(['auth', 'level:pegawai'])->prefix('pegawai')->group(function 
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'level:operator'])->prefix('operator')->group(function () {
+Route::middleware(['auth', 'level:operator'])->prefix('operator')->name('operator.')->group(function () {
 
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('operator.dashboard');
+    Route::get('/dashboard', [OperatorController::class, 'dashboard'])->name('dashboard');
+
+    Route::resource('/barang', BarangController::class);
+    Route::resource('/barang_masuk', BarangMasukController::class);
+    Route::resource('/barang_keluar', BarangKeluarController::class);
+
+    Route::get('/notifikasi', [OperatorController::class, 'notifikasi'])->name('notifikasi');
 });
 
 

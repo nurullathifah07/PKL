@@ -8,9 +8,6 @@ use Illuminate\Support\Facades\Storage;
 
 class ProfilController extends Controller
 {
-    /**
-     * Tampilkan profil pegawai login
-     */
     public function index()
     {
         $akun = Auth::user();
@@ -19,9 +16,6 @@ class ProfilController extends Controller
         return view('profil.index', compact('akun', 'pegawai'));
     }
 
-    /**
-     * Halaman edit profil
-     */
     public function edit()
     {
         $akun = Auth::user();
@@ -30,12 +24,10 @@ class ProfilController extends Controller
         return view('profil.edit', compact('akun', 'pegawai'));
     }
 
-    /**
-     * Update profil pegawai login
-     */
     public function update(Request $request)
     {
-        $pegawai = Auth::user()->pegawai;
+        $akun = Auth::user();
+        $pegawai = $akun->pegawai;
 
         $validated = $request->validate([
             'nama_pegawai'  => 'required|string|max:255',
@@ -48,7 +40,9 @@ class ProfilController extends Controller
         ]);
 
         // update data selain foto
-        $pegawai->update(collect($validated)->except('foto')->toArray());
+        $pegawai->update(
+            collect($validated)->except('foto')->toArray()
+        );
 
         // handle foto
         if ($request->hasFile('foto')) {
@@ -61,9 +55,13 @@ class ProfilController extends Controller
             $pegawai->update(['foto' => $path]);
         }
 
-        // 🔴 INI YANG DIPERBAIKI
+        // ✅ REDIRECT SESUAI ROLE
+        $dashboardRoute = $akun->level === 'operator'
+            ? 'operator.dashboard'
+            : 'pegawai.dashboard';
+
         return redirect()
-            ->route('pegawai.dashboard')
+            ->route($dashboardRoute)
             ->with('success', 'Profil berhasil diperbarui');
     }
 }

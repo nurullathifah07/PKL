@@ -102,9 +102,15 @@
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
-                             <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}"
-                                class="rounded-circle border"
-                                style="width:25px; height:25px; object-fit:cover; border-width:1px;">
+                             <a class="dropdown-toggle profile-pic d-flex align-items-center"
+                                data-toggle="dropdown"
+                                href="#"
+                                aria-expanded="false">
+
+                                <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}"
+                                    class="rounded-circle border mr-2"
+                                    style="width:28px; height:28px; object-fit:cover;">
+                            </a>
 
                             <ul class="dropdown-menu dropdown-user">
                                <li>
@@ -260,7 +266,7 @@
                                 </tr>
                                 <tr>
                                     <th>NIP BPS</th>
-                                    <td>: {{ auth()->user()->pegawai->nip_bpd }}</td>
+                                    <td>: {{ auth()->user()->pegawai->nip_bps }}</td>
                                 </tr>
                                 <tr>
                                     <th>Status Pegawai</th>

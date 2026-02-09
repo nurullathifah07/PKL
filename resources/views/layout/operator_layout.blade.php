@@ -101,67 +101,46 @@
                                 </li>
                             </ul>
                         </li>
-                        @auth
                         <li class="nav-item dropdown">
-                            <a class="dropdown-toggle profile-pic d-flex align-items-center"
-                            data-toggle="dropdown"
-                            href="#">
-                                <span style="
-                                    width:36px;
-                                    height:36px;
-                                    border-radius:50%;
-                                    background:#4e73df;
-                                    color:#fff;
-                                    display:inline-flex;
-                                    align-items:center;
-                                    justify-content:center;
-                                    font-weight:bold;
-                                    margin-right:8px;
-                                ">
-                                    A
-                                </span>
+                             <a class="dropdown-toggle profile-pic d-flex align-items-center"
+                                data-toggle="dropdown"
+                                href="#"
+                                aria-expanded="false">
+
+                                <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}"
+                                    class="rounded-circle border mr-2"
+                                    style="width:28px; height:28px; object-fit:cover;">
                             </a>
 
                             <ul class="dropdown-menu dropdown-user">
-                                <li>
+                               <li>
                                     <div class="user-box">
                                         <div class="u-img">
-                                            <div style="
-                                                width:80px;
-                                                height:80px;
-                                                border-radius:50%;
-                                                background:#4e73df;
-                                                color:#fff;
-                                                display:flex;
-                                                align-items:center;
-                                                justify-content:center;
-                                                font-size:32px;
-                                                font-weight:bold;
-                                            ">
-                                                A
-                                            </div>
+                                            <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}"
+                                                alt="user"
+                                                style="width:80px; height:80px; border-radius:50%; object-fit:cover;">
                                         </div>
                                         <div class="u-text">
                                             <h4>{{ Auth::user()->username }}</h4>
                                             <p class="text-muted">{{ Auth::user()->email }}</p>
+                                            <a href="{{ route('profil.index') }}" class="btn btn-rounded btn-danger btn-sm" data-toggle="modal" data-target="#modalProfil"> Lihat Profil </a>
                                         </div>
                                     </div>
                                 </li>
-
                                 <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="{{ route('profil.edit') }}"><i class="ti-user"></i> Edit Profil</a>
+                                    <a class="dropdown-item" href="#"><i class="ti-settings"></i> Pengaturan</a>
+                                <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#"
+                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                        <i class="fa fa-power-off"></i> Logout
+                                    </a>
 
-                                <a class="dropdown-item" href="#"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                    <i class="fa fa-power-off"></i> Logout
-                                </a>
-
-                                <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                    @csrf
+                                <form id="logout-form" action="{{ url('/logout') }}" method="POST" class="d-none">
+                                @csrf
                                 </form>
                             </ul>
                         </li>
-                        @endauth
-
                     </ul>
                 </div>
             </nav>
@@ -170,88 +149,60 @@
                 <div class="scrollbar-inner sidebar-wrapper">
                 @auth
                 <div class="user">
-                    <div class="photo">
-                        <div style="
-                            width:42px;
-                            height:42px;
-                            border-radius:50%;
-                            background:#4e73df;
-                            color:#fff;
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                            font-weight:bold;
-                        ">
-                            A
+                        <div class="photo">
+                            <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}">
+                        </div>
+                        <div class="info">
+                            <a aria-expanded="true">
+                                <span>
+                                    {{ Auth::user()->username }}
+                                    <span class="user-level">
+                                        {{ ucfirst(Auth::user()->level) }}
+                                    </span>
+                                </span>
+                            </a>
+                            <div class="clearfix"></div>
                         </div>
                     </div>
-                    <div class="info">
-                        <a aria-expanded="true">
-                            <span>
-                                {{ Auth::user()->username }}
-                                <span class="user-level">
-                                    {{ ucfirst(Auth::user()->level) }}
-                                </span>
-                            </span>
-                        </a>
-                        <div class="clearfix"></div>
-                    </div>
-                </div>
                 @endauth
 
                 <ul class="nav">
 
-                        {{-- BERANDA ADMIN --}}
-                        <li class="nav-item {{ Request::routeIs('admin.dashboard') ? 'active' : '' }}">
-                            <a href="{{ url('admin/dashboard') }}">
+                        {{-- BERANDA OPERATOR --}}
+                        <li class="nav-item {{ Request::routeIs('operator.dashboard') ? 'active' : '' }}">
+                            <a href="{{ url('operator/dashboard') }}">
                                 <i class="bi bi-speedometer" style="font-size: 18px;"></i>
                                 <p>Dashboard</p>
                             </a>
                         </li>
 
-                        {{-- DATA AKUN --}}
-                        <li class="nav-item {{ request()->is('admin/akun*') ? 'active' : '' }}">
-                            <a href="{{ url('admin/akun') }}">
-                                <i class="bi bi-person-fill-add" style="font-size: 18px;"></i>
-                                <p>Akun</p>
-                            </a>
-                        </li>
-
-                        {{-- DATA PEGAWAI --}}
-                        <li class="nav-item {{ request()->is('admin/pegawai*') ? 'active' : '' }}">
-                            <a href="{{ url('admin/pegawai') }}">
-                                <i class="bi bi-person-rolodex" style="font-size: 18px;"></i>
-                                <p>Data Pegawai</p>
-                            </a>
-                        </li>
-
                         {{-- DATA BARANG --}}
-                        <li class="nav-item {{ request()->is('admin/barang') ? 'active' : '' }}">
-                            <a href="{{ url('admin/barang') }}">
+                        <li class="nav-item {{ request()->is('operator/barang') ? 'active' : '' }}">
+                            <a href="{{ url('operator/barang') }}">
                                 <i class="bi bi-box-seam" style="font-size: 18px;"></i>
                                 <p>Data Barang</p>
                             </a>
                         </li>
 
                         {{-- BARANG MASUK --}}
-                        <li class="nav-item {{ request()->is('admin/barang_masuk*') ? 'active' : '' }}">
-                            <a href="{{ url('admin/barang_masuk') }}">
+                        <li class="nav-item {{ request()->is('operator/barang_masuk*') ? 'active' : '' }}">
+                            <a href="{{ url('operator/barang_masuk') }}">
                                 <i class="bi bi-box-seam-fill" style="font-size: 18px;"></i>
                                 <p>Barang Masuk</p>
                             </a>
                         </li>
 
                         {{-- BARANG KELUAR --}}
-                        <li class="nav-item {{ request()->is('admin/barang_keluar*') ? 'active' : '' }}">
-                            <a href="{{ url('admin/barang_keluar') }}">
+                        <li class="nav-item {{ request()->is('operator/barang_keluar*') ? 'active' : '' }}">
+                            <a href="{{ url('operator/barang_keluar') }}">
                                 <i class="bi bi-dropbox" style="font-size: 18px;"></i>
                                 <p>Barang Keluar</p>
                             </a>
                         </li>
 
                         {{-- NOTIFIKASI --}}
-                        <li class="nav-item {{ Request::routeIs('admin.notifikasi') ? 'active' : '' }}">
-                            <a href="{{ url('admin/notifikasi') }}">
+                        <li class="nav-item {{ Request::routeIs('operator.notifikasi') ? 'active' : '' }}">
+                            <a href="{{ url('operator/notifikasi') }}">
                                 <i class="bi bi-bell" style="font-size: 18px;"></i>
                                 <p>Notifikasi</p>
                             </a>
@@ -296,6 +247,93 @@
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="modalProfil" tabindex="-1" role="dialog" aria-labelledby="modalProfilLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+
+                <!-- HEADER -->
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalProfilLabel">Profil Pegawai</h5>
+                    <button type="button" class="close" data-dismiss="modal">
+                        <span>&times;</span>
+                    </button>
+                </div>
+
+                <!-- BODY -->
+                <div class="modal-body">
+                    <div class="row">
+
+                        <!-- FOTO + NAMA -->
+                        <div class="col-md-4 text-center border-right">
+                            <img src="{{ asset('storage/' . auth()->user()->pegawai->foto) }}"
+                                class="rounded-circle mb-3"
+                                width="120"
+                                height="120"
+                                style="object-fit:cover;">
+
+                            <h5 class="mb-0">{{ auth()->user()->pegawai->nama_pegawai }}</h5>
+                            <small class="text-muted">{{ auth()->user()->pegawai->jabatan }}</small>
+                        </div>
+
+                        <!-- DATA -->
+                        <div class="col-md-8">
+                            <table class="table table-borderless">
+                                <tr>
+                                    <th width="40%">NIP</th>
+                                    <td>: {{ auth()->user()->pegawai->nip }}</td>
+                                </tr>
+                                <tr>
+                                    <th>NIP BPS</th>
+                                    <td>: {{ auth()->user()->pegawai->nip_bps }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Status Pegawai</th>
+                                    <td>: <span class="badge badge-success">{{ auth()->user()->pegawai->status_pegawai }}</span></td>
+                                </tr>
+                                <tr>
+                                    <th>Subbagian / Seksi</th>
+                                    <td>: {{ auth()->user()->pegawai->subbagian}}</td>
+                                </tr>
+                                <tr>
+                                    <th>Golongan</th>
+                                    <td>: {{ auth()->user()->pegawai->golongan_akhir }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Pendidikan</th>
+                                    <td>: {{ auth()->user()->pegawai->pendidikan }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Tempat, Tgl Lahir</th>
+                                    <td>: {{ auth()->user()->pegawai->tempat_lahir }}, {{ \Carbon\Carbon::parse(auth()->user()->pegawai->tanggal_lahir)->format('d-m-Y') }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Jenis Kelamin</th>
+                                    <td>: {{ auth()->user()->pegawai->jenis_kelamin }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Agama</th>
+                                    <td>: {{ auth()->user()->pegawai->agama }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Username Akun</th>
+                                    <td>: {{ Auth::user()->username }}</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- FOOTER -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
     <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
