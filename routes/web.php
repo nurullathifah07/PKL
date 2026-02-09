@@ -1,68 +1,90 @@
 <?php
 
-use App\Http\Controllers\AdminController;
-use App\Http\Controllers\AkunController;
-use App\Http\Controllers\AuthController;
-use App\Http\Controllers\BarangController;
-use App\Http\Controllers\BarangKeluarController;
-use App\Http\Controllers\BarangMasukController;
-use App\Http\Controllers\PegawaiController;
-use App\Http\Controllers\PegawaiViewController;
-use App\Http\Controllers\PermintaanATKController;
-use App\Http\Controllers\ProfilController;
-use App\Models\Barang;
-use App\Models\BarangMasuk;
-use App\Models\Pegawai;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\{
+    AdminController,
+    AkunController,
+    AuthController,
+    BarangController,
+    BarangKeluarController,
+    BarangMasukController,
+    PegawaiController,
+    PegawaiViewController,
+    PermintaanATKController,
+    ProfilController
+};
 
 
-// Auth
-Route::get('/', function () {
-    return redirect()->route('login');
-});
+/*
+|--------------------------------------------------------------------------
+| AUTH (bebas akses)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', fn() => redirect()->route('login'));
+
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/register', fn() => view('auth.register'));
 
-Route::get('/register', function () {
-    return view('auth.register');
+
+/*
+|--------------------------------------------------------------------------
+| ADMIN ONLY
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'level:admin'])->prefix('admin')->group(function () {
+
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+
+    Route::resource('/akun', AkunController::class);
+    Route::resource('/pegawai', PegawaiController::class);
+    Route::resource('/barang', BarangController::class);
+    Route::resource('/barang_masuk', BarangMasukController::class);
+    Route::resource('/barang_keluar', BarangKeluarController::class);
+
+    Route::get('/notifikasi', [AdminController::class, 'notifikasi'])->name('admin.notifikasi');
 });
 
 
-Route::middleware(['auth'])->group(function () {
+/*
+|--------------------------------------------------------------------------
+| PEGAWAI ONLY
+|--------------------------------------------------------------------------
+*/
 
-    // ADMIN
-    Route::get('/admin/dashboard', [AdminController::class, 'dashboard'])
-        ->name('admin.dashboard');
+Route::middleware(['auth', 'level:pegawai'])->prefix('pegawai')->group(function () {
 
-    Route::resource('/admin/akun', AkunController::class);
-    Route::resource('/admin/pegawai', PegawaiController::class);
-    Route::resource('/admin/barang', BarangController::class);
-    Route::resource('/admin/barang_masuk', BarangMasukController::class);
-    Route::resource('/admin/barang_keluar', BarangKeluarController::class);
+    Route::get('/dashboard', [PegawaiViewController::class, 'dashboard'])->name('pegawai.dashboard');
 
-    Route::get('/admin/notifikasi', [AdminController::class, 'notifikasi'])
-        ->name('admin.notifikasi');
-
-    // PEGAWAI
-    Route::get('/pegawai/dashboard', [PegawaiViewController::class, 'dashboard'])
-        ->name('pegawai.dashboard');
-
-    Route::resource('/pegawai/permintaan-ATK', PermintaanATKController::class);
-
-    Route::get('/profil', [ProfilController::class, 'index'])
-        ->name('profil.index');
-
-    Route::get('/profil/edit', [ProfilController::class, 'edit'])
-        ->name('profil.edit');
-
-    Route::put('/profil', [ProfilController::class, 'update'])
-        ->name('profil.update');
+    Route::resource('/permintaan-ATK', PermintaanATKController::class);
 });
 
 
+/*
+|--------------------------------------------------------------------------
+| OPERATOR ONLY
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'level:operator'])->prefix('operator')->group(function () {
+
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('operator.dashboard');
+});
 
 
+/*
+|--------------------------------------------------------------------------
+| PROFIL (pegawai + operator)
+|--------------------------------------------------------------------------
+*/
 
+Route::middleware(['auth', 'level:pegawai,operator'])->group(function () {
+
+    Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
+    Route::get('/profil/edit', [ProfilController::class, 'edit'])->name('profil.edit');
+    Route::put('/profil', [ProfilController::class, 'update'])->name('profil.update');
+});
