@@ -1,4 +1,4 @@
-@extends('layout.admin_layout')
+@extends('layout.operator_layout')
 
 @section('title', 'Edit Barang Masuk')
 
@@ -12,7 +12,7 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('barang_masuk.update', $barangMasuk->id_barang_masuk) }}"
+        <form action="{{ route('operator.barang_masuk.update', $barangMasuk->id_barang_masuk) }}"
               method="POST">
             @csrf
             @method('PUT')
@@ -64,7 +64,7 @@
                 <button class="btn btn-primary">
                     Update
                 </button>
-                <a href="{{ route('barang_masuk.index') }}" class="btn btn-secondary">
+                <a href="{{ route('operator.barang_masuk.index') }}" class="btn btn-secondary">
                     Batal
                 </a>
             </div>

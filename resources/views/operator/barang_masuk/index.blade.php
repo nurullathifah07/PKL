@@ -1,4 +1,4 @@
-@extends('layout.admin_layout')
+@extends('layout.operator_layout')
 
 @section('title', 'Daftar Barang Masuk')
 
@@ -15,7 +15,7 @@
                     <h4 class="card-title">Daftar Barang Masuk</h4>
 
                     {{-- Tombol Tambah Akun --}}
-                    <a href="{{ route('barang_masuk.create') }}" class="btn btn-primary btn-round ml-auto">
+                    <a href="{{ route('operator.barang_masuk.create') }}" class="btn btn-primary btn-round ml-auto">
                         <i class="la la-plus"></i> Tambah Barang Masuk
                     </a>
                 </div>
@@ -50,7 +50,7 @@
                                         <div class="form-button-action">
 
                                             {{-- EDIT --}}
-                                            <a href="{{ route('barang_masuk.edit', $bm->id_barang_masuk) }}"
+                                            <a href="{{ route('operator.barang_masuk.edit', $bm->id_barang_masuk) }}"
                                             class="btn btn-link btn-simple-primary"
                                             data-toggle="tooltip"
                                             title="Edit Barang Masuk">
@@ -58,7 +58,7 @@
                                             </a>
 
                                             {{-- HAPUS --}}
-                                            <form action="{{ route('barang_masuk.destroy', $bm->id_barang_masuk) }}"
+                                            <form action="{{ route('operator.barang_masuk.destroy', $bm->id_barang_masuk) }}"
                                                 method="POST"
                                                 style="display:inline-block"
                                                 onsubmit="return confirm('Yakin hapus data ini?')">

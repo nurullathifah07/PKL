@@ -8,41 +8,67 @@ use App\Models\BarangKeluar;
 use App\Models\BarangKeluarDetail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class BarangKeluarController extends Controller
 {
-    /**
-     * ===============================
-     * INDEX
-     * ===============================
-     */
+    /*
+    |==================================================
+    | HELPER
+    |==================================================
+    */
+    private function level()
+    {
+        return Auth::user()->level; // admin / operator
+    }
+
+    private function viewPath($view)
+    {
+        return $this->level() . '.barang_keluar.' . $view;
+    }
+
+    private function indexRoute()
+    {
+        return $this->level() === 'operator'
+            ? 'operator.barang_keluar.index'
+            : 'barang_keluar.index';
+    }
+
+    /*
+    |==================================================
+    | INDEX
+    |==================================================
+    */
     public function index()
     {
         $barangKeluar = BarangKeluar::with('pegawai')
             ->orderBy('tanggal_keluar', 'desc')
             ->get();
 
-        return view('admin.barang_keluar.index', compact('barangKeluar'));
+        return view($this->viewPath('index'), compact('barangKeluar'));
     }
 
-    /**
-     * ===============================
-     * CREATE
-     * ===============================
-     */
+    /*
+    |==================================================
+    | CREATE
+    |==================================================
+    */
     public function create()
     {
         $barang  = Barang::orderBy('nama_barang')->get();
         $pegawai = Pegawai::orderBy('nama_pegawai')->get();
 
-        return view('admin.barang_keluar.create', compact('barang', 'pegawai'));
+        return view(
+            $this->viewPath('create'),
+            compact('barang', 'pegawai')
+        );
     }
 
-    /**
-     * ===============================
-     * STORE
-     * ===============================
-     */
+    /*
+    |==================================================
+    | STORE
+    |==================================================
+    */
     public function store(Request $request)
     {
         $request->validate([
@@ -56,12 +82,11 @@ class BarangKeluarController extends Controller
         try {
             DB::transaction(function () use ($request) {
 
-                // 🔍 cek bon pegawai di hari yang sama
+                // cek bon pegawai di hari sama
                 $barangKeluar = BarangKeluar::where('tanggal_keluar', $request->tanggal_keluar)
                     ->where('id_pegawai', $request->id_pegawai)
                     ->first();
 
-                // ➕ jika belum ada → buat bon
                 if (!$barangKeluar) {
                     $barangKeluar = BarangKeluar::create([
                         'tanggal_keluar' => $request->tanggal_keluar,
@@ -70,10 +95,10 @@ class BarangKeluarController extends Controller
                     ]);
                 }
 
-                // 🧾 simpan detail barang
                 foreach ($request->barang as $item) {
 
-                    $barang = Barang::lockForUpdate()->findOrFail($item['id_barang']);
+                    $barang = Barang::lockForUpdate()
+                        ->findOrFail($item['id_barang']);
 
                     if ($barang->stok < $item['jumlah_keluar']) {
                         throw new \Exception(
@@ -87,7 +112,6 @@ class BarangKeluarController extends Controller
                         'jumlah_keluar'    => $item['jumlah_keluar'],
                     ]);
 
-                    // kurangi stok
                     $barang->stok -= $item['jumlah_keluar'];
                     $barang->save();
                 }
@@ -100,51 +124,56 @@ class BarangKeluarController extends Controller
         }
 
         return redirect()
-            ->route('barang_keluar.index')
+            ->route($this->indexRoute())
             ->with('success', 'Barang keluar berhasil disimpan');
     }
 
-    /**
-     * ===============================
-     * SHOW
-     * ===============================
-     */
+    /*
+    |==================================================
+    | SHOW
+    |==================================================
+    */
     public function show($id)
-{
-    $barangKeluar = BarangKeluar::with([
-        'pegawai',
-        'details.barang'
-    ])->findOrFail($id);
-
-    // 🔍 pejabat yang mengetahui (otomatis)
-    $pejabatMengetahui = Pegawai::where('jabatan', 'Kepala Subbagian Umum')
-        ->first();
-
-    return view(
-        'admin.barang_keluar.show',
-        compact('barangKeluar', 'pejabatMengetahui')
-    );
-}
-
-
-    /**
-     * ===============================
-     * EDIT
-     * ===============================
-     */
-    public function edit($id)
     {
-        $barangKeluar = BarangKeluar::with('details.barang')->findOrFail($id);
-        $barang = Barang::orderBy('nama_barang')->get();
+        $barangKeluar = BarangKeluar::with([
+            'pegawai',
+            'details.barang'
+        ])->findOrFail($id);
 
-        return view('admin.barang_keluar.edit', compact('barangKeluar', 'barang'));
+        $pejabatMengetahui = Pegawai::where(
+            'jabatan',
+            'Kepala Subbagian Umum'
+        )->first();
+
+        return view(
+            $this->viewPath('show'),
+            compact('barangKeluar', 'pejabatMengetahui')
+        );
     }
 
-    /**
-     * ===============================
-     * UPDATE
-     * ===============================
-     */
+    /*
+    |==================================================
+    | EDIT
+    |==================================================
+    */
+    public function edit($id)
+    {
+        $barangKeluar = BarangKeluar::with('details.barang')
+            ->findOrFail($id);
+
+        $barang = Barang::orderBy('nama_barang')->get();
+
+        return view(
+            $this->viewPath('edit'),
+            compact('barangKeluar', 'barang')
+        );
+    }
+
+    /*
+    |==================================================
+    | UPDATE
+    |==================================================
+    */
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -156,14 +185,16 @@ class BarangKeluarController extends Controller
         try {
             DB::transaction(function () use ($request, $id) {
 
-                $barangKeluar = BarangKeluar::with('details')->findOrFail($id);
+                $barangKeluar = BarangKeluar::with('details')
+                    ->findOrFail($id);
 
                 foreach ($request->barang as $item) {
 
                     $detail = BarangKeluarDetail::findOrFail($item['id_detail_bk']);
-                    $barang = Barang::lockForUpdate()->findOrFail($item['id_barang']);
+                    $barang = Barang::lockForUpdate()
+                        ->findOrFail($item['id_barang']);
 
-                    // kembalikan stok lama
+                    // rollback stok lama
                     $barang->stok += $detail->jumlah_keluar;
 
                     if ($barang->stok < $item['jumlah_keluar']) {
@@ -172,7 +203,6 @@ class BarangKeluarController extends Controller
                         );
                     }
 
-                    // update detail
                     $detail->update([
                         'jumlah_keluar' => $item['jumlah_keluar']
                     ]);
@@ -190,20 +220,21 @@ class BarangKeluarController extends Controller
         }
 
         return redirect()
-            ->route('barang_keluar.show', $id)
-            ->with('success', 'Bon berhasil diperbarui');
+            ->route($this->indexRoute())
+            ->with('success', 'Bon barang keluar berhasil diperbarui');
     }
 
-    /**
-     * ===============================
-     * DESTROY
-     * ===============================
-     */
+    /*
+    |==================================================
+    | DESTROY
+    |==================================================
+    */
     public function destroy($id)
     {
         DB::transaction(function () use ($id) {
 
-            $barangKeluar = BarangKeluar::with('details')->findOrFail($id);
+            $barangKeluar = BarangKeluar::with('details')
+                ->findOrFail($id);
 
             foreach ($barangKeluar->details as $detail) {
                 $barang = Barang::find($detail->id_barang);
@@ -215,7 +246,7 @@ class BarangKeluarController extends Controller
         });
 
         return redirect()
-            ->route('barang_keluar.index')
+            ->route($this->indexRoute())
             ->with('success', 'Data barang keluar berhasil dihapus');
     }
 }

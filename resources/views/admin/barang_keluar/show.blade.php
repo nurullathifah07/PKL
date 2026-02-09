@@ -114,7 +114,7 @@
     <button onclick="window.print()" class="btn btn-primary">
         <i class="la la-print"></i> Print
     </button>
-    <a href="{{ route('barang_keluar.index') }}" class="btn btn-secondary">
+    <a href="{{ route('admin.barang_keluar.index') }}" class="btn btn-secondary">
         Kembali
     </a>
 </div>

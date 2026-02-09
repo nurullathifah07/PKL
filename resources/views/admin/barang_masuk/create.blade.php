@@ -12,7 +12,7 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('barang_masuk.store') }}" method="POST">
+        <form action="{{ route('admin.barang_masuk.store') }}" method="POST">
             @csrf
 
             {{-- TANGGAL --}}
@@ -62,7 +62,7 @@
 
             <div class="text-center">
                 <button class="btn btn-primary">Simpan</button>
-                <a href="{{ route('barang_masuk.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('admin.barang_masuk.index') }}" class="btn btn-secondary">Batal</a>
             </div>
 
         </form>

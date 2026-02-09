@@ -1,4 +1,4 @@
-@extends('layout.admin_layout')
+@extends('layout.operator_layout')
 
 @section('title', 'Edit Barang Keluar')
 
@@ -17,7 +17,7 @@
             </div>
         @endif
 
-        <form action="{{ route('barang_keluar.update', $barangKeluar->id_barang_keluar) }}"
+        <form action="{{ route('operator.barang_keluar.update', $barangKeluar->id_barang_keluar) }}"
               method="POST">
             @csrf
             @method('PUT')
@@ -84,7 +84,7 @@
                 <button class="btn btn-primary">
                     Update
                 </button>
-                <a href="{{ route('barang_keluar.show', $barangKeluar->id_barang_keluar) }}"
+                <a href="{{ route('operator.barang_keluar.show', $barangKeluar->id_barang_keluar) }}"
                    class="btn btn-secondary">
                     Batal
                 </a>
