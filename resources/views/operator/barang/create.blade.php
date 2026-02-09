@@ -1,4 +1,4 @@
-@extends('layout.admin_layout')
+@extends('layout.operator_layout')
 
 @section('title', 'Tambah Barang')
 
@@ -12,7 +12,8 @@
     </div>
 
     <div class="card-body">
-        <form action="{{ route('admin.barang.store') }}" method="POST">
+        {{-- PENTING: route OPERATOR --}}
+        <form action="{{ route('operator.barang.store') }}" method="POST">
             @csrf
 
             {{-- KODE BARANG --}}
@@ -24,7 +25,6 @@
                        value="{{ old('kode_barang') }}"
                        placeholder="Contoh: 4.01.03.996.999"
                        required>
-
                 @error('kode_barang')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -38,7 +38,6 @@
                        class="form-control @error('nama_barang') is-invalid @enderror"
                        value="{{ old('nama_barang') }}"
                        required>
-
                 @error('nama_barang')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -55,7 +54,6 @@
                     <option value="box"  {{ old('satuan') == 'box' ? 'selected' : '' }}>Box</option>
                     <option value="rim"  {{ old('satuan') == 'rim' ? 'selected' : '' }}>Rim</option>
                 </select>
-
                 @error('satuan')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -70,33 +68,21 @@
                        value="{{ old('stok_minimal') }}"
                        min="0"
                        required>
-
-                <small class="text-muted">
-                    Digunakan sebagai batas peringatan stok menipis
-                </small>
-
                 @error('stok_minimal')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
             </div>
 
-            {{-- STOK AWAL (OPSIONAL) --}}
+            {{-- STOK --}}
             <div class="mb-3">
                 <label class="form-label">
                     Stok Awal <span class="text-muted">(Opsional)</span>
                 </label>
-
                 <input type="number"
                        name="stok"
                        class="form-control @error('stok') is-invalid @enderror"
                        value="{{ old('stok') }}"
-                       min="0"
-                       placeholder="Kosongkan jika belum ada stok">
-
-                <small class="text-muted">
-                    Jika tidak diisi, stok otomatis bernilai <b>0</b>
-                </small>
-
+                       min="0">
                 @error('stok')
                     <div class="invalid-feedback">{{ $message }}</div>
                 @enderror
@@ -109,7 +95,9 @@
                 <button type="submit" class="btn btn-primary">
                     Simpan
                 </button>
-                <a href="{{ route('admin.barang.index') }}" class="btn btn-secondary">
+
+                {{-- PENTING: route OPERATOR --}}
+                <a href="{{ route('operator.barang.index') }}" class="btn btn-secondary">
                     Batal
                 </a>
             </div>

@@ -1,4 +1,4 @@
-@extends('layout.admin_layout')
+@extends('layout.operator_layout')
 
 @section('title', 'Daftar Barang')
 
@@ -15,8 +15,8 @@
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Daftar Barang</h4>
 
-                    {{-- TOMBOL TAMBAH --}}
-                    <a href="{{ route('admin.barang.create') }}"
+                    {{-- TOMBOL TAMBAH (OPERATOR) --}}
+                    <a href="{{ route('operator.barang.create') }}"
                        class="btn btn-primary btn-round ml-auto">
                         <i class="la la-plus"></i> Tambah Barang
                     </a>
@@ -36,7 +36,7 @@
                                 <th>Stok Minimal</th>
                                 <th>Status</th>
                                 <th>Stok</th>
-                                <th width="10%">Aksi</th>
+                                <th width="12%">Aksi</th>
                             </tr>
                         </thead>
 
@@ -67,14 +67,14 @@
                                         <div class="form-button-action">
 
                                             {{-- EDIT --}}
-                                            <a href="{{ route('admin.barang.edit', $b->id_barang) }}"
+                                            <a href="{{ route('operator.barang.edit', $b->id_barang) }}"
                                                class="btn btn-link btn-primary btn-sm"
                                                title="Edit">
                                                 <i class="la la-edit"></i>
                                             </a>
 
                                             {{-- DELETE --}}
-                                            <form action="{{ route('admin.barang.destroy', $b->id_barang) }}"
+                                            <form action="{{ route('operator.barang.destroy', $b->id_barang) }}"
                                                   method="POST"
                                                   style="display:inline;">
                                                 @csrf

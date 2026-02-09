@@ -36,7 +36,7 @@ Route::get('/register', fn() => view('auth.register'));
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'level:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'level:admin'])->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
 

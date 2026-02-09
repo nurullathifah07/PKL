@@ -4,20 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Models\Barang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BarangController extends Controller
 {
+    private function viewPath($view)
+    {
+        $level = Auth::user()->level; // admin / operator
+        return "$level.barang.$view";
+    }
+
+    private function routeName($name)
+    {
+        return Auth::user()->level . ".barang.$name";
+    }
+
     // INDEX
     public function index()
     {
         $barang = Barang::all();
-        return view('admin.barang.index', compact('barang'));
+        return view($this->viewPath('index'), compact('barang'));
     }
 
     // CREATE
     public function create()
     {
-        return view('admin.barang.create');
+        return view($this->viewPath('create'));
     }
 
     // STORE
@@ -33,14 +45,11 @@ class BarangController extends Controller
 
         $stok = $request->stok ?? 0;
 
-        // HITUNG STATUS OTOMATIS
-        if ($stok == 0) {
-            $status = 'habis';
-        } elseif ($stok <= $request->stok_minimal) {
-            $status = 'menipis';
-        } else {
-            $status = 'tersedia';
-        }
+        $status = match (true) {
+            $stok == 0 => 'habis',
+            $stok <= $request->stok_minimal => 'menipis',
+            default => 'tersedia',
+        };
 
         Barang::create([
             'kode_barang'  => $request->kode_barang,
@@ -51,7 +60,8 @@ class BarangController extends Controller
             'status'       => $status,
         ]);
 
-        return redirect()->route('barang.index')
+        return redirect()
+            ->route($this->routeName('index'))
             ->with('success', 'Barang berhasil ditambahkan');
     }
 
@@ -59,10 +69,10 @@ class BarangController extends Controller
     public function edit($id)
     {
         $barang = Barang::findOrFail($id);
-        return view('admin.barang.edit', compact('barang'));
+        return view($this->viewPath('edit'), compact('barang'));
     }
 
-    // UPDATE (EDIT BARANG + STOK)
+    // UPDATE
     public function update(Request $request, $id)
     {
         $barang = Barang::findOrFail($id);
@@ -77,14 +87,11 @@ class BarangController extends Controller
 
         $stok = $request->stok ?? $barang->stok;
 
-        // STATUS OTOMATIS
-        if ($stok == 0) {
-            $status = 'habis';
-        } elseif ($stok <= $request->stok_minimal) {
-            $status = 'menipis';
-        } else {
-            $status = 'tersedia';
-        }
+        $status = match (true) {
+            $stok == 0 => 'habis',
+            $stok <= $request->stok_minimal => 'menipis',
+            default => 'tersedia',
+        };
 
         $barang->update([
             'kode_barang'  => $request->kode_barang,
@@ -95,7 +102,8 @@ class BarangController extends Controller
             'status'       => $status,
         ]);
 
-        return redirect()->route('barang.index')
+        return redirect()
+            ->route($this->routeName('index'))
             ->with('success', 'Barang berhasil diperbarui');
     }
 
@@ -104,7 +112,8 @@ class BarangController extends Controller
     {
         Barang::findOrFail($id)->delete();
 
-        return redirect()->route('barang.index')
+        return redirect()
+            ->route($this->routeName('index'))
             ->with('success', 'Barang berhasil dihapus');
     }
 }

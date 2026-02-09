@@ -1,4 +1,4 @@
-@extends('layout.admin_layout')
+@extends('layout.operator_layout')
 
 @section('title', 'Edit Barang')
 
@@ -10,24 +10,30 @@
     <div class="card-header">
         <h5 class="card-title mb-0">Form Edit Data Barang</h5>
     </div>
-    <div class="card-body">
 
-        <form action="{{ route('admin.barang.update', $barang->id_barang) }}" method="POST">
+    <div class="card-body">
+        <form action="{{ route('operator.barang.update', $barang->id_barang) }}" method="POST">
             @csrf
             @method('PUT')
 
-            {{-- KODE --}}
+            {{-- KODE BARANG --}}
             <div class="mb-3">
                 <label>Kode Barang</label>
-                <input type="text" name="kode_barang" class="form-control"
-                       value="{{ old('kode_barang', $barang->kode_barang) }}" required>
+                <input type="text"
+                       name="kode_barang"
+                       class="form-control"
+                       value="{{ old('kode_barang', $barang->kode_barang) }}"
+                       required>
             </div>
 
-            {{-- NAMA --}}
+            {{-- NAMA BARANG --}}
             <div class="mb-3">
                 <label>Nama Barang</label>
-                <input type="text" name="nama_barang" class="form-control"
-                       value="{{ old('nama_barang', $barang->nama_barang) }}" required>
+                <input type="text"
+                       name="nama_barang"
+                       class="form-control"
+                       value="{{ old('nama_barang', $barang->nama_barang) }}"
+                       required>
             </div>
 
             {{-- SATUAN --}}
@@ -43,15 +49,22 @@
             {{-- STOK MINIMAL --}}
             <div class="mb-3">
                 <label>Stok Minimal</label>
-                <input type="number" name="stok_minimal" class="form-control"
-                       value="{{ old('stok_minimal', $barang->stok_minimal) }}" min="0" required>
+                <input type="number"
+                       name="stok_minimal"
+                       class="form-control"
+                       value="{{ old('stok_minimal', $barang->stok_minimal) }}"
+                       min="0"
+                       required>
             </div>
 
-            {{-- STOK (EDITABLE) --}}
+            {{-- STOK --}}
             <div class="mb-3">
                 <label>Stok Saat Ini</label>
-                <input type="number" name="stok" class="form-control"
-                       value="{{ old('stok', $barang->stok) }}" min="0">
+                <input type="number"
+                       name="stok"
+                       class="form-control"
+                       value="{{ old('stok', $barang->stok) }}"
+                       min="0">
                 <small class="text-muted">
                     Boleh dikosongkan (stok tidak berubah)
                 </small>
@@ -60,16 +73,16 @@
             <hr>
 
             <div class="text-center">
-                <button class="btn btn-primary">
+                <button type="submit" class="btn btn-primary">
                     Update
                 </button>
-                <a href="{{ route('admin.barang.index') }}" class="btn btn-secondary">
+
+                <a href="{{ route('operator.barang.index') }}" class="btn btn-secondary">
                     Batal
                 </a>
             </div>
 
         </form>
-
     </div>
 </div>
 

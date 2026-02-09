@@ -1,80 +1,69 @@
 @extends('layout.admin_layout')
 
-@section('title', 'Daftar Barang')
+@section('title', 'Daftar Barang Keluar')
 
 @section('content')
 
-<h4 class="page-title">Daftar Barang</h4>
+<h4 class="page-title">Daftar Barang Keluar</h4>
 
 <div class="row">
     <div class="col-md-12">
         <div class="card">
+            <div class="card-header d-flex align-items-center">
+                <h4 class="card-title">Daftar Barang Keluar</h4>
 
-            {{-- HEADER --}}
-            <div class="card-header">
-                <div class="d-flex align-items-center">
-                    <h4 class="card-title">Daftar Barang</h4>
-
-                    {{-- TOMBOL TAMBAH --}}
-                    <a href="{{ route('admin.barang.create') }}"
-                       class="btn btn-primary btn-round ml-auto">
-                        <i class="la la-plus"></i> Tambah Barang
-                    </a>
-                </div>
+                <a href="{{ route('barang_keluar.create') }}"
+                   class="btn btn-primary btn-round ml-auto">
+                    <i class="la la-plus"></i> Tambah Barang Keluar
+                </a>
             </div>
 
-            {{-- BODY --}}
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="display table table-hover">
+                    <table class="table table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
-                                <th>Kode Barang</th>
-                                <th>Nama Barang</th>
-                                <th>Satuan</th>
-                                <th>Stok Minimal</th>
-                                <th>Status</th>
-                                <th>Stok</th>
-                                <th width="10%">Aksi</th>
+                                <th>Tanggal</th>
+                                <th>Nama Pemohon</th>
+                                <th>Keterangan</th>
+                                <th style="width: 15%">Aksi</th>
                             </tr>
                         </thead>
-
                         <tbody class="text-center">
-                            @forelse ($barang as $b)
+                            @forelse ($barangKeluar as $bk)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $b->kode_barang }}</td>
-                                    <td>{{ $b->nama_barang }}</td>
-                                    <td>{{ ucfirst($b->satuan) }}</td>
-                                    <td>{{ $b->stok_minimal }}</td>
 
-                                    {{-- STATUS --}}
                                     <td>
-                                        @if ($b->status == 'tersedia')
-                                            <span class="badge badge-success">Tersedia</span>
-                                        @elseif ($b->status == 'menipis')
-                                            <span class="badge badge-warning">Menipis</span>
-                                        @else
-                                            <span class="badge badge-danger">Habis</span>
-                                        @endif
+                                        {{ \Carbon\Carbon::parse($bk->tanggal_keluar)->format('d M Y') }}
                                     </td>
 
-                                    <td>{{ $b->stok }}</td>
+                                    <td>
+                                        {{ $bk->pegawai->nama_pegawai ?? '-' }}
+                                    </td>
 
-                                    {{-- AKSI --}}
+                                    <td>{{ $bk->keterangan ?? '-' }}</td>
+
                                     <td>
                                         <div class="form-button-action">
 
+                                            {{-- SHOW --}}
+                                            <a href="{{ route('barang_keluar.show', $bk->id_barang_keluar) }}"
+                                               class="btn btn-link btn-info btn-sm"
+                                               title="Detail">
+                                                <i class="la la-eye"></i>
+                                            </a>
+
                                             {{-- EDIT --}}
-                                            <a href="{{ route('admin.barang.edit', $b->id_barang) }}"
+                                            <a href="{{ route('barang_keluar.edit', $bk->id_barang_keluar) }}"
                                                class="btn btn-link btn-primary btn-sm"
                                                title="Edit">
                                                 <i class="la la-edit"></i>
                                             </a>
 
                                             {{-- DELETE --}}
-                                            <form action="{{ route('admin.barang.destroy', $b->id_barang) }}"
+                                            <form action="{{ route('barang_keluar.destroy', $bk->id_barang_keluar) }}"
                                                   method="POST"
                                                   style="display:inline;">
                                                 @csrf
@@ -92,13 +81,12 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="8" class="text-muted">
-                                        Data barang belum tersedia
+                                    <td colspan="5" class="text-center">
+                                        Data belum tersedia
                                     </td>
                                 </tr>
                             @endforelse
                         </tbody>
-
                     </table>
                 </div>
             </div>
