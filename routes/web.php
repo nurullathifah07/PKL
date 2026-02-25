@@ -8,6 +8,7 @@ use App\Http\Controllers\{
     BarangController,
     BarangKeluarController,
     BarangMasukController,
+    KartuPersediaanController,
     OperatorController,
     PegawaiController,
     PegawaiViewController,
@@ -38,13 +39,15 @@ Route::get('/register', fn() => view('auth.register'));
 
 Route::middleware(['auth', 'level:admin'])->prefix('admin')->name('admin.')->group(function () {
 
-    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('admin.dashboard');
+    Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
 
     Route::resource('/akun', AkunController::class);
     Route::resource('/pegawai', PegawaiController::class);
     Route::resource('/barang', BarangController::class);
     Route::resource('/barang_masuk', BarangMasukController::class);
     Route::resource('/barang_keluar', BarangKeluarController::class);
+    Route::get('/kartu_persediaan',[KartuPersediaanController::class, 'index'])->name('kartu_persediaan.index');
+    Route::get('/kartu_persediaan/{id}',[KartuPersediaanController::class, 'show'])->name('kartu_persediaan.show');
 
     Route::get('/notifikasi', [AdminController::class, 'notifikasi'])->name('admin.notifikasi');
 });
