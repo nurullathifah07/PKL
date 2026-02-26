@@ -31,7 +31,7 @@ class AkunController extends Controller
             'level'    => $request->level,
         ]);
 
-        return redirect()->route('akun.index')
+        return redirect()->route('admin.akun.index')
                          ->with('success', 'Akun berhasil ditambahkan');
     }
 
@@ -54,7 +54,7 @@ class AkunController extends Controller
             'level'    => $request->level,
         ]);
 
-        return redirect()->route('akun.index')
+        return redirect()->route('admin.akun.index')
                          ->with('success', 'Akun berhasil diperbarui');
     }
 
@@ -63,7 +63,7 @@ class AkunController extends Controller
     {
         Akun::findOrFail($id)->delete();
 
-        return redirect()->route('akun.index')
+        return redirect()->route('admin.akun.index')
                          ->with('success', 'Akun berhasil dihapus');
     }
 }

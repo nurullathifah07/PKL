@@ -10,7 +10,7 @@
     <div class="card-header py-3 d-flex justify-content-between align-items-center">
         <h5 class="card-title mb-0">Profil Pegawai</h5>
 
-        <a href="{{ route('pegawai.index') }}" class="btn btn-secondary btn-sm">
+        <a href="{{ route('admin.pegawai.index') }}" class="btn btn-secondary btn-sm">
             <i class="la la-arrow-left"></i> Kembali
         </a>
     </div>
@@ -112,12 +112,12 @@
         <hr>
 
         <div class="text-center">
-            <a href="{{ route('pegawai.edit', $pegawai->id_pegawai) }}"
+            <a href="{{ route('admin.pegawai.edit', $pegawai->id_pegawai) }}"
                class="btn btn-primary">
                 <i class="la la-edit"></i> Edit
             </a>
 
-            <a href="{{ route('pegawai.index') }}"
+            <a href="{{ route('admin.pegawai.index') }}"
                class="btn btn-secondary">
                 Kembali
             </a>

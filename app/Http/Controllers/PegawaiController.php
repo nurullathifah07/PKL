@@ -63,7 +63,7 @@ class PegawaiController extends Controller
         Pegawai::create($data);
 
         return redirect()
-            ->route('pegawai.index')
+            ->route('admin.pegawai.index')
             ->with('success', 'Data pegawai berhasil ditambahkan');
     }
 
@@ -130,7 +130,7 @@ class PegawaiController extends Controller
         $pegawai->update($data);
 
         return redirect()
-            ->route('pegawai.index')
+            ->route('admin.pegawai.index')
             ->with('success', 'Data pegawai berhasil diperbarui');
     }
 
@@ -145,7 +145,7 @@ class PegawaiController extends Controller
         $pegawai->delete();
 
         return redirect()
-            ->route('pegawai.index')
+            ->route('admin.pegawai.index')
             ->with('success', 'Data pegawai berhasil dihapus');
     }
 }

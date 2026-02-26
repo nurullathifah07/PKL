@@ -15,7 +15,7 @@
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Daftar Pegawai</h4>
 
-                    <a href="{{ route('pegawai.create') }}"
+                    <a href="{{ route('admin.pegawai.create') }}"
                        class="btn btn-primary btn-round ml-auto">
                         <i class="la la-plus"></i> Tambah Pegawai
                     </a>
@@ -71,21 +71,21 @@
                                         <div class="form-button-action">
 
                                             {{-- SHOW --}}
-                                            <a href="{{ route('pegawai.show', $p->id_pegawai) }}"
+                                            <a href="{{ route('admin.pegawai.show', $p->id_pegawai) }}"
                                                class="btn btn-link btn-info btn-sm"
                                                title="Detail">
                                                 <i class="la la-eye"></i>
                                             </a>
 
                                             {{-- EDIT --}}
-                                            <a href="{{ route('pegawai.edit', $p->id_pegawai) }}"
+                                            <a href="{{ route('admin.pegawai.edit', $p->id_pegawai) }}"
                                                class="btn btn-link btn-primary btn-sm"
                                                title="Edit">
                                                 <i class="la la-edit"></i>
                                             </a>
 
                                             {{-- DELETE --}}
-                                            <form action="{{ route('pegawai.destroy', $p->id_pegawai) }}"
+                                            <form action="{{ route('admin.pegawai.destroy', $p->id_pegawai) }}"
                                                   method="POST"
                                                   style="display:inline;">
                                                 @csrf

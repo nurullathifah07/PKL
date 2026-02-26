@@ -11,7 +11,7 @@
         <h5 class="card-title">Form Tambah Akun</h5>
     </div>
     <div class="card-body">
-        <form action="{{ route('akun.store') }}" method="POST">
+        <form action="{{ route('admin.akun.store') }}" method="POST">
             @csrf <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
                 <input type="text" class="form-control" id="username" name="username" value="{{ old('username') }}" required>
@@ -55,7 +55,7 @@
             </div>
             <div class="text-center">
                 <button type="submit" class="btn btn-primary me-2">Simpan</button>
-                <a href="{{ route('akun.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('admin.akun.index') }}" class="btn btn-secondary">Batal</a>
             </div>
         </form>
     </div>

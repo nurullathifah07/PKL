@@ -46,14 +46,14 @@
                                         <div class="form-button-action">
 
                                             {{-- Edit --}}
-                                            <a href="{{ route('akun.edit', $a->id_akun) }}"
+                                            <a href="{{ route('admin.akun.edit', $a->id_akun) }}"
                                                 class="btn btn-link btn-simple-primary"
                                                 title="Edit Akun">
                                                 <i class="la la-edit"></i>
                                             </a>
 
                                             {{-- Hapus --}}
-                                            <form action="{{ route('akun.destroy', $a->id_akun) }}"
+                                            <form action="{{ route('admin.akun.destroy', $a->id_akun) }}"
                                                 method="POST"
                                                 style="display:inline;">
                                                 @csrf

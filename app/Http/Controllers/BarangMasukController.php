@@ -30,7 +30,7 @@ class BarangMasukController extends Controller
     {
         return $this->level() === 'operator'
             ? 'operator.barang_masuk.index'
-            : 'barang_masuk.index'; // admin
+            : 'admin.barang_masuk.index';
     }
 
     /*
@@ -89,7 +89,7 @@ class BarangMasukController extends Controller
 
         return redirect()
             ->route($this->indexRoute())
-            ->with('success', 'Barang masuk berhasil ditambahkan');
+            ->with('success', 'Barang berhasil ditambahkan');
     }
 
     /*
@@ -126,6 +126,7 @@ class BarangMasukController extends Controller
             // rollback stok lama
             $barang->stok -= $barangMasuk->jumlah_barang;
 
+            // update data
             $barangMasuk->update([
                 'tanggal_pembelian' => $request->tanggal_pembelian,
                 'jumlah_barang'     => $request->jumlah_barang,
@@ -155,9 +156,11 @@ class BarangMasukController extends Controller
 
         DB::transaction(function () use ($barangMasuk, $barang) {
 
+            // kurangi stok
             $barang->stok -= $barangMasuk->jumlah_barang;
             $barang->save();
 
+            // hapus data
             $barangMasuk->delete();
         });
 

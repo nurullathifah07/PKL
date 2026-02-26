@@ -26,7 +26,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('pegawai.update', $pegawai->id_pegawai) }}"
+                    <form action="{{ route('admin.pegawai.update', $pegawai->id_pegawai) }}"
                           method="POST"
                           enctype="multipart/form-data">
                         @csrf
@@ -173,7 +173,7 @@
                         {{-- BUTTON --}}
                         <div class="text-center">
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <a href="{{ route('pegawai.index') }}" class="btn btn-secondary">Batal</a>
+                            <a href="{{ route('admin.pegawai.index') }}" class="btn btn-secondary">Batal</a>
                         </div>
 
                     </form>

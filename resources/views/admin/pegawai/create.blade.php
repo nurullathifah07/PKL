@@ -13,7 +13,7 @@
 
     <div class="card-body">
 
-        <form action="{{ route('pegawai.store') }}"
+        <form action="{{ route('admin.pegawai.store') }}"
               method="POST"
               enctype="multipart/form-data">
             @csrf
@@ -156,8 +156,8 @@
             </div>
 
             <div class="text-center">
-                <button class="btn btn-primary">Simpan</button>
-                <a href="{{ route('pegawai.index') }}" class="btn btn-secondary">Batal</a>
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="{{ route('admin.pegawai.index') }}" class="btn btn-secondary">Batal</a>
             </div>
 
         </form>

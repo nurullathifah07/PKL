@@ -31,7 +31,7 @@ class BarangKeluarController extends Controller
     {
         return $this->level() === 'operator'
             ? 'operator.barang_keluar.index'
-            : 'barang_keluar.index';
+            : 'admin.barang_keluar.index';
     }
 
     /*

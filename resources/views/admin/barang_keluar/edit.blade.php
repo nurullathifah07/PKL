@@ -84,7 +84,7 @@
                 <button class="btn btn-primary">
                     Update
                 </button>
-                <a href="{{ route('admin.barang_keluar.show', $barangKeluar->id_barang_keluar) }}"
+                <a href="{{ route('admin.barang_keluar.index', $barangKeluar->id_barang_keluar) }}"
                    class="btn btn-secondary">
                     Batal
                 </a>

@@ -61,7 +61,7 @@
             <hr>
 
             <div class="text-center">
-                <button class="btn btn-primary">Simpan</button>
+                <button type="submit" class="btn btn-primary">Simpan</button>
                 <a href="{{ route('admin.barang_masuk.index') }}" class="btn btn-secondary">Batal</a>
             </div>
 
