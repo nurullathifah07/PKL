@@ -20,9 +20,19 @@ class BarangController extends Controller
     }
 
     // INDEX
-    public function index()
+    public function index(Request $request)
     {
-        $barang = Barang::all();
+        $q = $request->q;
+
+        $barang = Barang::when($q, function ($query) use ($q) {
+                $query->where(function ($sub) use ($q) {
+                    $sub->where('kode_barang', 'like', "%{$q}%")
+                        ->orWhere('nama_barang', 'like', "%{$q}%")
+                        ->orWhere('satuan', 'like', "%{$q}%");
+                });
+            })
+            ->get();
+
         return view($this->viewPath('index'), compact('barang'));
     }
 

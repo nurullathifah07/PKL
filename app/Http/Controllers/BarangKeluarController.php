@@ -39,9 +39,61 @@ class BarangKeluarController extends Controller
     | INDEX
     |==================================================
     */
-    public function index()
+    public function index(Request $request)
     {
-        $barangKeluar = BarangKeluar::with('pegawai')
+        $q = strtolower($request->q);
+
+        // mapping bulan Indonesia
+        $bulanMap = [
+            'januari' => 1, 'jan' => 1,
+            'februari' => 2, 'feb' => 2,
+            'maret' => 3, 'mar' => 3,
+            'april' => 4, 'apr' => 4,
+            'mei' => 5,
+            'juni' => 6, 'jun' => 6,
+            'juli' => 7, 'jul' => 7,
+            'agustus' => 8, 'agu' => 8,
+            'september' => 9, 'sep' => 9,
+            'oktober' => 10, 'okt' => 10,
+            'november' => 11, 'nov' => 11,
+            'desember' => 12, 'des' => 12,
+        ];
+
+        $bulan = $bulanMap[$q] ?? null;
+
+        $barangKeluar = BarangKeluar::with(['pegawai', 'details.barang'])
+            ->when($q, function ($query) use ($q, $bulan) {
+
+                $query->where(function ($sub) use ($q, $bulan) {
+
+                    // 🔹 tanggal keluar (angka)
+                    if (is_numeric($q)) {
+                        $sub->whereDay('tanggal_keluar', $q)
+                            ->orWhereMonth('tanggal_keluar', $q)
+                            ->orWhereYear('tanggal_keluar', $q);
+                    }
+
+                    // 🔹 nama bulan (feb, februari, dll)
+                    if ($bulan) {
+                        $sub->orWhereMonth('tanggal_keluar', $bulan);
+                    }
+
+                    // 🔹 keterangan
+                    $sub->orWhere('keterangan', 'like', "%{$q}%");
+                })
+
+                // 🔹 pegawai
+                ->orWhereHas('pegawai', function ($pegawai) use ($q) {
+                    $pegawai->where('nama_pegawai', 'like', "%{$q}%")
+                            ->orWhere('nip', 'like', "%{$q}%");
+                })
+
+                // 🔹 barang (detail)
+                ->orWhereHas('details.barang', function ($barang) use ($q) {
+                    $barang->where('nama_barang', 'like', "%{$q}%")
+                        ->orWhere('kode_barang', 'like', "%{$q}%");
+                });
+            })
             ->orderBy('tanggal_keluar', 'desc')
             ->get();
 

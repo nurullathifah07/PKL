@@ -9,9 +9,19 @@ use Illuminate\Support\Facades\Hash;
 class AkunController extends Controller
 {
     // TAMPIL DATA
-    public function index()
+    public function index(Request $request)
     {
-        $akun = Akun::all();
+        $q = $request->q;
+
+        $akun = Akun::query()
+            ->when($q, function ($query) use ($q) {
+                $query->where('username', 'like', "%{$q}%")
+                    ->orWhere('email', 'like', "%{$q}%")
+                    ->orWhere('level', 'like', "%{$q}%");
+            })
+            ->orderBy('id_akun', 'desc')
+            ->get();
+
         return view('admin.akun.index', compact('akun'));
     }
 

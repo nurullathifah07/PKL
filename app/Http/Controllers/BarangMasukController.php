@@ -38,9 +38,55 @@ class BarangMasukController extends Controller
     | INDEX
     |--------------------------------------------------
     */
-    public function index()
+    public function index(Request $request)
     {
+        $q = strtolower($request->q);
+
+        // mapping bulan Indonesia
+        $bulanMap = [
+            'januari' => 1, 'jan' => 1,
+            'februari' => 2, 'feb' => 2,
+            'maret' => 3, 'mar' => 3,
+            'april' => 4, 'apr' => 4,
+            'mei' => 5,
+            'juni' => 6, 'jun' => 6,
+            'juli' => 7, 'jul' => 7,
+            'agustus' => 8, 'agu' => 8,
+            'september' => 9, 'sep' => 9,
+            'oktober' => 10, 'okt' => 10,
+            'november' => 11, 'nov' => 11,
+            'desember' => 12, 'des' => 12,
+        ];
+
+        $bulan = $bulanMap[$q] ?? null;
+
         $barangMasuk = BarangMasuk::with('barang')
+            ->when($q, function ($query) use ($q, $bulan) {
+
+                $query->where(function ($sub) use ($q, $bulan) {
+
+                    // 🔹 tanggal (angka)
+                    if (is_numeric($q)) {
+                        $sub->whereDay('tanggal_pembelian', $q)
+                            ->orWhereMonth('tanggal_pembelian', $q)
+                            ->orWhereYear('tanggal_pembelian', $q);
+                    }
+
+                    // 🔹 nama bulan (feb, februari, dll)
+                    if ($bulan) {
+                        $sub->orWhereMonth('tanggal_pembelian', $bulan);
+                    }
+
+                    // 🔹 field lain
+                    $sub->orWhere('jumlah_barang', 'like', "%{$q}%")
+                        ->orWhere('harga_satuan', 'like', "%{$q}%");
+                })
+
+                ->orWhereHas('barang', function ($barang) use ($q) {
+                    $barang->where('nama_barang', 'like', "%{$q}%")
+                        ->orWhere('kode_barang', 'like', "%{$q}%");
+                });
+            })
             ->orderBy('tanggal_pembelian', 'desc')
             ->get();
 

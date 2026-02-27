@@ -9,9 +9,21 @@ use Illuminate\Support\Facades\Storage;
 
 class PegawaiController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $pegawai = Pegawai::with('akun')->get();
+        $q = $request->q;
+
+        $pegawai = Pegawai::with('akun')
+            ->when($q, function ($query) use ($q) {
+                $query->where(function ($sub) use ($q) {
+                    $sub->where('nama_pegawai', 'like', "%{$q}%")
+                        ->orWhere('nip', 'like', "%{$q}%")
+                        ->orWhere('nip_bps', 'like', "%{$q}%")
+                        ->orWhere('jabatan', 'like', "%{$q}%");
+                });
+            })
+            ->get();
+
         return view('admin.pegawai.index', compact('pegawai'));
     }
 
