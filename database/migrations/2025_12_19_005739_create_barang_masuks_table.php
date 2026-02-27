@@ -17,6 +17,7 @@ return new class extends Migration
             // relasi ke barang
             $table->unsignedBigInteger('id_barang');
 
+            $table->string('no_bon')->nullable();
             $table->date('tanggal_pembelian');
             $table->integer('jumlah_barang')->unsigned();
             $table->bigInteger('harga_satuan');

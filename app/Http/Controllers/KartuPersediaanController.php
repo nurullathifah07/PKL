@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\DB;
 use App\Models\Barang;
 
@@ -33,6 +34,8 @@ class KartuPersediaanController extends Controller
             ->select(
                 'tanggal_pembelian as tanggal',
                 DB::raw("'Pembelian' as uraian"),
+                DB::raw('NULL as no_bon'),
+                'harga_satuan',
                 'jumlah_barang as masuk',
                 DB::raw('0 as keluar')
             );
@@ -48,6 +51,8 @@ class KartuPersediaanController extends Controller
             ->select(
                 'k.tanggal_keluar as tanggal',
                 'k.keterangan as uraian',
+                DB::raw('NULL as no_bon'),
+                DB::raw('NULL as harga_satuan'),
                 DB::raw('0 as masuk'),
                 'd.jumlah_keluar as keluar'
             );
@@ -72,13 +77,43 @@ class KartuPersediaanController extends Controller
         foreach ($transaksi as $t) {
             $saldo += $t->masuk;
             $saldo -= $t->keluar;
-
             $t->saldo = $saldo;
         }
 
+        /*
+        ======================
+        REKAP BULANAN KELUAR
+        ======================
+        */
+        $rekapBulanan = [];
+
+        foreach ($transaksi as $t) {
+            if ($t->keluar > 0) {
+                $bulan = date('n', strtotime($t->tanggal));
+                $rekapBulanan[$bulan] = ($rekapBulanan[$bulan] ?? 0) + $t->keluar;
+            }
+        }
+
+        /*
+        ======================
+        TOTAL & STOK
+        ======================
+        */
+        $jumlah_keluar = array_sum($rekapBulanan);
+
+        $stokAwal = $transaksi->isNotEmpty()
+            ? ($transaksi->first()->saldo - $transaksi->first()->masuk + $transaksi->first()->keluar)
+            : 0;
+
+        $stokAkhir = $transaksi->last()->saldo ?? 0;
+
         return view('admin.kartu_persediaan.show', compact(
             'barang',
-            'transaksi'
+            'transaksi',
+            'rekapBulanan',
+            'jumlah_keluar',
+            'stokAwal',
+            'stokAkhir'
         ));
     }
 }

@@ -72,13 +72,14 @@ class BarangMasukController extends Controller
                             ->orWhereYear('tanggal_pembelian', $q);
                     }
 
-                    // 🔹 nama bulan (feb, februari, dll)
+                    // 🔹 nama bulan
                     if ($bulan) {
                         $sub->orWhereMonth('tanggal_pembelian', $bulan);
                     }
 
-                    // 🔹 field lain
-                    $sub->orWhere('jumlah_barang', 'like', "%{$q}%")
+                    // 🔹 field lain termasuk no_bon
+                    $sub->orWhere('no_bon', 'like', "%{$q}%")
+                        ->orWhere('jumlah_barang', 'like', "%{$q}%")
                         ->orWhere('harga_satuan', 'like', "%{$q}%");
                 })
 
@@ -112,6 +113,7 @@ class BarangMasukController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+            'no_bon'            => 'nullable|string|max:100', 
             'id_barang'         => 'required|exists:barang,id_barang',
             'tanggal_pembelian' => 'required|date',
             'jumlah_barang'     => 'required|integer|min:1',
@@ -121,6 +123,7 @@ class BarangMasukController extends Controller
         DB::transaction(function () use ($request) {
 
             BarangMasuk::create([
+                'no_bon'            => $request->no_bon,
                 'id_barang'         => $request->id_barang,
                 'tanggal_pembelian' => $request->tanggal_pembelian,
                 'jumlah_barang'     => $request->jumlah_barang,
@@ -162,6 +165,7 @@ class BarangMasukController extends Controller
         $barang = Barang::findOrFail($barangMasuk->id_barang);
 
         $request->validate([
+            'no_bon'            => 'nullable|string|max:100',
             'tanggal_pembelian' => 'required|date',
             'jumlah_barang'     => 'required|integer|min:1',
             'harga_satuan'      => 'required|integer|min:0',
@@ -174,6 +178,7 @@ class BarangMasukController extends Controller
 
             // update data
             $barangMasuk->update([
+                'no_bon'            => $request->no_bon,
                 'tanggal_pembelian' => $request->tanggal_pembelian,
                 'jumlah_barang'     => $request->jumlah_barang,
                 'harga_satuan'      => $request->harga_satuan,

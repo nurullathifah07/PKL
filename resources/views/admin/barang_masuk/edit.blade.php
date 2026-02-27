@@ -17,6 +17,17 @@
             @csrf
             @method('PUT')
 
+            {{-- NO BON --}}
+            <div class="mb-3">
+                <label class="form-label">No Bon (opsional)</label>
+                <input type="text"
+                    name="no_bon"
+                    class="form-control"
+                    placeholder="Masukkan nomor bon (jika ada)"
+                    value="{{ old('no_bon', $barangMasuk->no_bon) }}">
+                <small class="text-muted">Kosongkan jika tidak ada nomor bon</small>
+            </div>
+            
             {{-- TANGGAL --}}
             <div class="mb-3">
                 <label class="form-label">Tanggal Pembelian</label>

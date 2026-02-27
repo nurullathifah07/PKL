@@ -27,6 +27,7 @@
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
+                                <th>No Bon</th>
                                 <th>Tanggal Pembelian</th>
                                 <th>Nama Barang</th>
                                 <th>Jumlah Barang</th>
@@ -40,6 +41,7 @@
                             @forelse ($barangMasuk as $bm)
                                 <tr>
                                     <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $bm->no_bon ?? '-' }}</td>
                                     <td>{{ \Carbon\Carbon::parse($bm->tanggal_pembelian)->format('d M Y') }}</td>
                                     <td>{{ $bm->barang->nama_barang ?? '-' }}</td>
                                     <td>{{ $bm->jumlah_barang }}</td>
