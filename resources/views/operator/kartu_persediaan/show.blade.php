@@ -1,4 +1,4 @@
-@extends('layout.admin_layout')
+@extends('layout.operator_layout')
 
 @section('content')
 
@@ -242,7 +242,7 @@
         <button onclick="window.print()" class="btn btn-primary">
             Print
         </button>
-        <a href="{{ route('admin.kartu_persediaan.index') }}"
+        <a href="{{ route('operator.kartu_persediaan.index') }}"
            class="btn btn-secondary">
             Kembali
         </a>

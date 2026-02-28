@@ -207,6 +207,14 @@
                             </a>
                         </li>
 
+                        {{-- KARTU PERSEDIAAN --}}
+                        <li class="nav-item {{ request()->is('operator/kartu_persediaan') ? 'active' : '' }}">
+                            <a href="{{ url('operator/kartu_persediaan') }}">
+                                <i class="bi bi-card-list" style="font-size: 18px;"></i>
+                                <p>Laporan Persediaan</p>
+                            </a>
+                        </li>
+
                         {{-- NOTIFIKASI --}}
                         <li class="nav-item {{ Request::routeIs('operator.notifikasi') ? 'active' : '' }}">
                             <a href="{{ url('operator/notifikasi') }}">

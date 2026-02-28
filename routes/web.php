@@ -80,6 +80,8 @@ Route::middleware(['auth', 'level:operator'])->prefix('operator')->name('operato
     Route::resource('/barang', BarangController::class);
     Route::resource('/barang_masuk', BarangMasukController::class);
     Route::resource('/barang_keluar', BarangKeluarController::class);
+    Route::get('/kartu_persediaan',[KartuPersediaanController::class, 'index'])->name('kartu_persediaan.index');
+    Route::get('/kartu_persediaan/{id}',[KartuPersediaanController::class, 'show'])->name('kartu_persediaan.show');
 
     Route::get('/notifikasi', [OperatorController::class, 'notifikasi'])->name('notifikasi');
 });
