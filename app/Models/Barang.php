@@ -4,6 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\BarangMasuk;
+use App\Models\BarangKeluarDetail;
+
 
 class Barang extends Model
 {
@@ -29,5 +32,15 @@ class Barang extends Model
             return 'menipis';
         }
         return 'tersedia';
+    }
+
+    public function barangMasuk()
+    {
+        return $this->hasMany(BarangMasuk::class, 'id_barang');
+    }
+
+    public function barangKeluarDetail()
+    {
+        return $this->hasMany(BarangKeluarDetail::class, 'id_barang');
     }
 }

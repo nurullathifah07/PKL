@@ -6,6 +6,8 @@ use App\Models\Barang;
 use App\Models\Pegawai;
 use App\Models\BarangKeluar;
 use App\Models\BarangKeluarDetail;
+use App\Models\Akun;
+use App\Notifications\StokNotifikasi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -134,7 +136,6 @@ class BarangKeluarController extends Controller
         try {
             DB::transaction(function () use ($request) {
 
-                // cek bon pegawai di hari sama
                 $barangKeluar = BarangKeluar::where('tanggal_keluar', $request->tanggal_keluar)
                     ->where('id_pegawai', $request->id_pegawai)
                     ->first();
@@ -158,14 +159,55 @@ class BarangKeluarController extends Controller
                         );
                     }
 
+                    // ===============================
+                    // SIMPAN STOK SEBELUM DIKURANGI
+                    // ===============================
+                    $stokSebelumnya = $barang->stok;
+
                     BarangKeluarDetail::create([
                         'id_barang_keluar' => $barangKeluar->id_barang_keluar,
                         'id_barang'        => $item['id_barang'],
                         'jumlah_keluar'    => $item['jumlah_keluar'],
                     ]);
 
+                    // ===============================
+                    // KURANGI STOK
+                    // ===============================
                     $barang->stok -= $item['jumlah_keluar'];
                     $barang->save();
+
+                    // ===============================
+                    // CEK STOK HABIS
+                    // ===============================
+                    if ($stokSebelumnya > 0 && $barang->stok <= 0) {
+
+                        // Operator → email + database
+                        $operators = Akun::where('level', 'operator')->get();
+                        foreach ($operators as $op) {
+                            $op->notify(new StokNotifikasi($barang, 'habis'));
+                        }
+
+                        // Admin → database saja
+                        $admins = Akun::where('level', 'admin')->get();
+                        foreach ($admins as $admin) {
+                            $admin->notify(new StokNotifikasi($barang, 'habis'));
+                        }
+                    }
+
+                    // ===============================
+                    // CEK STOK MENIPIS
+                    // ===============================
+                    elseif (
+                        $stokSebelumnya > $barang->stok_minimum &&
+                        $barang->stok <= $barang->stok_minimum &&
+                        $barang->stok > 0
+                    ) {
+
+                        $akuns = Akun::whereIn('level', ['admin', 'operator'])->get();
+                        foreach ($akuns as $akun) {
+                            $akun->notify(new StokNotifikasi($barang, 'menipis'));
+                        }
+                    }
                 }
             });
 

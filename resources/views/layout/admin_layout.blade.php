@@ -263,14 +263,6 @@
                                 <p>Laporan Persediaan</p>
                             </a>
                         </li>
-
-                        {{-- NOTIFIKASI --}}
-                        <li class="nav-item {{ Request::routeIs('admin.notifikasi') ? 'active' : '' }}">
-                            <a href="{{ url('admin/notifikasi') }}">
-                                <i class="bi bi-bell" style="font-size: 18px;"></i>
-                                <p>Notifikasi</p>
-                            </a>
-                        </li>
                     </ul>
                 </div>
             </div>

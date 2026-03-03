@@ -55,56 +55,70 @@
                         <li class="nav-item dropdown hidden-caret">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <i class="la la-bell"></i>
-                                <span class="notification">3</span>
+                                <span class="notification">{{ $totalNotif }}</span>
                             </a>
                             <ul class="dropdown-menu notif-box" aria-labelledby="navbarDropdown">
                                 <li>
-                                    <div class="dropdown-title">You have 4 new notification</div>
-                                </li>
-                                <li>
-                                    <div class="notif-center">
-                                        <a href="#">
-                                            <div class="notif-icon notif-primary"> <i class="la la-user-plus"></i> </div>
-                                            <div class="notif-content">
-                                                <span class="block">
-                                                    New user registered
-                                                </span>
-                                                <span class="time">5 minutes ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="notif-icon notif-success"> <i class="la la-comment"></i> </div>
-                                            <div class="notif-content">
-                                                <span class="block">
-                                                    Rahmad commented on Admin
-                                                </span>
-                                                <span class="time">12 minutes ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="notif-img">
-                                                <img src="{{ asset('assets/img/profile2.jpg')}}" alt="Img Profile">
-                                            </div>
-                                            <div class="notif-content">
-                                                <span class="block">
-                                                    Reza send messages to you
-                                                </span>
-                                                <span class="time">12 minutes ago</span>
-                                            </div>
-                                        </a>
-                                        <a href="#">
-                                            <div class="notif-icon notif-danger"> <i class="la la-heart"></i> </div>
-                                            <div class="notif-content">
-                                                <span class="block">
-                                                    Farrah liked Admin
-                                                </span>
-                                                <span class="time">17 minutes ago</span>
-                                            </div>
-                                        </a>
+                                    <div class="dropdown-title">
+                                        @if($totalNotif > 0)
+                                            Ada {{ $totalNotif }} notifikasi stok
+                                        @else
+                                            Tidak ada notifikasi
+                                        @endif
                                     </div>
                                 </li>
+
                                 <li>
-                                    <a class="see-all" href="javascript:void(0);"> <strong>See all notifications</strong> <i class="la la-angle-right"></i> </a>
+                                    <div class="notif-center">
+
+                                        {{-- Barang Habis --}}
+                                        @foreach($barangHabis as $item)
+                                        <a href="{{ route('barang.index') }}">
+                                            <div class="notif-icon notif-danger">
+                                                <i class="la la-times-circle"></i>
+                                            </div>
+                                            <div class="notif-content">
+                                                <span class="block">
+                                                    {{ $item->nama_barang }} habis
+                                                </span>
+                                                <span class="time">
+                                                    Stok: 0
+                                                </span>
+                                            </div>
+                                        </a>
+                                        @endforeach
+
+
+                                        {{-- Barang Menipis --}}
+                                        @foreach($barangMenipis as $item)
+                                        <a href="{{ route('operator.barang.index') }}">
+                                            <div class="notif-icon notif-warning">
+                                                <i class="la la-exclamation-circle"></i>
+                                            </div>
+                                            <div class="notif-content">
+                                                <span class="block">
+                                                    {{ $item->nama_barang }} menipis
+                                                </span>
+                                                <span class="time">
+                                                    Sisa: {{ $item->stok }}
+                                                </span>
+                                            </div>
+                                        </a>
+                                        @endforeach
+
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <a class="see-all" href="{{ route('operator.barang.index') }}">
+                                        <strong>Lihat Semua Barang</strong>
+                                        <i class="la la-angle-right"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="see-all text-danger" href="{{ route('notif.clear', $totalNotif) }}">
+                                        <strong>Clear Notifikasi</strong>
+                                    </a>
                                 </li>
                             </ul>
                         </li>
@@ -212,14 +226,6 @@
                             <a href="{{ url('operator/kartu_persediaan') }}">
                                 <i class="bi bi-card-list" style="font-size: 18px;"></i>
                                 <p>Laporan Persediaan</p>
-                            </a>
-                        </li>
-
-                        {{-- NOTIFIKASI --}}
-                        <li class="nav-item {{ Request::routeIs('operator.notifikasi') ? 'active' : '' }}">
-                            <a href="{{ url('operator/notifikasi') }}">
-                                <i class="bi bi-bell" style="font-size: 18px;"></i>
-                                <p>Notifikasi</p>
                             </a>
                         </li>
                     </ul>

@@ -28,6 +28,11 @@ Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
+Route::get('/clear-notif/{total}', function ($total) {
+    session(['last_cleared_total' => $total]);
+    return redirect()->back();
+})->name('notif.clear');
+
 Route::get('/register', fn() => view('auth.register'));
 
 
@@ -82,8 +87,6 @@ Route::middleware(['auth', 'level:operator'])->prefix('operator')->name('operato
     Route::resource('/barang_keluar', BarangKeluarController::class);
     Route::get('/kartu_persediaan',[KartuPersediaanController::class, 'index'])->name('kartu_persediaan.index');
     Route::get('/kartu_persediaan/{id}',[KartuPersediaanController::class, 'show'])->name('kartu_persediaan.show');
-
-    Route::get('/notifikasi', [OperatorController::class, 'notifikasi'])->name('notifikasi');
 });
 
 
