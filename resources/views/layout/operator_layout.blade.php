@@ -73,7 +73,7 @@
 
                                         {{-- Barang Habis --}}
                                         @foreach($barangHabis as $item)
-                                        <a href="{{ route('barang.index') }}">
+                                        <a href="{{ route('operator.barang.index') }}">
                                             <div class="notif-icon notif-danger">
                                                 <i class="la la-times-circle"></i>
                                             </div>
