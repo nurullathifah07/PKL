@@ -138,8 +138,7 @@
                                     <a class="dropdown-item" href="{{ route('profil.edit') }}"><i class="ti-user"></i> Edit Profil</a>
                                     <a class="dropdown-item" href="#"><i class="ti-settings"></i> Pengaturan</a>
                                 <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#"
-                                        onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="#" onclick="confirmLogout()">
                                         <i class="fa fa-power-off"></i> Logout
                                     </a>
 
@@ -321,6 +320,24 @@
             </div>
         </div>
     </div>
+
+    <script>
+    function confirmLogout() {
+        Swal.fire({
+            title: 'Apakah kamu yakin?',
+            text: "Kamu akan keluar dari sistem",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal',
+            confirmButtonColor: '#d33'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logout-form').submit();
+            }
+        });
+    }
+    </script>
 
     <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>

@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Akun;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -40,30 +39,38 @@ class AuthController extends Controller
 
         // Proses autentikasi
         if (Auth::attempt($credentials, $request->filled('remember'))) {
+
             $request->session()->regenerate();
 
             // Redirect berdasarkan level
             switch (Auth::user()->level) {
+
                 case 'admin':
-                    return redirect()->route('admin.dashboard');
+                    return redirect()
+                        ->route('admin.dashboard')
+                        ->with('success', 'Login berhasil');
+
                 case 'pegawai':
-                    return redirect()->route('pegawai.dashboard');
+                    return redirect()
+                        ->route('pegawai.dashboard')
+                        ->with('success', 'Login berhasil');
+
                 case 'operator':
-                    return redirect()->route('operator.dashboard');
+                    return redirect()
+                        ->route('operator.dashboard')
+                        ->with('success', 'Login berhasil');
+
                 default:
                     Auth::logout();
-                    return redirect('/login')->withErrors([
-                        'login' => 'Level akun tidak dikenali'
-                    ]);
+                    return redirect('/login')
+                        ->with('error', 'Level akun tidak dikenali');
             }
         }
 
         // Jika login gagal
         return back()
             ->withInput($request->only('login'))
-            ->withErrors([
-                'login' => 'Username / Email atau Password salah'
-            ]);
+            ->with('error', 'Username / Email atau Password salah');
     }
 
     // ===============================
@@ -76,6 +83,8 @@ class AuthController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('login');
+        return redirect()
+            ->route('login')
+            ->with('success', 'Logout berhasil');
     }
 }
