@@ -355,6 +355,63 @@
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- POPUP BERHASIL --}}
+    @if(session('success'))
+    <script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: '{{ session('success') }}',
+        timer: 2000,
+        showConfirmButton: false
+    })
+    </script>
+    @endif
+
+    {{-- POPUP GAGAL --}}
+    @if(session('error'))
+    <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Terjadi Kesalahan',
+        text: '{{ session('error') }}'
+    })
+    </script>
+    @endif
+
+    {{-- KONFIRMASI HAPUS DINAMIS --}}
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const forms = document.querySelectorAll(".form-hapus");
+
+        forms.forEach(form => {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                let jenisData = form.getAttribute("data-judul");
+
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Apakah anda yakin ingin menghapus data ' + jenisData + ' ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+
+    });
+    </script>
     <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>

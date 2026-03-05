@@ -59,16 +59,16 @@
                                                 <i class="la la-edit"></i>
                                             </a>
 
-                                            {{-- HAPUS --}}
+                                           {{-- Hapus --}}
                                             <form action="{{ route('operator.barang_masuk.destroy', $bm->id_barang_masuk) }}"
                                                 method="POST"
-                                                style="display:inline-block"
-                                                onsubmit="return confirm('Yakin hapus data ini?')">
+                                                class="form-hapus"
+                                                data-judul="barang masuk"
+                                                style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
                                                         class="btn btn-link btn-simple-danger"
-                                                        data-toggle="tooltip"
                                                         title="Hapus Barang Masuk">
                                                     <i class="la la-times"></i>
                                                 </button>
