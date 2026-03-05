@@ -12,7 +12,7 @@
     </div>
     <div class="card-body">
 
-        <form action="{{ route('akun.update', $akun->id_akun) }}" method="POST">
+        <form action="{{ route('admin.akun.update', $akun->id_akun) }}" method="POST">
             @csrf
             @method('PUT')
 
@@ -61,7 +61,7 @@
 
             <div class="text-center">
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a href="{{ route('akun.index') }}" class="btn btn-secondary">Batal</a>
+                <a href="{{ route('admin.akun.index') }}" class="btn btn-secondary">Batal</a>
             </div>
 
         </form>

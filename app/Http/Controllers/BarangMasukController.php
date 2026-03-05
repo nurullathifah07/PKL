@@ -113,7 +113,7 @@ class BarangMasukController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'no_bon'            => 'nullable|string|max:100', 
+            'no_bon'            => 'nullable|string|max:100',
             'id_barang'         => 'required|exists:barang,id_barang',
             'tanggal_pembelian' => 'required|date',
             'jumlah_barang'     => 'required|integer|min:1',
@@ -138,7 +138,7 @@ class BarangMasukController extends Controller
 
         return redirect()
             ->route($this->indexRoute())
-            ->with('success', 'Barang berhasil ditambahkan');
+            ->with('success', 'Barang masuk berhasil ditambahkan');
     }
 
     /*

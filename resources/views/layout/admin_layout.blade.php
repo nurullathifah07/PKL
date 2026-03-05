@@ -297,26 +297,64 @@
                 </div>
             </div>
     </div>
-    <div class="modal fade" id="modalUpdate" tabindex="-1" role="dialog" aria-labelledby="modalUpdatePro" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header bg-primary">
-                    <h6 class="modal-title"><i class="la la-frown-o"></i> Under Development</h6>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body text-center">
-                    <p>Currently the pro version of the <b>Ready Dashboard</b> Bootstrap is in progress development</p>
-                    <p>
-                        <b>We'll let you know when it's done</b></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    {{-- POPUP BERHASIL --}}
+    @if(session('success'))
+    <script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: '{{ session('success') }}',
+        timer: 2000,
+        showConfirmButton: false
+    })
+    </script>
+    @endif
+
+    {{-- POPUP GAGAL --}}
+    @if(session('error'))
+    <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Terjadi Kesalahan',
+        text: '{{ session('error') }}'
+    })
+    </script>
+    @endif
+
+    {{-- KONFIRMASI HAPUS DINAMIS --}}
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const forms = document.querySelectorAll(".form-hapus");
+
+        forms.forEach(form => {
+            form.addEventListener("submit", function (e) {
+                e.preventDefault();
+
+                let jenisData = form.getAttribute("data-judul");
+
+                Swal.fire({
+                    title: 'Konfirmasi',
+                    text: 'Apakah anda yakin ingin menghapus data ' + jenisData + ' ini?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Ya, hapus',
+                    cancelButtonText: 'Tidak'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+
+    });
+    </script>
+
     <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>

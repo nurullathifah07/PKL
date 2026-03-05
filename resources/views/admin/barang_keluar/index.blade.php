@@ -62,16 +62,17 @@
                                                 <i class="la la-edit"></i>
                                             </a>
 
-                                            {{-- DELETE --}}
+                                            {{-- Hapus --}}
                                             <form action="{{ route('admin.barang_keluar.destroy', $bk->id_barang_keluar) }}"
-                                                  method="POST"
-                                                  style="display:inline;">
+                                                method="POST"
+                                                class="form-hapus"
+                                                data-judul="barang keluar"
+                                                style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
-                                                        class="btn btn-link btn-danger btn-sm"
-                                                        title="Hapus"
-                                                        onclick="return confirm('Yakin ingin menghapus data ini?')">
+                                                        class="btn btn-link btn-simple-danger"
+                                                        title="Hapus Barang Keluar">
                                                     <i class="la la-times"></i>
                                                 </button>
                                             </form>

@@ -55,13 +55,14 @@
                                             {{-- Hapus --}}
                                             <form action="{{ route('admin.akun.destroy', $a->id_akun) }}"
                                                 method="POST"
+                                                class="form-hapus"
+                                                data-judul="akun"
                                                 style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit"
                                                         class="btn btn-link btn-simple-danger"
-                                                        title="Hapus Akun"
-                                                        onclick="return confirm('Yakin hapus akun ini?')">
+                                                        title="Hapus Akun">
                                                     <i class="la la-times"></i>
                                                 </button>
                                             </form>
