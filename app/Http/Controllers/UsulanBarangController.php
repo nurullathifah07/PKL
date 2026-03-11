@@ -19,23 +19,33 @@ class UsulanBarangController extends Controller
 
 
     // menampilkan daftar usulan
-    public function index()
+    public function index(Request $request)
     {
         $level = Auth::user()->level;
+        $q = $request->q;
 
         if ($level == 'pegawai') {
 
             $pegawai = Pegawai::where('id_akun', Auth::id())->first();
 
-            $usulan = UsulanBarang::where('id_pegawai', $pegawai->id_pegawai)
-                        ->latest()
-                        ->get();
+            $usulan = UsulanBarang::query()
+                ->when($q, function ($query) use ($q) {
+                    $query->where('nama_barang_usulan', 'like', "%{$q}%")
+                        ->orWhere('status', 'like', "%{$q}%");
+                })
+                ->where('id_pegawai', $pegawai->id_pegawai)
+                ->latest()
+                ->get();
 
         } else {
 
             $usulan = UsulanBarang::with('pegawai')
-                        ->latest()
-                        ->get();
+                ->when($q, function ($query) use ($q) {
+                    $query->where('nama_barang_usulan', 'like', "%{$q}%")
+                        ->orWhere('status', 'like', "%{$q}%");
+                })
+                ->latest()
+                ->get();
         }
 
         return view($this->viewPath('index'), compact('usulan'));
@@ -72,15 +82,20 @@ class UsulanBarangController extends Controller
     }
 
 
-    // admin setujui usulan
+    // admin setujui usulan → redirect ke tambah barang
     public function setujui($id)
     {
         $usulan = UsulanBarang::findOrFail($id);
 
+        // ubah status
         $usulan->status = 'disetujui';
         $usulan->save();
 
-        return back()->with('success','Usulan berhasil disetujui');
+        // redirect ke tambah barang dengan nama barang otomatis
+        return redirect()->route('admin.barang.create', [
+            'nama_barang' => $usulan->nama_barang_usulan,
+            'id_usulan' => $usulan->id_usulan_barang
+        ]);
     }
 
 

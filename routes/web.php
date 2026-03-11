@@ -53,7 +53,7 @@ Route::middleware(['auth', 'level:admin'])->prefix('admin')->name('admin.')->gro
     Route::get('/kartu_persediaan',[KartuPersediaanController::class, 'index'])->name('kartu_persediaan.index');
     Route::get('/kartu_persediaan/{id}',[KartuPersediaanController::class, 'show'])->name('kartu_persediaan.show');
     Route::get('/usulan_barang',[UsulanBarangController::class,'index'])->name('usulan_barang.index');
-    Route::post('/usulan_barang/{id}/setujui',[UsulanBarangController::class,'setujui'])->name('usulan_barang.setujui');
+    Route::get('/usulan_barang/{id}/setujui',[UsulanBarangController::class,'setujui'])->name('usulan_barang.setujui');
     Route::post('/usulan_barang/{id}/tolak', [UsulanBarangController::class,'tolak'])->name('usulan_barang.tolak');
     Route::post('/usulan_barang/{id}/simpan-barang',[UsulanBarangController::class,'simpanBarang'])->name('usulan_barang.simpanBarang');
     Route::delete('/usulan_barang/{id}', [UsulanBarangController::class, 'destroy'])->name('usulan_barang.destroy');

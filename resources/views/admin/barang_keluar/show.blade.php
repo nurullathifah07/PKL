@@ -111,8 +111,8 @@
 
 {{-- BUTTON --}}
 <div class="text-center mt-3 no-print">
-    <button onclick="window.print()" class="btn btn-primary">
-        <i class="la la-print"></i> Print
+    <button type="button" onclick="printPage()" class="btn btn-primary">
+        Print
     </button>
     <a href="{{ route('admin.barang_keluar.index') }}" class="btn btn-secondary">
         Kembali
@@ -162,3 +162,9 @@
 </style>
 
 @endsection
+
+<script>
+function printPage(){
+    window.print();
+}
+</script>

@@ -4,168 +4,188 @@
 
 <div class="container-fluid">
 
-    <h4 class="page-title mb-4 text-gray-800">Data Usulan Barang</h4>
+<h4 class="page-title mb-4 text-gray-800">Data Usulan Barang</h4>
 
-    <div class="card shadow">
-        <div class="card-body">
+<div class="card shadow">
+    <div class="card-body">
 
-            <table class="table table-bordered table-hover">
+        <table class="table table-bordered table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th width="50">No</th>
+                    <th>Nama Pegawai</th>
+                    <th>Nama Barang</th>
+                    <th width="100">Jumlah</th>
+                    <th>Keterangan</th>
+                    <th width="150">Status</th>
+                    <th width="200">Aksi</th>
+                </tr>
+            </thead>
 
-                <thead class="thead-light">
-                    <tr>
-                        <th width="50">No</th>
-                        <th>Nama Pegawai</th>
-                        <th>Nama Barang</th>
-                        <th width="100">Jumlah</th>
-                        <th>Keterangan</th>
-                        <th width="150">Status</th>
-                        <th width="200">Aksi</th>
-                    </tr>
-                </thead>
+            <tbody>
 
-                <tbody>
+            @forelse($usulan as $u)
 
-                @forelse($usulan as $u)
+                <tr>
+                    <td>{{ $loop->iteration }}</td>
 
-                    <tr>
+                    <td>{{ $u->pegawai->nama_pegawai ?? '-' }}</td>
 
-                        <td>{{ $loop->iteration }}</td>
+                    <td>{{ $u->nama_barang_usulan }}</td>
 
-                        <td>{{ $u->pegawai->nama_pegawai ?? '-' }}</td>
+                    <td>{{ $u->jumlah_usulan }}</td>
 
-                        <td>{{ $u->nama_barang_usulan }}</td>
+                    <td>{{ $u->keterangan }}</td>
 
-                        <td>{{ $u->jumlah_usulan }}</td>
+                    <td>
+                        @if($u->status == 'pending')
 
-                        <td>{{ $u->keterangan }}</td>
+                            <span class="badge badge-warning">
+                                Menunggu
+                            </span>
 
-                        <td>
+                        @elseif($u->status == 'disetujui')
 
-                            @if($u->status == 'pending')
+                            <span class="badge badge-success">
+                                Disetujui
+                            </span>
 
-                                <span class="badge badge-warning">
-                                    Menunggu
-                                </span>
+                        @elseif($u->status == 'ditolak')
 
-                            @elseif($u->status == 'disetujui')
+                            <span class="badge badge-danger">
+                                Ditolak
+                            </span>
 
-                                <span class="badge badge-success">
-                                    Disetujui
-                                </span>
+                            <br>
 
-                            @elseif($u->status == 'ditolak')
+                            <small class="text-danger">
+                                Alasan: {{ $u->alasan_penolakan }}
+                            </small>
 
-                                <span class="badge badge-danger">
-                                    Ditolak
-                                </span>
+                        @endif
+                    </td>
 
-                                <br>
+                    <td>
 
-                                <small class="text-danger">
-                                    Alasan: {{ $u->alasan_penolakan }}
-                                </small>
+                        {{-- AKSI SAAT STATUS PENDING --}}
+                        @if($u->status == 'pending')
 
-                            @endif
+                            <div class="dropdown">
 
-                        </td>
+                                <button
+                                    class="btn btn-primary btn-sm dropdown-toggle"
+                                    type="button"
+                                    data-toggle="dropdown">
+                                    Aksi
+                                </button>
 
-                        <td>
+                                <div class="dropdown-menu">
 
-                            {{-- AKSI SAAT STATUS PENDING --}}
-                            @if($u->status == 'pending')
+                                    {{-- SETUJUI --}}
+                                    <a href="{{ route('admin.usulan_barang.setujui', $u->id_usulan_barang) }}"
+                                       class="dropdown-item"
+                                       onclick="return confirm('Yakin menyetujui usulan ini?')">
+                                        Setujui
+                                    </a>
 
-                                <div class="dropdown">
-
+                                    {{-- TOLAK --}}
                                     <button
-                                        class="btn btn-primary btn-sm dropdown-toggle"
-                                        type="button"
-                                        data-toggle="dropdown">
-                                        Aksi
+                                        class="dropdown-item text-danger"
+                                        data-toggle="modal"
+                                        data-target="#tolakModal{{ $u->id_usulan_barang }}">
+                                        Tolak
                                     </button>
-
-                                    <div class="dropdown-menu">
-
-                                        {{-- SETUJUI --}}
-                                        <form
-                                            action="{{ route('admin.usulan_barang.setujui',$u->id_usulan_barang) }}"
-                                            method="POST"
-                                            onsubmit="return confirm('Yakin menyetujui usulan ini?')">
-
-                                            @csrf
-
-                                            <button class="dropdown-item">
-                                                Setujui
-                                            </button>
-
-                                        </form>
-
-
-                                        {{-- TOLAK --}}
-                                        <form
-                                            action="{{ route('admin.usulan_barang.tolak',$u->id_usulan_barang) }}"
-                                            method="POST"
-                                            onsubmit="return confirm('Yakin menolak usulan ini?')">
-
-                                            @csrf
-
-                                            <input
-                                                type="hidden"
-                                                name="alasan_penolakan"
-                                                value="Usulan tidak disetujui">
-
-                                            <button class="dropdown-item text-danger">
-                                                Tolak
-                                            </button>
-
-                                        </form>
-
-                                    </div>
 
                                 </div>
 
-                            @endif
+                            </div>
+
+                        @endif
 
 
-                            {{-- HAPUS --}}
-                            @if($u->status == 'disetujui' || $u->status == 'ditolak')
+                        {{-- HAPUS --}}
+                        @if($u->status == 'disetujui' || $u->status == 'ditolak')
 
-                                <form
-                                    action="{{ route('admin.usulan_barang.destroy',$u->id_usulan_barang) }}"
-                                    method="POST"
-                                    style="display:inline"
-                                    onsubmit="return confirm('Yakin ingin menghapus usulan ini?')">
+                            <form
+                                action="{{ route('admin.usulan_barang.destroy', $u->id_usulan_barang) }}"
+                                method="POST"
+                                style="display:inline"
+                                onsubmit="return confirm('Yakin ingin menghapus usulan ini?')">
 
-                                    @csrf
-                                    @method('DELETE')
+                                @csrf
+                                @method('DELETE')
 
-                                    <button class="btn btn-danger btn-sm">
-                                        Hapus
+                                <button class="btn btn-danger btn-sm">
+                                    Hapus
+                                </button>
+
+                            </form>
+
+                        @endif
+
+                    </td>
+                </tr>
+
+
+                {{-- MODAL TOLAK --}}
+                <div class="modal fade" id="tolakModal{{ $u->id_usulan_barang }}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+
+                            <form action="{{ route('admin.usulan_barang.tolak', $u->id_usulan_barang) }}" method="POST">
+                                @csrf
+
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Alasan Penolakan</h5>
+
+                                    <button type="button" class="close" data-dismiss="modal">
+                                        <span>&times;</span>
+                                    </button>
+                                </div>
+
+                                <div class="modal-body">
+
+                                    <textarea
+                                        name="alasan_penolakan"
+                                        class="form-control"
+                                        placeholder="Masukkan alasan penolakan..."
+                                        required></textarea>
+
+                                </div>
+
+                                <div class="modal-footer">
+
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                        Batal
                                     </button>
 
-                                </form>
+                                    <button type="submit" class="btn btn-danger">
+                                        Tolak Usulan
+                                    </button>
 
-                            @endif
+                                </div>
 
-                        </td>
+                            </form>
 
-                    </tr>
+                        </div>
+                    </div>
+                </div>
 
-                @empty
+            @empty
 
-                    <tr>
-                        <td colspan="7" class="text-center">
-                            Belum ada usulan barang
-                        </td>
-                    </tr>
+                <tr>
+                    <td colspan="7" class="text-center">
+                        Belum ada usulan barang
+                    </td>
+                </tr>
 
-                @endforelse
+            @endforelse
 
-                </tbody>
+            </tbody>
+        </table>
 
-            </table>
-
-        </div>
     </div>
+</div>
 
 </div>
 

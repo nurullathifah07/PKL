@@ -19,7 +19,6 @@
                         <th width="90">Jumlah</th>
                         <th>Keterangan</th>
                         <th width="130">Status</th>
-                        <th width="180">Aksi</th>
                     </tr>
                 </thead>
 
@@ -48,26 +47,6 @@
                                 <span class="badge badge-danger">Ditolak</span>
                                 <br>
                                 <small class="text-muted">{{ $u->alasan_penolakan }}</small>
-                            @endif
-                        </td>
-
-                        <td>
-                            @if($u->status == 'pending')
-
-                                <button
-                                    onclick="setujuiUsulan({{ $u->id }}, '{{ $u->nama_barang_usulan }}')"
-                                    class="btn btn-success btn-sm">
-                                    Setujui
-                                </button>
-
-                                <button
-                                    onclick="tolakUsulan({{ $u->id }})"
-                                    class="btn btn-danger btn-sm">
-                                    Tolak
-                                </button>
-
-                            @else
-                                <span class="text-muted">-</span>
                             @endif
                         </td>
 
