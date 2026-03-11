@@ -13,7 +13,8 @@ use App\Http\Controllers\{
     PegawaiController,
     PegawaiViewController,
     PermintaanATKController,
-    ProfilController
+    ProfilController,
+    UsulanBarangController
 };
 
 /*
@@ -33,8 +34,6 @@ Route::get('/clear-notif/{total}', function ($total) {
     return redirect()->back();
 })->name('notif.clear');
 
-Route::get('/register', fn() => view('auth.register'));
-
 
 /*
 |--------------------------------------------------------------------------
@@ -53,8 +52,11 @@ Route::middleware(['auth', 'level:admin'])->prefix('admin')->name('admin.')->gro
     Route::resource('/barang_keluar', BarangKeluarController::class);
     Route::get('/kartu_persediaan',[KartuPersediaanController::class, 'index'])->name('kartu_persediaan.index');
     Route::get('/kartu_persediaan/{id}',[KartuPersediaanController::class, 'show'])->name('kartu_persediaan.show');
-
-    Route::get('/notifikasi', [AdminController::class, 'notifikasi'])->name('admin.notifikasi');
+    Route::get('/usulan_barang',[UsulanBarangController::class,'index'])->name('usulan_barang.index');
+    Route::post('/usulan_barang/{id}/setujui',[UsulanBarangController::class,'setujui'])->name('usulan_barang.setujui');
+    Route::post('/usulan_barang/{id}/tolak', [UsulanBarangController::class,'tolak'])->name('usulan_barang.tolak');
+    Route::post('/usulan_barang/{id}/simpan-barang',[UsulanBarangController::class,'simpanBarang'])->name('usulan_barang.simpanBarang');
+    Route::delete('/usulan_barang/{id}', [UsulanBarangController::class, 'destroy'])->name('usulan_barang.destroy');
 });
 
 
@@ -67,8 +69,10 @@ Route::middleware(['auth', 'level:admin'])->prefix('admin')->name('admin.')->gro
 Route::middleware(['auth', 'level:pegawai'])->prefix('pegawai')->group(function () {
 
     Route::get('/dashboard', [PegawaiViewController::class, 'dashboard'])->name('pegawai.dashboard');
-
     Route::resource('/permintaan-ATK', PermintaanATKController::class);
+    Route::get('/usulan_barang',[UsulanBarangController::class,'index'])->name('pegawai.usulan_barang.index');
+    Route::get('/usulan_barang/create',[UsulanBarangController::class,'create'])->name('pegawai.usulan_barang.create');
+    Route::post('/usulan_barang/store',[UsulanBarangController::class,'store'])->name('pegawai.usulan_barang.store');
 });
 
 
@@ -81,12 +85,12 @@ Route::middleware(['auth', 'level:pegawai'])->prefix('pegawai')->group(function 
 Route::middleware(['auth', 'level:operator'])->prefix('operator')->name('operator.')->group(function () {
 
     Route::get('/dashboard', [OperatorController::class, 'dashboard'])->name('dashboard');
-
     Route::resource('/barang', BarangController::class);
     Route::resource('/barang_masuk', BarangMasukController::class);
     Route::resource('/barang_keluar', BarangKeluarController::class);
     Route::get('/kartu_persediaan',[KartuPersediaanController::class, 'index'])->name('kartu_persediaan.index');
     Route::get('/kartu_persediaan/{id}',[KartuPersediaanController::class, 'show'])->name('kartu_persediaan.show');
+    Route::get('/usulan_barang',[UsulanBarangController::class,'index'])->name('usulan_barang.index');
 });
 
 

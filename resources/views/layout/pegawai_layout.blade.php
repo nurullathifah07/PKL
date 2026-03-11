@@ -194,6 +194,13 @@
                                 <p>Riwayat Permintaan</p>
                             </a>
                         </li>
+                        {{-- Riwayat Permintaan (INDEX) --}}
+                        <li class="nav-item {{ Request::is('pegawai/usulan_barang') ? 'active' : '' }}">
+                            <a href="{{ url('pegawai/usulan_barang') }}">
+                                <i class="bi bi-chat-left-text-fill" style="font-size: 18px;"></i>
+                                <p>Usulan Barang</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -320,6 +327,30 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if(session('success'))
+    <script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil',
+        text: '{{ session('success') }}',
+        timer: 2000,
+        showConfirmButton: false
+    })
+    </script>
+    @endif
+
+    @if(session('error'))
+    <script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Terjadi Kesalahan',
+        text: '{{ session('error') }}'
+    })
+    </script>
+    @endif
 
     <script>
     function confirmLogout() {

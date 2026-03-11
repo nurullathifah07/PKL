@@ -227,6 +227,13 @@
                                 <p>Laporan Persediaan</p>
                             </a>
                         </li>
+                        {{-- Riwayat Permintaan (INDEX) --}}
+                        <li class="nav-item {{ Request::is('operator/usulan_barang') ? 'active' : '' }}">
+                            <a href="{{ url('operator/usulan_barang') }}">
+                                <i class="bi bi-chat-left-text-fill" style="font-size: 18px;"></i>
+                                <p>Usulan Barang</p>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
