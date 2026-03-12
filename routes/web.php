@@ -105,4 +105,5 @@ Route::middleware(['auth', 'level:pegawai,operator'])->group(function () {
     Route::get('/profil', [ProfilController::class, 'index'])->name('profil.index');
     Route::get('/profil/edit', [ProfilController::class, 'edit'])->name('profil.edit');
     Route::put('/profil', [ProfilController::class, 'update'])->name('profil.update');
+    Route::post('/ubah-password', [AkunController::class, 'ubahPassword'])->name('ubah.password');
 });

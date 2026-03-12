@@ -86,7 +86,9 @@
                                 </li>
                                 <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="{{ route('profil.edit') }}"><i class="ti-user"></i> Edit Profil</a>
-                                    <a class="dropdown-item" href="#"><i class="ti-settings"></i> Pengaturan</a>
+                                    <a class="dropdown-item" href="#" id="btnUbahPassword">
+                                        <i class="ti-settings"></i> Ubah Password
+                                    </a>
                                 <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#" onclick="confirmLogout()">
                                         <i class="fa fa-power-off"></i> Logout
@@ -278,6 +280,45 @@
         </div>
     </div>
 
+    <div class="modal fade" id="modalUbahPassword" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <form action="{{ route('ubah.password') }}" method="POST">
+                    @csrf
+
+                    <div class="modal-header">
+                        <h5 class="modal-title">Ubah Password</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <div class="form-group">
+                            <label>Password Baru</label>
+                            <input type="password" name="password" class="form-control" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Konfirmasi Password</label>
+                            <input type="password" name="password_confirmation" class="form-control" required>
+                        </div>
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @if(session('success'))
@@ -320,6 +361,7 @@
     }
     </script>
 
+
     <script src="{{ asset('assets/js/core/jquery.3.2.1.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/jquery-ui-1.12.1.custom/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('assets/js/core/popper.min.js') }}"></script>
@@ -333,6 +375,14 @@
     <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
     <script src="{{ asset('assets/js/ready.min.js') }}"></script>
     <script src="{{ asset('assets/js/demo.js') }}"></script>
+    <script>
+    $(document).ready(function(){
+        $('#btnUbahPassword').click(function(e){
+            e.preventDefault();
+            $('#modalUbahPassword').modal('show');
+        });
+    });
+    </script>
     @yield('scripts')
 </body>
 </html>
