@@ -149,14 +149,30 @@
 
 <script>
 new Chart(document.getElementById('grafikPengambilan'), {
-    type: 'bar',
+    type: 'line',
     data: {
         labels: {!! json_encode($grafikPengambilan->pluck('tanggal')) !!},
         datasets: [{
             label: 'Jumlah Pengambilan',
             data: {!! json_encode($grafikPengambilan->pluck('total')) !!},
-            borderWidth: 1
+            borderWidth: 2,
+            fill: false,
+            tension: 0.3,
+            pointRadius: 4
         }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: {
+                display: true
+            }
+        },
+        scales: {
+            y: {
+                beginAtZero: true
+            }
+        }
     }
 });
 </script>
