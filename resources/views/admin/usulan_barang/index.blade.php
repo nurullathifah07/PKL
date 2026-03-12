@@ -10,9 +10,10 @@
     <div class="card-body">
 
         <table class="table table-bordered table-hover">
-            <thead class="thead-light">
+            <thead class="text-center">
                 <tr>
                     <th width="50">No</th>
+                    <th>Tanggal</th>
                     <th>Nama Pegawai</th>
                     <th>Nama Barang</th>
                     <th width="100">Jumlah</th>
@@ -22,12 +23,14 @@
                 </tr>
             </thead>
 
-            <tbody>
+            <tbody class="text-center">
 
             @forelse($usulan as $u)
 
                 <tr>
                     <td>{{ $loop->iteration }}</td>
+
+                    <td>{{ $u->created_at->format('d-m-Y') }}</td>
 
                     <td>{{ $u->pegawai->nama_pegawai ?? '-' }}</td>
 

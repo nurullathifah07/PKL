@@ -4,14 +4,39 @@
 
 @section('content')
 
+<style>
+/* CARD LEBIH HALUS / TUMPUL */
+.dashboard-card{
+    border-radius:18px;
+    border:none;
+    box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+/* WARNA CARD */
+.card-info{
+    background:#38b6c9;
+    color:white;
+}
+
+.card-success{
+    background:#4CAF50;
+    color:white;
+}
+
+.card-danger{
+    background:#ef5350;
+    color:white;
+}
+</style>
+
 <h4 class="page-title mb-4">Dashboard Pegawai</h4>
 
 {{-- ================= TOP CARDS ================= --}}
 <div class="row g-3">
 
     {{-- Total Barang --}}
-    <div class="col-md-6">
-        <div class="card shadow-sm border-0 card-stats card-info text-center">
+    <div class="col-md-4">
+        <div class="card dashboard-card card-info text-center">
             <div class="card-body">
                 <i class="bi bi-box-seam" style="font-size:32px;"></i>
                 <p class="mt-2 mb-1">Total Barang Tersedia</p>
@@ -20,13 +45,24 @@
         </div>
     </div>
 
-    {{-- Permintaan Saya --}}
-    <div class="col-md-6">
-        <div class="card shadow-sm border-0 card-stats card-warning text-center">
+    {{-- Usulan Diterima --}}
+    <div class="col-md-4">
+        <div class="card dashboard-card card-success text-center">
             <div class="card-body">
-                <i class="bi bi-clipboard-check" style="font-size:32px;"></i>
-                <p class="mt-2 mb-1">Permintaan Saya</p>
-                <h3 class="fw-bold">{{ $totalPermintaanSaya }}</h3>
+                <i class="bi bi-check-circle" style="font-size:32px;"></i>
+                <p class="mt-2 mb-1">Usulan Diterima</p>
+                <h3 class="fw-bold">{{ $usulanDiterima }}</h3>
+            </div>
+        </div>
+    </div>
+
+    {{-- Usulan Ditolak --}}
+    <div class="col-md-4">
+        <div class="card dashboard-card card-danger text-center">
+            <div class="card-body">
+                <i class="bi bi-x-circle" style="font-size:32px;"></i>
+                <p class="mt-2 mb-1">Usulan Ditolak</p>
+                <h3 class="fw-bold">{{ $usulanDitolak }}</h3>
             </div>
         </div>
     </div>
@@ -51,13 +87,16 @@
                     <th width="120">Status</th>
                 </tr>
             </thead>
+
             <tbody class="text-center">
                 @forelse($barang as $item)
+
                 <tr>
                     <td>{{ $loop->iteration }}</td>
+
                     <td>{{ $item->nama_barang }}</td>
 
-                    {{-- stok warna otomatis --}}
+                    {{-- STOK WARNA OTOMATIS --}}
                     <td class="
                         fw-bold
                         @if($item->stok <= 5) text-danger
@@ -69,30 +108,34 @@
                     </td>
 
                     <td>{{ $item->satuan }}</td>
+
                     <td>
                         @if ($item->status == 'tersedia')
                             <span class="badge badge-success">Tersedia</span>
+
                         @elseif ($item->status == 'menipis')
                             <span class="badge badge-warning">Menipis</span>
+
                         @else
                             <span class="badge badge-danger">Habis</span>
                         @endif
                     </td>
-                    <td>
 
-                    </td>
                 </tr>
 
                 @empty
+
                 <tr>
-                    <td colspan="4" class="text-center text-muted py-3">
+                    <td colspan="5" class="text-center text-muted py-3">
                         Belum ada data barang
                     </td>
                 </tr>
+
                 @endforelse
             </tbody>
         </table>
     </div>
+
 </div>
 
 @endsection

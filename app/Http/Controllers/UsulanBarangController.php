@@ -22,28 +22,87 @@ class UsulanBarangController extends Controller
     public function index(Request $request)
     {
         $level = Auth::user()->level;
-        $q = $request->q;
+        $q = strtolower($request->q);
+
+        // mapping bulan indonesia
+        $bulanMap = [
+            'januari'=>1,'jan'=>1,
+            'februari'=>2,'feb'=>2,
+            'maret'=>3,'mar'=>3,
+            'april'=>4,'apr'=>4,
+            'mei'=>5,
+            'juni'=>6,'jun'=>6,
+            'juli'=>7,'jul'=>7,
+            'agustus'=>8,'agu'=>8,
+            'september'=>9,'sep'=>9,
+            'oktober'=>10,'okt'=>10,
+            'november'=>11,'nov'=>11,
+            'desember'=>12,'des'=>12,
+        ];
+
+        $bulan = $bulanMap[$q] ?? null;
 
         if ($level == 'pegawai') {
 
             $pegawai = Pegawai::where('id_akun', Auth::id())->first();
 
-            $usulan = UsulanBarang::query()
-                ->when($q, function ($query) use ($q) {
-                    $query->where('nama_barang_usulan', 'like', "%{$q}%")
-                        ->orWhere('status', 'like', "%{$q}%");
+            $usulan = UsulanBarang::where('id_pegawai', $pegawai->id_pegawai)
+
+                ->when($q, function ($query) use ($q,$bulan) {
+
+                    $query->where(function ($sub) use ($q,$bulan) {
+
+                        $sub->where('nama_barang_usulan','like',"%{$q}%")
+                            ->orWhere('status','like',"%{$q}%")
+
+                            // format tanggal 11-03-2026
+                            ->orWhereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') like ?",["%{$q}%"])
+
+                            // format bulan tahun
+                            ->orWhereRaw("DATE_FORMAT(created_at,'%m-%Y') like ?",["%{$q}%"])
+
+                            // tahun
+                            ->orWhereYear('created_at',$q)
+
+                            // hari
+                            ->orWhereDay('created_at',$q);
+
+                        if($bulan){
+                            $sub->orWhereMonth('created_at',$bulan);
+                        }
+
+                    });
+
                 })
-                ->where('id_pegawai', $pegawai->id_pegawai)
+
                 ->latest()
                 ->get();
 
         } else {
 
             $usulan = UsulanBarang::with('pegawai')
-                ->when($q, function ($query) use ($q) {
-                    $query->where('nama_barang_usulan', 'like', "%{$q}%")
-                        ->orWhere('status', 'like', "%{$q}%");
+
+                ->when($q, function ($query) use ($q,$bulan) {
+
+                    $query->where(function ($sub) use ($q,$bulan) {
+
+                        $sub->where('nama_barang_usulan','like',"%{$q}%")
+                            ->orWhere('status','like',"%{$q}%")
+
+                            ->orWhereRaw("DATE_FORMAT(created_at,'%d-%m-%Y') like ?",["%{$q}%"])
+                            ->orWhereRaw("DATE_FORMAT(created_at,'%m-%Y') like ?",["%{$q}%"])
+
+                            ->orWhereYear('created_at',$q)
+                            ->orWhereDay('created_at',$q);
+
+                        if($bulan){
+                            $sub->orWhereMonth('created_at',$bulan);
+                        }
+
+                    });
+
                 })
+
                 ->latest()
                 ->get();
         }

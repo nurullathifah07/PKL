@@ -15,9 +15,10 @@
         <div class="card-body">
 
             <table class="table table-bordered">
-                <thead class="thead-light">
+                <thead class="text-center">
                     <tr>
                         <th>No</th>
+                        <th>Tanggal</th>
                         <th>Nama Barang</th>
                         <th>Jumlah</th>
                         <th>Keterangan</th>
@@ -25,12 +26,14 @@
                     </tr>
                 </thead>
 
-                <tbody>
+                <tbody class="text-center">
 
                 @forelse($usulan as $u)
 
                 <tr>
                     <td>{{ $loop->iteration }}</td>
+
+                    <td>{{ $u->created_at->format('d-m-Y') }}</td>
 
                     <td>{{ $u->nama_barang_usulan }}</td>
 
