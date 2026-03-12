@@ -47,34 +47,40 @@
 {{-- ================= CARD RINGKASAN ================= --}}
 <div class="row">
 
-    <div class="col-md-4 mb-3">
-        <div class="card card-stats card-warning">
-            <div class="card-body text-center">
-                <i class="bi bi-archive-fill icon-dashboard"></i>
-                <p class="card-category mt-2">Total Barang</p>
-                <h4 class="card-title">{{ $totalBarang }}</h4>
+    <div class="col-md-4">
+        <a href="{{ url('admin/barang') }}" style="text-decoration:none;">
+            <div class="card card-stats card-warning card-ringkasan">
+                <div class="card-body text-center">
+                    <i class="bi bi-archive-fill" style="font-size:35px;"></i>
+                    <p class="card-category mt-2">Total Barang</p>
+                    <h4 class="card-title">{{ $totalBarang }}</h4>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
-    <div class="col-md-4 mb-3">
-        <div class="card card-stats card-danger">
-            <div class="card-body text-center">
-                <i class="bi bi-bag-dash-fill icon-dashboard"></i>
-                <p class="card-category mt-2">Total Pengambilan</p>
-                <h4 class="card-title">{{ $totalBarangKeluar }}</h4>
+    <div class="col-md-4">
+        <a href="{{ url('admin/barang_keluar') }}" style="text-decoration:none;">
+            <div class="card card-stats card-danger card-ringkasan">
+                <div class="card-body text-center">
+                    <i class="bi bi-bag-dash-fill" style="font-size:35px;"></i>
+                    <p class="card-category mt-2">Total Pengambilan</p>
+                    <h4 class="card-title">{{ $totalBarangKeluar }}</h4>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
-    <div class="col-md-4 mb-3">
-        <div class="card card-stats card-info">
-            <div class="card-body text-center">
-                <i class="bi bi-cart-plus-fill icon-dashboard"></i>
-                <p class="card-category mt-2">Total Pembelian</p>
-                <h4 class="card-title">{{ $totalBarangMasuk }}</h4>
+    <div class="col-md-4">
+        <a href="{{ url('admin/barang_masuk') }}" style="text-decoration:none;">
+            <div class="card card-stats card-info card-ringkasan">
+                <div class="card-body text-center">
+                    <i class="bi bi-cart-plus-fill" style="font-size:35px;"></i>
+                    <p class="card-category mt-2">Total Pembelian</p>
+                    <h4 class="card-title">{{ $totalBarangMasuk }}</h4>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
 </div>

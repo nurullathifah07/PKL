@@ -2,6 +2,22 @@
 
 @section('title', 'Dashboard Persediaan ATK')
 
+@section('styles')
+<style>
+    .card-ringkasan{
+        border-radius:20px;
+        box-shadow:0 6px 15px rgba(0,0,0,0.08);
+        transition:0.2s;
+    }
+
+    .card-ringkasan:hover{
+        transform:translateY(-3px);
+        cursor:pointer;
+    }
+</style>
+@endsection
+
+
 @section('content')
 
 <h4 class="page-title mb-4">Dashboard Persediaan ATK</h4>
@@ -10,33 +26,39 @@
 <div class="row">
 
     <div class="col-md-4">
-        <div class="card card-stats card-warning">
-            <div class="card-body text-center">
-                <i class="bi bi-archive-fill" style="font-size:35px;"></i>
-                <p class="card-category mt-2">Total Barang</p>
-                <h4 class="card-title">{{ $totalBarang }}</h4>
+        <a href="{{ url('operator/barang') }}" style="text-decoration:none;">
+            <div class="card card-stats card-warning card-ringkasan">
+                <div class="card-body text-center">
+                    <i class="bi bi-archive-fill" style="font-size:35px;"></i>
+                    <p class="card-category mt-2">Total Barang</p>
+                    <h4 class="card-title">{{ $totalBarang }}</h4>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-md-4">
-        <div class="card card-stats card-danger">
-            <div class="card-body text-center">
-                <i class="bi bi-bag-dash-fill" style="font-size:35px;"></i>
-                <p class="card-category mt-2">Total Pengambilan</p>
-                <h4 class="card-title">{{ $totalBarangKeluar }}</h4>
+        <a href="{{ url('operator/barang_keluar') }}" style="text-decoration:none;">
+            <div class="card card-stats card-danger card-ringkasan">
+                <div class="card-body text-center">
+                    <i class="bi bi-bag-dash-fill" style="font-size:35px;"></i>
+                    <p class="card-category mt-2">Total Pengambilan</p>
+                    <h4 class="card-title">{{ $totalBarangKeluar }}</h4>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
     <div class="col-md-4">
-        <div class="card card-stats card-info">
-            <div class="card-body text-center">
-                <i class="bi bi-cart-plus-fill" style="font-size:35px;"></i>
-                <p class="card-category mt-2">Total Pembelian</p>
-                <h4 class="card-title">{{ $totalBarangMasuk }}</h4>
+        <a href="{{ url('operator/barang_masuk') }}" style="text-decoration:none;">
+            <div class="card card-stats card-info card-ringkasan">
+                <div class="card-body text-center">
+                    <i class="bi bi-cart-plus-fill" style="font-size:35px;"></i>
+                    <p class="card-category mt-2">Total Pembelian</p>
+                    <h4 class="card-title">{{ $totalBarangMasuk }}</h4>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
 </div>
@@ -86,7 +108,7 @@
     </div>
 </div>
 
-{{-- ================= TABEL REKAP PENGAMBILAN ================= --}}
+{{-- ================= TABEL REKAP ================= --}}
 <div class="card mt-4 mb-4">
     <div class="card-header">
         <h4 class="card-title">Rekap Pengambilan Barang per Hari</h4>
@@ -121,8 +143,10 @@
 
 @endsection
 
+
 @section('scripts')
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
 new Chart(document.getElementById('grafikPengambilan'), {
     type: 'bar',

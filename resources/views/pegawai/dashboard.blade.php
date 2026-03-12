@@ -5,10 +5,17 @@
 @section('content')
 
 <style>
+.dashboard-card:hover{
+    transform: translateY(-4px);
+    box-shadow:0 6px 15px rgba(0,0,0,0.1);
+    cursor:pointer;
+}
+
 /* CARD LEBIH HALUS / TUMPUL */
 .dashboard-card{
     border-radius:18px;
     border:none;
+    transition:0.2s;
     box-shadow:0 4px 10px rgba(0,0,0,0.08);
 }
 
@@ -47,24 +54,28 @@
 
     {{-- Usulan Diterima --}}
     <div class="col-md-4">
-        <div class="card dashboard-card card-success text-center">
-            <div class="card-body">
-                <i class="bi bi-check-circle" style="font-size:32px;"></i>
-                <p class="mt-2 mb-1">Usulan Diterima</p>
-                <h3 class="fw-bold">{{ $usulanDiterima }}</h3>
+        <a href="{{ url('pegawai/usulan_barang') }}" style="text-decoration:none;">
+            <div class="card dashboard-card card-success text-center">
+                <div class="card-body">
+                    <i class="bi bi-check-circle" style="font-size:32px;"></i>
+                    <p class="mt-2 mb-1">Usulan Diterima</p>
+                    <h3 class="fw-bold">{{ $usulanDiterima }}</h3>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
     {{-- Usulan Ditolak --}}
     <div class="col-md-4">
-        <div class="card dashboard-card card-danger text-center">
-            <div class="card-body">
-                <i class="bi bi-x-circle" style="font-size:32px;"></i>
-                <p class="mt-2 mb-1">Usulan Ditolak</p>
-                <h3 class="fw-bold">{{ $usulanDitolak }}</h3>
+        <a href="{{ url('pegawai/usulan_barang') }}" style="text-decoration:none;">
+            <div class="card dashboard-card card-danger text-center">
+                <div class="card-body">
+                    <i class="bi bi-x-circle" style="font-size:32px;"></i>
+                    <p class="mt-2 mb-1">Usulan Ditolak</p>
+                    <h3 class="fw-bold">{{ $usulanDitolak }}</h3>
+                </div>
             </div>
-        </div>
+        </a>
     </div>
 
 </div>
