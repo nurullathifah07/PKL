@@ -15,7 +15,6 @@
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Daftar Barang</h4>
 
-                    {{-- TOMBOL TAMBAH --}}
                     <a href="{{ route('admin.barang.create') }}"
                        class="btn btn-primary btn-round ml-auto">
                         <i class="la la-plus"></i> Tambah Barang
@@ -26,7 +25,9 @@
             {{-- BODY --}}
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="display table table-hover">
+
+                    <table id="tabel-barang" class="display table table-bordered table-hover">
+
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
@@ -41,71 +42,121 @@
                         </thead>
 
                         <tbody class="text-center">
+
                             @forelse ($barang as $b)
-                                <tr>
-                                    <td>{{ $loop->iteration }}</td>
-                                    <td>{{ $b->kode_barang }}</td>
-                                    <td>{{ $b->nama_barang }}</td>
-                                    <td>{{ ucfirst($b->satuan) }}</td>
-                                    <td>{{ $b->stok_minimal }}</td>
 
-                                    {{-- STATUS --}}
-                                    <td>
-                                        @if ($b->status == 'tersedia')
-                                            <span class="badge badge-success">Tersedia</span>
-                                        @elseif ($b->status == 'menipis')
-                                            <span class="badge badge-warning">Menipis</span>
-                                        @else
-                                            <span class="badge badge-danger">Habis</span>
-                                        @endif
-                                    </td>
+                            <tr>
 
-                                    <td>{{ $b->stok }}</td>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $b->kode_barang }}</td>
+                                <td>{{ $b->nama_barang }}</td>
+                                <td>{{ ucfirst($b->satuan) }}</td>
+                                <td>{{ $b->stok_minimal }}</td>
 
-                                    {{-- AKSI --}}
-                                    <td>
-                                        <div class="form-button-action">
+                                {{-- STATUS --}}
+                                <td>
 
-                                            {{-- EDIT --}}
-                                            <a href="{{ route('admin.barang.edit', $b->id_barang) }}"
-                                               class="btn btn-link btn-primary btn-sm"
-                                               title="Edit">
-                                                <i class="la la-edit"></i>
-                                            </a>
+                                    @if ($b->status == 'tersedia')
+                                        <span class="badge badge-success">
+                                            Tersedia
+                                        </span>
 
-                                            {{-- Hapus --}}
-                                            <form action="{{ route('admin.barang.destroy', $b->id_barang) }}"
-                                                method="POST"
-                                                class="form-hapus"
-                                                data-judul="barang"
-                                                style="display:inline;">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                        class="btn btn-link btn-simple-danger"
-                                                        title="Hapus Barang">
-                                                    <i class="la la-times"></i>
-                                                </button>
-                                            </form>
+                                    @elseif ($b->status == 'menipis')
+                                        <span class="badge badge-warning">
+                                            Menipis
+                                        </span>
 
-                                        </div>
-                                    </td>
-                                </tr>
+                                    @else
+                                        <span class="badge badge-danger">
+                                            Habis
+                                        </span>
+
+                                    @endif
+
+                                </td>
+
+                                <td>{{ $b->stok }}</td>
+
+                                {{-- AKSI --}}
+                                <td>
+                                    <div class="form-button-action">
+
+                                        {{-- EDIT --}}
+                                        <a href="{{ route('admin.barang.edit',$b->id_barang) }}"
+                                           class="btn btn-link btn-primary btn-sm"
+                                           title="Edit">
+                                            <i class="la la-edit"></i>
+                                        </a>
+
+                                        {{-- HAPUS --}}
+                                        <form action="{{ route('admin.barang.destroy',$b->id_barang) }}"
+                                              method="POST"
+                                              class="form-hapus"
+                                              data-judul="barang"
+                                              style="display:inline;">
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit"
+                                                    class="btn btn-link btn-danger btn-sm"
+                                                    title="Hapus Barang">
+                                                <i class="la la-times"></i>
+                                            </button>
+                                        </form>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
                             @empty
-                                <tr>
-                                    <td colspan="8" class="text-muted">
-                                        Data barang belum tersedia
-                                    </td>
-                                </tr>
+
+                            <tr>
+                                <td colspan="8" class="text-center text-muted">
+                                    Data barang belum tersedia
+                                </td>
+                            </tr>
+
                             @endforelse
+
                         </tbody>
 
                     </table>
+
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
+@endsection
+@section('scripts')
+
+<script>
+
+$(document).ready(function(){
+
+    $('#tabel-barang').DataTable({
+
+        pageLength: 10,
+        searching: false,
+        lengthChange: false,
+
+        language:{
+            paginate:{
+                previous:"Sebelumnya",
+                next:"Berikutnya"
+            },
+            info:"Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoEmpty:"Data tidak tersedia",
+            zeroRecords:"Data tidak ditemukan"
+        }
+
+    });
+
+});
+
+</script>
 
 @endsection

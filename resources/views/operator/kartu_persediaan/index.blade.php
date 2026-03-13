@@ -1,5 +1,7 @@
 @extends('layout.operator_layout')
 
+@section('title','Daftar Kartu Kendali')
+
 @section('content')
 
 <h4 class="page-title">Kartu Persediaan</h4>
@@ -15,7 +17,8 @@
         <div class="card-body pt-0">
 
             <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
+                <table id="tabel-kartu-persediaan" class="display table table-hover align-middle mb-0">
+
                     <thead class="table-light">
                         <tr>
                             <th width="5%">No</th>
@@ -24,6 +27,7 @@
                             <th width="15%" class="text-center">Aksi</th>
                         </tr>
                     </thead>
+
                     <tbody>
                         @forelse($barang as $key => $b)
                         <tr>
@@ -37,6 +41,7 @@
                                 </a>
                             </td>
                         </tr>
+
                         @empty
                         <tr>
                             <td colspan="4" class="text-center text-muted py-4">
@@ -45,6 +50,7 @@
                         </tr>
                         @endforelse
                     </tbody>
+
                 </table>
             </div>
 
@@ -52,5 +58,31 @@
     </div>
 
 </div>
+
+@endsection
+
+
+@section('scripts')
+
+<script>
+$(document).ready(function () {
+
+    $('#tabel-kartu-persediaan').DataTable({
+        pageLength: 10,
+        searching: false,
+        lengthChange: false,
+        language: {
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            },
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoEmpty: "Data tidak tersedia",
+            zeroRecords: "Data tidak ditemukan"
+        }
+    });
+
+});
+</script>
 
 @endsection

@@ -1,5 +1,7 @@
 @extends('layout.pegawai_layout')
 
+@section('title', 'Usulan Barang Baru')
+
 @section('content')
 
 <div class="container-fluid">
@@ -14,9 +16,9 @@
     <div class="card shadow">
         <div class="card-body">
 
-            <table class="table table-bordered">
-                <thead class="text-center">
-                    <tr>
+            <table id="tabel-usulan-pegawai" class="display table table-bordered">
+                <thead>
+                    <tr class="text-center">
                         <th>No</th>
                         <th>Tanggal</th>
                         <th>Nama Barang</th>
@@ -71,7 +73,7 @@
                 @empty
 
                 <tr>
-                    <td colspan="5" class="text-center">
+                    <td colspan="6" class="text-center">
                         Belum ada usulan barang
                     </td>
                 </tr>
@@ -85,5 +87,31 @@
     </div>
 
 </div>
+
+@endsection
+
+
+@section('scripts')
+
+<script>
+$(document).ready(function(){
+
+    $('#tabel-usulan-pegawai').DataTable({
+        pageLength: 10,
+        searching: false,
+        lengthChange: false,
+        language: {
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            },
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoEmpty: "Data tidak tersedia",
+            zeroRecords: "Data tidak ditemukan"
+        }
+    });
+
+});
+</script>
 
 @endsection

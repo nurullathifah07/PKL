@@ -15,7 +15,7 @@
                 <div class="d-flex align-items-center">
                     <h4 class="card-title">Daftar Barang</h4>
 
-                    {{-- TOMBOL TAMBAH (OPERATOR) --}}
+                    {{-- TOMBOL TAMBAH --}}
                     <a href="{{ route('operator.barang.create') }}"
                        class="btn btn-primary btn-round ml-auto">
                         <i class="la la-plus"></i> Tambah Barang
@@ -26,7 +26,8 @@
             {{-- BODY --}}
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="display table table-hover">
+
+                    <table id="tabel-barang" class="display table table-hover">
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
@@ -73,17 +74,16 @@
                                                 <i class="la la-edit"></i>
                                             </a>
 
-                                            {{-- Hapus --}}
+                                            {{-- HAPUS --}}
                                             <form action="{{ route('operator.barang.destroy', $b->id_barang) }}"
                                                 method="POST"
-                                                class="form-hapus"
-                                                data-judul="barang"
                                                 style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
+
                                                 <button type="submit"
                                                         class="btn btn-link btn-simple-danger"
-                                                        title="Hapus Barang">
+                                                        onclick="return confirm('Yakin ingin menghapus barang ini?')">
                                                     <i class="la la-times"></i>
                                                 </button>
                                             </form>
@@ -101,11 +101,36 @@
                         </tbody>
 
                     </table>
+
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
+@endsection
+
+
+@section('scripts')
+
+<script>
+$(document).ready(function () {
+    $('#tabel-barang').DataTable({
+        pageLength: 10, // tampil 10 data
+        searching: false, // hilangkan search
+        lengthChange: false, // hilangkan show entries
+        language: {
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            },
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoEmpty: "Data tidak tersedia",
+            zeroRecords: "Data tidak ditemukan"
+        }
+    });
+});
+</script>
 
 @endsection

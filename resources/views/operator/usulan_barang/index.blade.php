@@ -1,4 +1,4 @@
-@extends('layout.admin_layout')
+@extends('layout.operator_layout')
 
 @section('title','Usulan Barang')
 
@@ -10,9 +10,9 @@
     <div class="card shadow">
         <div class="card-body">
 
-            <table class="table table-bordered table-hover">
+            <table id="tabel-usulan" class="display table table-bordered table-hover">
                 <thead class="text-center">
-                    <tr>
+                    <tr class="text-center">
                         <th width="50">No</th>
                         <th>Tanggal</th>
                         <th>Nama Pegawai</th>
@@ -25,6 +25,7 @@
 
                 <tbody class="text-center">
                 @forelse($usulan as $u)
+
                     <tr>
 
                         <td>{{ $loop->iteration }}</td>
@@ -75,6 +76,26 @@
 
 @section('scripts')
 <script>
+
+$(document).ready(function(){
+
+    $('#tabel-usulan').DataTable({
+        pageLength: 10,
+        searching: false,
+        lengthChange: false,
+        language: {
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            },
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoEmpty: "Data tidak tersedia",
+            zeroRecords: "Data tidak ditemukan"
+        }
+    });
+
+});
+
 
 function setujuiUsulan(id, namaBarang){
 

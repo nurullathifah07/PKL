@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use App\Models\Barang;
 
 class KartuPersediaanController extends Controller
@@ -22,9 +23,18 @@ class KartuPersediaanController extends Controller
     // =========================
     // INDEX → daftar barang
     // =========================
-    public function index()
+    public function index(Request $request)
     {
-        $barang = Barang::orderBy('nama_barang')->get();
+        $query = Barang::query();
+
+        // jika ada pencarian
+        if ($request->search) {
+            $query->where('nama_barang', 'like', '%' . $request->search . '%')
+                ->orWhere('kode_barang', 'like', '%' . $request->search . '%');
+        }
+
+        $barang = $query->orderBy('nama_barang')->get();
+
         return view($this->viewPath('index'), compact('barang'));
     }
 
