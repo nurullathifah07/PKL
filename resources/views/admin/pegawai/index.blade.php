@@ -90,14 +90,15 @@
 
                                         {{-- DELETE --}}
                                         <form action="{{ route('admin.pegawai.destroy',$p->id_pegawai) }}"
-                                              method="POST"
-                                              style="display:inline;">
+                                            method="POST"
+                                            class="form-hapus"
+                                            data-judul="pegawai"
+                                            style="display:inline;">
                                             @csrf
                                             @method('DELETE')
 
                                             <button type="submit"
                                                     class="btn btn-link btn-danger btn-sm"
-                                                    onclick="return confirm('Yakin ingin menghapus data ini?')"
                                                     title="Hapus">
                                                 <i class="la la-times"></i>
                                             </button>

@@ -9,6 +9,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
+
+            {{-- HEADER --}}
             <div class="card-header d-flex align-items-center">
                 <h4 class="card-title">Daftar Barang Keluar</h4>
 
@@ -18,9 +20,12 @@
                 </a>
             </div>
 
+            {{-- BODY --}}
             <div class="card-body">
                 <div class="table-responsive">
-                    <table class="table table-hover">
+
+                    <table id="tabel-barang-keluar" class="display table table-hover">
+
                         <thead class="text-center">
                             <tr>
                                 <th>No</th>
@@ -30,9 +35,11 @@
                                 <th style="width: 15%">Aksi</th>
                             </tr>
                         </thead>
+
                         <tbody class="text-center">
                             @forelse ($barangKeluar as $bk)
                                 <tr>
+
                                     <td>{{ $loop->iteration }}</td>
 
                                     <td>
@@ -48,7 +55,7 @@
                                     <td>
                                         <div class="form-button-action">
 
-                                            {{-- SHOW --}}
+                                            {{-- DETAIL --}}
                                             <a href="{{ route('admin.barang_keluar.show', $bk->id_barang_keluar) }}"
                                                class="btn btn-link btn-info btn-sm"
                                                title="Detail">
@@ -62,7 +69,7 @@
                                                 <i class="la la-edit"></i>
                                             </a>
 
-                                            {{-- Hapus --}}
+                                            {{-- DELETE --}}
                                             <form action="{{ route('admin.barang_keluar.destroy', $bk->id_barang_keluar) }}"
                                                 method="POST"
                                                 class="form-hapus"
@@ -70,16 +77,19 @@
                                                 style="display:inline;">
                                                 @csrf
                                                 @method('DELETE')
+
                                                 <button type="submit"
-                                                        class="btn btn-link btn-simple-danger"
-                                                        title="Hapus Barang Keluar">
+                                                        class="btn btn-link btn-danger btn-sm"
+                                                        title="Hapus">
                                                     <i class="la la-times"></i>
                                                 </button>
                                             </form>
 
                                         </div>
                                     </td>
+
                                 </tr>
+
                             @empty
                                 <tr>
                                     <td colspan="5" class="text-center">
@@ -88,12 +98,40 @@
                                 </tr>
                             @endforelse
                         </tbody>
+
                     </table>
+
                 </div>
             </div>
 
         </div>
     </div>
 </div>
+
+@endsection
+
+
+@section('scripts')
+
+<script>
+$(document).ready(function () {
+
+    $('#tabel-barang-keluar').DataTable({
+        pageLength: 10,
+        searching: false,
+        lengthChange: false,
+        language: {
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            },
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoEmpty: "Data tidak tersedia",
+            zeroRecords: "Data tidak ditemukan"
+        }
+    });
+
+});
+</script>
 
 @endsection

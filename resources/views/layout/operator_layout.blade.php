@@ -15,6 +15,15 @@
     <link rel="stylesheet" href="{{ asset('assets/css/demo.css')}}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     @yield('styles')
+    <style>
+        table thead th {
+            text-align: center;
+        }
+        </style><style>
+    table.dataTable thead th {
+        text-align: center !important;
+    }
+    </style>
 
 </head>
 <body>
@@ -490,7 +499,6 @@
     <script src="{{ asset('assets/js/plugin/jquery-mapael/maps/world_countries.min.js') }}"></script>
     <script src="{{ asset('assets/js/plugin/chart-circle/circles.min.js') }}"></script>
     <script src="{{ asset('assets/js/ready.min.js') }}"></script>
-    <script src="{{ asset('assets/js/demo.js') }}"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

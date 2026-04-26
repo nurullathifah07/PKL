@@ -1,195 +1,205 @@
 @extends('layout.admin_layout')
 
+@section('title', 'Data Usulan Barang')
+
 @section('content')
 
-<div class="container-fluid">
+<h4 class="page-title">Data Usulan Barang</h4>
 
-<h4 class="page-title mb-4 text-gray-800">Data Usulan Barang</h4>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
 
-<div class="card shadow">
-    <div class="card-body">
+            {{-- HEADER --}}
+            <div class="card-header">
+                <div class="d-flex align-items-center">
+                    <h4 class="card-title">Data Usulan Barang</h4>
+                </div>
+            </div>
 
-        <table class="table table-bordered table-hover">
-            <thead class="text-center">
-                <tr>
-                    <th width="50">No</th>
-                    <th>Tanggal</th>
-                    <th>Nama Pegawai</th>
-                    <th>Nama Barang</th>
-                    <th width="100">Jumlah</th>
-                    <th>Keterangan</th>
-                    <th width="150">Status</th>
-                    <th width="200">Aksi</th>
-                </tr>
-            </thead>
+            {{-- BODY --}}
+            <div class="card-body">
+                <div class="table-responsive">
 
-            <tbody class="text-center">
+                    <table id="tabel-usulan" class="display table table-bordered table-hover">
 
-            @forelse($usulan as $u)
+                        <thead class="text-center">
+                            <tr>
+                                <th width="50">No</th>
+                                <th>Tanggal</th>
+                                <th>Nama Pegawai</th>
+                                <th>Nama Barang</th>
+                                <th width="100">Jumlah</th>
+                                <th>Keterangan</th>
+                                <th width="150">Status</th>
+                                <th width="200">Aksi</th>
+                            </tr>
+                        </thead>
 
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
+                        <tbody class="text-center">
 
-                    <td>{{ $u->created_at->format('d-m-Y') }}</td>
+                        @forelse($usulan as $u)
 
-                    <td>{{ $u->pegawai->nama_pegawai ?? '-' }}</td>
+                            <tr>
+                                <td>{{ $loop->iteration }}</td>
+                                <td>{{ $u->created_at->format('d-m-Y') }}</td>
+                                <td>{{ $u->pegawai->nama_pegawai ?? '-' }}</td>
+                                <td>{{ $u->nama_barang_usulan }}</td>
+                                <td>{{ $u->jumlah_usulan }}</td>
+                                <td>{{ $u->keterangan }}</td>
 
-                    <td>{{ $u->nama_barang_usulan }}</td>
+                                {{-- STATUS --}}
+                                <td>
+                                    @if($u->status == 'pending')
+                                        <span class="badge badge-warning">Menunggu</span>
 
-                    <td>{{ $u->jumlah_usulan }}</td>
+                                    @elseif($u->status == 'disetujui')
+                                        <span class="badge badge-success">Disetujui</span>
 
-                    <td>{{ $u->keterangan }}</td>
+                                    @elseif($u->status == 'ditolak')
+                                        <span class="badge badge-danger">Ditolak</span>
+                                        <br>
+                                        <small class="text-danger">
+                                            Alasan: {{ $u->alasan_penolakan }}
+                                        </small>
+                                    @endif
+                                </td>
 
-                    <td>
-                        @if($u->status == 'pending')
+                                {{-- AKSI --}}
+                                <td>
 
-                            <span class="badge badge-warning">
-                                Menunggu
-                            </span>
+                                    {{-- PENDING --}}
+                                    @if($u->status == 'pending')
 
-                        @elseif($u->status == 'disetujui')
+                                        <div class="dropdown">
+                                            <button class="btn btn-primary btn-sm dropdown-toggle"
+                                                    type="button"
+                                                    data-toggle="dropdown">
+                                                Aksi
+                                            </button>
 
-                            <span class="badge badge-success">
-                                Disetujui
-                            </span>
+                                            <div class="dropdown-menu">
 
-                        @elseif($u->status == 'ditolak')
+                                                <a href="{{ route('admin.usulan_barang.setujui', $u->id_usulan_barang) }}"
+                                                   class="dropdown-item"
+                                                   onclick="return confirm('Yakin menyetujui usulan ini?')">
+                                                    Setujui
+                                                </a>
 
-                            <span class="badge badge-danger">
-                                Ditolak
-                            </span>
+                                                <button class="dropdown-item text-danger"
+                                                        data-toggle="modal"
+                                                        data-target="#tolakModal{{ $u->id_usulan_barang }}">
+                                                    Tolak
+                                                </button>
 
-                            <br>
+                                            </div>
+                                        </div>
 
-                            <small class="text-danger">
-                                Alasan: {{ $u->alasan_penolakan }}
-                            </small>
+                                    @endif
 
-                        @endif
-                    </td>
+                                    {{-- HAPUS --}}
+                                    @if($u->status == 'disetujui' || $u->status == 'ditolak')
 
-                    <td>
+                                        <form action="{{ route('admin.usulan_barang.destroy', $u->id_usulan_barang) }}"
+                                            method="POST"
+                                            class="form-hapus"
+                                            data-judul="usulan"
+                                            style="display:inline;">
 
-                        {{-- AKSI SAAT STATUS PENDING --}}
-                        @if($u->status == 'pending')
+                                            @csrf
+                                            @method('DELETE')
 
-                            <div class="dropdown">
+                                            <button class="btn btn-danger btn-sm">
+                                                Hapus
+                                            </button>
+                                        </form>
 
-                                <button
-                                    class="btn btn-primary btn-sm dropdown-toggle"
-                                    type="button"
-                                    data-toggle="dropdown">
-                                    Aksi
-                                </button>
+                                    @endif
 
-                                <div class="dropdown-menu">
+                                </td>
+                            </tr>
 
-                                    {{-- SETUJUI --}}
-                                    <a href="{{ route('admin.usulan_barang.setujui', $u->id_usulan_barang) }}"
-                                       class="dropdown-item"
-                                       onclick="return confirm('Yakin menyetujui usulan ini?')">
-                                        Setujui
-                                    </a>
+                            {{-- MODAL TOLAK --}}
+                            <div class="modal fade" id="tolakModal{{ $u->id_usulan_barang }}">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
 
-                                    {{-- TOLAK --}}
-                                    <button
-                                        class="dropdown-item text-danger"
-                                        data-toggle="modal"
-                                        data-target="#tolakModal{{ $u->id_usulan_barang }}">
-                                        Tolak
-                                    </button>
+                                        <form action="{{ route('admin.usulan_barang.tolak', $u->id_usulan_barang) }}" method="POST">
+                                            @csrf
 
+                                            <div class="modal-header">
+                                                <h5 class="modal-title">Alasan Penolakan</h5>
+                                                <button type="button" class="close" data-dismiss="modal">
+                                                    <span>&times;</span>
+                                                </button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <textarea name="alasan_penolakan"
+                                                          class="form-control"
+                                                          placeholder="Masukkan alasan penolakan..."
+                                                          required></textarea>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">
+                                                    Batal
+                                                </button>
+
+                                                <button type="submit" class="btn btn-danger">
+                                                    Tolak Usulan
+                                                </button>
+                                            </div>
+
+                                        </form>
+
+                                    </div>
                                 </div>
-
                             </div>
 
-                        @endif
+                        @empty
 
+                            <tr>
+                                <td colspan="8" class="text-center">
+                                    Belum ada usulan barang
+                                </td>
+                            </tr>
 
-                        {{-- HAPUS --}}
-                        @if($u->status == 'disetujui' || $u->status == 'ditolak')
+                        @endforelse
 
-                            <form
-                                action="{{ route('admin.usulan_barang.destroy', $u->id_usulan_barang) }}"
-                                method="POST"
-                                style="display:inline"
-                                onsubmit="return confirm('Yakin ingin menghapus usulan ini?')">
+                        </tbody>
 
-                                @csrf
-                                @method('DELETE')
+                    </table>
 
-                                <button class="btn btn-danger btn-sm">
-                                    Hapus
-                                </button>
-
-                            </form>
-
-                        @endif
-
-                    </td>
-                </tr>
-
-
-                {{-- MODAL TOLAK --}}
-                <div class="modal fade" id="tolakModal{{ $u->id_usulan_barang }}">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-
-                            <form action="{{ route('admin.usulan_barang.tolak', $u->id_usulan_barang) }}" method="POST">
-                                @csrf
-
-                                <div class="modal-header">
-                                    <h5 class="modal-title">Alasan Penolakan</h5>
-
-                                    <button type="button" class="close" data-dismiss="modal">
-                                        <span>&times;</span>
-                                    </button>
-                                </div>
-
-                                <div class="modal-body">
-
-                                    <textarea
-                                        name="alasan_penolakan"
-                                        class="form-control"
-                                        placeholder="Masukkan alasan penolakan..."
-                                        required></textarea>
-
-                                </div>
-
-                                <div class="modal-footer">
-
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">
-                                        Batal
-                                    </button>
-
-                                    <button type="submit" class="btn btn-danger">
-                                        Tolak Usulan
-                                    </button>
-
-                                </div>
-
-                            </form>
-
-                        </div>
-                    </div>
                 </div>
+            </div>
 
-            @empty
-
-                <tr>
-                    <td colspan="7" class="text-center">
-                        Belum ada usulan barang
-                    </td>
-                </tr>
-
-            @endforelse
-
-            </tbody>
-        </table>
-
+        </div>
     </div>
 </div>
 
-</div>
+@endsection
+
+
+@section('scripts')
+
+<script>
+$(document).ready(function () {
+    $('#tabel-usulan').DataTable({
+        pageLength: 10,
+        searching: false,
+        lengthChange: false,
+        language: {
+            paginate: {
+                previous: "Sebelumnya",
+                next: "Berikutnya"
+            },
+            info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+            infoEmpty: "Data tidak tersedia",
+            zeroRecords: "Data tidak ditemukan"
+        }
+    });
+});
+</script>
 
 @endsection
