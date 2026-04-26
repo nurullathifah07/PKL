@@ -17,13 +17,13 @@ class PegawaiViewController extends Controller
         // total jenis barang
         $totalBarang = Barang::count('id_barang');
 
-        // usulan diterima
-        $usulanDiterima = UsulanBarang::where('id_pegawai', $pegawai->id)
-                            ->where('status', 'diterima')
+        // usulan disetujui (dulu: disetujui)
+        $usulanDisetujui = UsulanBarang::where('id_pegawai', $pegawai->id_pegawai)
+                            ->where('status', 'disetujui')
                             ->count();
 
         // usulan ditolak
-        $usulanDitolak = UsulanBarang::where('id_pegawai', $pegawai->id)
+        $usulanDitolak = UsulanBarang::where('id_pegawai', $pegawai->id_pegawai)
                             ->where('status', 'ditolak')
                             ->count();
 
@@ -41,7 +41,7 @@ class PegawaiViewController extends Controller
             'akun',
             'pegawai',
             'totalBarang',
-            'usulanDiterima',
+            'usulanDisetujui',
             'usulanDitolak',
             'barang'
         ));

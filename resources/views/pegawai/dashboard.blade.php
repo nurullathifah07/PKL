@@ -52,14 +52,14 @@
         </div>
     </div>
 
-    {{-- Usulan Diterima --}}
+    {{-- Usulan Disetujui --}}
     <div class="col-md-4">
         <a href="{{ url('pegawai/usulan_barang') }}" style="text-decoration:none;">
             <div class="card dashboard-card card-success text-center">
                 <div class="card-body">
                     <i class="bi bi-check-circle" style="font-size:32px;"></i>
-                    <p class="mt-2 mb-1">Usulan Diterima</p>
-                    <h3 class="fw-bold">{{ $usulanDiterima }}</h3>
+                    <p class="mt-2 mb-1">Usulan Disetujui</p>
+                    <h3 class="fw-bold">{{ $usulanDisetujui }}</h3>
                 </div>
             </div>
         </a>
