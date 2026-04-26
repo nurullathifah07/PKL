@@ -23,6 +23,91 @@
     table.dataTable thead th {
         text-align: center !important;
     }
+
+    /* LOGO HEADER TETAP NORMAL */
+    .logo-header{
+        width:250px !important;
+    }
+
+    /* SIDEBAR mulai di bawah logo */
+    .sidebar{
+        width:250px;
+        transition:all .3s ease;
+    }
+
+    .sidebar-wrapper{
+        width:250px;
+        transition:all .3s ease;
+    }
+
+    /* MAIN PANEL */
+    .main-panel{
+        width:calc(100% - 250px);
+        transition:all .3s ease;
+    }
+
+    /* ===== COLLAPSE ===== */
+    .wrapper.sidebar-collapsed .sidebar{
+        width:80px;
+    }
+
+    .wrapper.sidebar-collapsed .sidebar-wrapper{
+        width:80px;
+    }
+
+    .wrapper.sidebar-collapsed .main-panel{
+        width:calc(100% - 80px);
+    }
+
+    /* sembunyikan profil */
+    .wrapper.sidebar-collapsed .sidebar .user{
+        display:none;
+    }
+
+    /* sembunyikan teks menu */
+    .wrapper.sidebar-collapsed .sidebar .nav p{
+        display:none;
+    }
+
+    /* center icon */
+    .wrapper.sidebar-collapsed .sidebar .nav li a{
+        justify-content:center;
+    }
+
+    .wrapper.sidebar-collapsed .sidebar .nav i{
+        margin:0;
+        font-size:22px;
+    }
+
+    .sidebar {
+    overflow: hidden;
+    }
+
+    .sidebar-wrapper {
+        height: calc(100vh - 70px); /* sesuaikan header */
+        overflow-y: auto;
+    }
+
+    .sidebar .nav {
+        margin-bottom: 20px;
+    }
+
+    .sidebar .nav li a {
+        white-space: nowrap;
+    }
+
+    .sidebar-wrapper {
+    height: 100vh;
+    overflow-y: auto;
+
+    /* sembunyikan scrollbar (Chrome, Edge, Safari) */
+    scrollbar-width: none;        /* Firefox */
+    -ms-overflow-style: none;     /* IE/Edge lama */
+    }
+
+    .sidebar-wrapper::-webkit-scrollbar {
+        display: none; /* Chrome, Safari */
+    }
     </style>
 
 </head>
@@ -36,13 +121,13 @@
                         style="height: 30px; margin-right: 8px;">
                     ATK BPS Banjar
                 </a>
-                <button class="navbar-toggler sidenav-toggler ml-auto" type="button" data-toggle="collapse" data-target="collapse" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
                 <button class="topbar-toggler more"><i class="la la-ellipsis-v"></i></button>
             </div>
             <nav class="navbar navbar-header navbar-expand-lg">
                 <div class="container-fluid">
+                    <button id="toggleSidebar" class="btn btn-sm btn-primary mr-3">
+                        <i class="bi bi-chevron-left" id="iconToggle"></i>
+                    </button>
                     <form method="GET" action="{{ url()->current() }}"
                         class="navbar-left navbar-form nav-search mr-md-3">
 
@@ -177,7 +262,7 @@
             </nav>
             </div>
             <div class="sidebar">
-                <div class="scrollbar-inner sidebar-wrapper">
+                <div class="sidebar-wrapper">
                 @auth
                 <div class="user">
                         <div class="photo">
@@ -258,7 +343,7 @@
                 <footer class="footer">
                     <div class="container-fluid">
                         <div class="copyright ml-auto">
-                            2025, made with <i class="la la-heart heart text-danger"></i> by <a href="http://www.themekita.com">BPS Kabupaten Banjar</a>
+                            &copy; 2026 Sistem Informasi ATK - BPS Kabupaten Banjar
                         </div>
                     </div>
                 </footer>
@@ -511,5 +596,28 @@
     });
     </script>
     @yield('scripts')
+
+    <script>
+    const wrapper = document.querySelector(".wrapper");
+    const icon = document.getElementById("iconToggle");
+
+    // load state
+    if(localStorage.getItem("sidebar") === "collapsed"){
+        wrapper.classList.add("sidebar-collapsed");
+        icon.classList.replace("bi-chevron-left","bi-chevron-right");
+    }
+
+    document.getElementById("toggleSidebar").onclick = function(){
+        wrapper.classList.toggle("sidebar-collapsed");
+
+        if(wrapper.classList.contains("sidebar-collapsed")){
+            icon.classList.replace("bi-chevron-left","bi-chevron-right");
+            localStorage.setItem("sidebar","collapsed");
+        }else{
+            icon.classList.replace("bi-chevron-right","bi-chevron-left");
+            localStorage.setItem("sidebar","open");
+        }
+    }
+    </script>
 </body>
 </html>
