@@ -85,40 +85,7 @@
 
 </div>
 
-{{-- ================= STOK MENIPIS ================= --}}
-<div class="card mt-4">
-    <div class="card-header">
-        <h4 class="card-title">Stok Barang Menipis</h4>
-    </div>
-    <div class="card-body">
-        <table class="table table-bordered">
-            <thead class="table-light">
-                <tr>
-                    <th width="50">No</th>
-                    <th>Nama Barang</th>
-                    <th width="100">Stok</th>
-                    <th width="100">Satuan</th>
-                </tr>
-            </thead>
-            <tbody>
-                @forelse($stokMenipis as $item)
-                <tr>
-                    <td>{{ $loop->iteration }}</td>
-                    <td>{{ $item->nama_barang }}</td>
-                    <td class="text-danger fw-bold">{{ $item->stok }}</td>
-                    <td>{{ $item->satuan }}</td>
-                </tr>
-                @empty
-                <tr>
-                    <td colspan="4" class="text-center text-muted">
-                        Tidak ada stok menipis
-                    </td>
-                </tr>
-                @endforelse
-            </tbody>
-        </table>
-    </div>
-</div>
+
 
 {{-- ================= GRAFIK PENGAMBILAN ================= --}}
 <div class="card mt-4">

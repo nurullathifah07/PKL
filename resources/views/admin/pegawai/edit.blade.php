@@ -126,12 +126,10 @@
                                 </div>
 
                                 {{-- TANGGAL LAHIR --}}
-                                <div class="mb-3">
-                                    <label class="form-label">Tanggal Lahir</label>
-                                    <input type="date" class="form-control"
-                                           name="tanggal_lahir"
-                                           value="{{ old('tanggal_lahir', $pegawai->tanggal_lahir) }}">
-                                </div>
+                                <input type="date" class="form-control"
+                                            id="tanggal_lahir"
+                                            name="tanggal_lahir"
+                                            value="{{ old('tanggal_lahir', $pegawai->tanggal_lahir) }}">
 
                                 {{-- JENIS KELAMIN --}}
                                 <div class="mb-3">

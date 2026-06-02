@@ -510,5 +510,23 @@
         }
     }
     </script>
+    <script>
+    window.onload = function () {
+        let input = document.getElementById("tanggal_lahir");
+
+        if (input) {
+            let today = new Date();
+            let minAge = 18;
+
+            let maxDate = new Date(
+                today.getFullYear() - minAge,
+                today.getMonth(),
+                today.getDate()
+            );
+
+            input.max = maxDate.toISOString().split('T')[0];
+        }
+    }
+    </script>
 </body>
 </html>

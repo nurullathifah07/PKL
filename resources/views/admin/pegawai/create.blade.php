@@ -12,7 +12,16 @@
     </div>
 
     <div class="card-body">
-
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <strong>Terjadi kesalahan:</strong>
+                <ul class="mb-0">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <form action="{{ route('admin.pegawai.store') }}"
               method="POST"
               enctype="multipart/form-data">
@@ -43,6 +52,9 @@
                         <input type="text" name="nip"
                                class="form-control"
                                value="{{ old('nip') }}">
+                        @error('nip')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -50,6 +62,9 @@
                         <input type="text" name="nip_bps"
                                class="form-control"
                                value="{{ old('nip_bps') }}">
+                        @error('nip_bps')
+                            <small class="text-danger">{{ $message }}</small>
+                        @enderror
                     </div>
 
                     <div class="mb-3">
@@ -111,8 +126,9 @@
                     <div class="mb-3">
                         <label class="form-label">Tanggal Lahir</label>
                         <input type="date" name="tanggal_lahir"
-                               class="form-control"
-                               value="{{ old('tanggal_lahir') }}" required>
+                                id="tanggal_lahir"
+                                class="form-control"
+                                value="{{ old('tanggal_lahir') }}" required>
                     </div>
 
                     <div class="mb-3">
